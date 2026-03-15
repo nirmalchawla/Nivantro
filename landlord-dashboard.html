@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landlord Dashboard — Nivantro India</title>
+  <meta name="description" content="Nivantro India Landlord Dashboard — manage properties, track rent, handle maintenance, and monitor Trust Score.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">Nivantro</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li><li><a href="features.html">Features</a></li><li><a href="how-it-works.html">How It Works</a></li><li><a href="about.html">About</a></li>
+      </ul>
+      <div class="nav-cta">
+        <div class="user-pill"><div class="user-avatar user-avatar--landlord">RP</div><span class="user-name">Rohit Patel</span><span class="user-role-badge badge-landlord">Landlord</span></div>
+        <a href="index.html" class="btn btn-secondary" style="margin-left: 1rem;">Logout</a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Header -->
+  <section class="dash-header">
+    <div class="container">
+      <div class="dash-header-top">
+        <div class="dash-welcome animate-on-scroll">
+          <span class="label">Landlord Dashboard</span>
+          <h1 class="display-md">Welcome back, <span class="text-gradient">Rohit</span> 👋</h1>
+          <p class="text-muted">You have <strong>3 properties</strong>, <strong>2 active tenancies</strong>, and <strong>1 open maintenance ticket</strong>.</p>
+        </div>
+        <div class="dash-header-actions animate-on-scroll">
+          <a href="#" class="btn btn-primary">+ List New Property</a>
+          <a href="#" class="btn btn-secondary">View Analytics</a>
+        </div>
+      </div>
+      <div class="metric-strip animate-on-scroll">
+        <div class="metric-card"><div class="metric-icon" style="background:rgba(13,124,102,0.1);color:var(--primary);">🏠</div><div><div class="metric-value">3</div><div class="metric-label">Properties</div></div></div>
+        <div class="metric-card"><div class="metric-icon" style="background:rgba(34,197,94,0.1);color:var(--success);">✓</div><div><div class="metric-value">2</div><div class="metric-label">Occupied</div></div></div>
+        <div class="metric-card"><div class="metric-icon" style="background:rgba(249,139,54,0.1);color:var(--secondary);">◎</div><div><div class="metric-value">1</div><div class="metric-label">Vacant</div></div></div>
+        <div class="metric-card"><div class="metric-icon" style="background:rgba(13,124,102,0.1);color:var(--primary);">₹</div><div><div class="metric-value">₹55K</div><div class="metric-label">Monthly Income</div></div></div>
+        <div class="metric-card"><div class="metric-icon" style="background:rgba(30,174,201,0.1);color:var(--accent);">★</div><div><div class="metric-value">4.3</div><div class="metric-label">Trust Score</div></div></div>
+        <div class="metric-card"><div class="metric-icon" style="background:rgba(239,68,68,0.1);color:var(--danger);">🎫</div><div><div class="metric-value">1</div><div class="metric-label">Open Tickets</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Tabs & Panels -->
+  <section class="section" style="padding-top:var(--space-xl);">
+    <div class="container">
+      <div class="dash-tabs animate-on-scroll" id="dashTabs">
+        <button class="dash-tab active" data-tab="properties">🏠 Properties</button>
+        <button class="dash-tab" data-tab="rent">💰 Rent</button>
+        <button class="dash-tab" data-tab="tickets">🎫 Maintenance</button>
+        <button class="dash-tab" data-tab="agreements">📄 Agreements</button>
+        <button class="dash-tab" data-tab="movein">📥 Move-In</button>
+        <button class="dash-tab" data-tab="moveout">📤 Move-Out</button>
+        <button class="dash-tab" data-tab="trust">★ Trust Score</button>
+        <button class="dash-tab" data-tab="insurance">🛡️ RentGuard</button>
+        <button class="dash-tab" data-tab="proxy">🌐 NRI & Proxy</button>
+        <button class="dash-tab" data-tab="portfolio">📊 Portfolio</button>
+      </div>
+
+      <!-- TAB: Properties -->
+      <div class="dash-panel active" id="panel-properties">
+        <div class="dash-section-title animate-on-scroll"><h2>My Properties</h2><p class="text-muted">Manage your rental portfolio. Tenant profiles are masked until you shortlist — protecting privacy while enabling informed decisions.</p></div>
+        <div class="property-grid">
+          <div class="property-card animate-on-scroll">
+            <div class="property-status property-status--occupied">Occupied</div>
+            <div class="property-image" style="background:linear-gradient(135deg,rgba(13,124,102,0.08),rgba(30,174,201,0.06));"><div style="font-size:3rem;">🏢</div></div>
+            <div class="property-body">
+              <h3>Prestige Shantiniketan</h3><p class="property-meta">3BHK · Whitefield, Bangalore · 1,450 sq ft</p>
+              <div class="property-rent"><span class="rent-amount">₹30,000<span class="rent-period">/mo</span></span><span class="rent-status rent-status--paid">✓ Paid</span></div>
+              <div class="property-tenant"><div class="tenant-avatar" style="background:linear-gradient(135deg,var(--secondary),var(--secondary-light));">AS</div><div><div class="tenant-name">Anita Sharma</div><div class="tenant-scores"><span class="score-pill score-pill--green">★ 4.5</span><span class="score-pill score-pill--orange">RCP 720</span></div></div></div>
+              <div class="property-details-row">
+                <div class="detail-item"><span class="detail-label">Lease Start</span><span class="detail-value">15 Jan 2025</span></div>
+                <div class="detail-item"><span class="detail-label">Lease End</span><span class="detail-value">14 Jan 2026</span></div>
+                <div class="detail-item"><span class="detail-label">Deposit</span><span class="detail-value">₹90,000 (Escrow)</span></div>
+              </div>
+              <div class="property-actions"><a href="inspection.html" class="btn btn-secondary btn-sm">View Checklist</a><a href="#" class="btn btn-primary btn-sm">Message Tenant</a></div>
+            </div>
+          </div>
+          <div class="property-card animate-on-scroll">
+            <div class="property-status property-status--occupied">Occupied</div>
+            <div class="property-image" style="background:linear-gradient(135deg,rgba(249,139,54,0.08),rgba(249,139,54,0.04));"><div style="font-size:3rem;">🏠</div></div>
+            <div class="property-body">
+              <h3>Brigade Millennium</h3><p class="property-meta">2BHK · JP Nagar, Bangalore · 1,100 sq ft</p>
+              <div class="property-rent"><span class="rent-amount">₹25,000<span class="rent-period">/mo</span></span><span class="rent-status rent-status--due">⧖ Due in 3 days</span></div>
+              <div class="property-tenant"><div class="tenant-avatar" style="background:linear-gradient(135deg,var(--accent),#5ED4E8);">VK</div><div><div class="tenant-name">Vikram Kumar</div><div class="tenant-scores"><span class="score-pill score-pill--green">★ 4.1</span><span class="score-pill score-pill--orange">RCP 640</span></div></div></div>
+              <div class="property-details-row">
+                <div class="detail-item"><span class="detail-label">Lease Start</span><span class="detail-value">01 Mar 2025</span></div>
+                <div class="detail-item"><span class="detail-label">Lease End</span><span class="detail-value">28 Feb 2026</span></div>
+                <div class="detail-item"><span class="detail-label">Deposit</span><span class="detail-value">₹75,000 (Escrow)</span></div>
+              </div>
+              <div class="property-actions"><a href="inspection.html" class="btn btn-secondary btn-sm">View Checklist</a><a href="#" class="btn btn-primary btn-sm">Message Tenant</a></div>
+            </div>
+          </div>
+          <div class="property-card animate-on-scroll">
+            <div class="property-status property-status--vacant">Vacant</div>
+            <div class="property-image" style="background:linear-gradient(135deg,rgba(100,116,139,0.08),rgba(100,116,139,0.04));"><div style="font-size:3rem;">🏗</div></div>
+            <div class="property-body">
+              <h3>Sobha Dream Acres</h3><p class="property-meta">2BHK · Panathur, Bangalore · 980 sq ft</p>
+              <div class="property-rent"><span class="rent-amount">₹20,000<span class="rent-period">/mo</span></span><span class="rent-status rent-status--vacant">No Tenant</span></div>
+              <div class="property-vacant-info"><p>Listed <strong>28 Feb 2026</strong> · Ready for move-in</p><div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-top:0.5rem;"><span class="feature-tag">Semi-furnished</span><span class="feature-tag">Family Preferred</span><span class="feature-tag">Pet Friendly</span></div></div>
+              <div class="masked-profiles-info animate-on-scroll"><span class="masked-icon">👤</span><strong>5 masked applications</strong> — shortlist to reveal full profiles<div class="masked-bar"><div class="masked-bar-fill" style="width:60%;"></div></div><span class="text-sm text-muted">3 have RCP > 700</span></div>
+              <div class="property-actions"><a href="#" class="btn btn-secondary btn-sm">Edit Listing</a><a href="#" class="btn btn-accent btn-sm">Review Applications</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Rent Tracker -->
+      <div class="dash-panel" id="panel-rent" style="display:none;">
+        <div class="dash-section-title animate-on-scroll"><h2>Rent Tracker</h2><p class="text-muted">Track payments with auto-WhatsApp reminders 3 days before due date. TDS reconciliation for tax filing.</p></div>
+        <div class="rent-summary-strip animate-on-scroll">
+          <div class="rent-summary-item"><div class="rent-summary-value" style="color:var(--primary);">₹6,60,000</div><div class="rent-summary-label">Collected (FY 25-26)</div></div>
+          <div class="rent-summary-item"><div class="rent-summary-value" style="color:var(--success);">100%</div><div class="rent-summary-label">Collection Rate</div></div>
+          <div class="rent-summary-item"><div class="rent-summary-value" style="color:var(--accent);">0</div><div class="rent-summary-label">Missed Payments</div></div>
+          <div class="rent-summary-item"><div class="rent-summary-value" style="color:var(--secondary);">1.2 days</div><div class="rent-summary-label">Avg Early Payment</div></div>
+        </div>
+        <div class="animate-on-scroll">
+          <table class="detail-table"><thead><tr><th>Month</th><th>Property</th><th>Tenant</th><th>Amount</th><th>Due</th><th>Paid</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Mar 2026</td><td>Prestige Shantiniketan</td><td>Anita Sharma</td><td>₹30,000</td><td>05 Mar</td><td>03 Mar</td><td><span class="status-badge status-badge--success">On-time</span></td></tr>
+            <tr><td>Mar 2026</td><td>Brigade Millennium</td><td>Vikram Kumar</td><td>₹25,000</td><td>01 Mar</td><td>—</td><td><span class="status-badge status-badge--warning">Due in 3 days</span></td></tr>
+            <tr><td>Feb 2026</td><td>Prestige Shantiniketan</td><td>Anita Sharma</td><td>₹30,000</td><td>05 Feb</td><td>04 Feb</td><td><span class="status-badge status-badge--success">On-time</span></td></tr>
+            <tr><td>Feb 2026</td><td>Brigade Millennium</td><td>Vikram Kumar</td><td>₹25,000</td><td>01 Feb</td><td>01 Feb</td><td><span class="status-badge status-badge--success">On-time</span></td></tr>
+            <tr><td>Jan 2026</td><td>Prestige Shantiniketan</td><td>Anita Sharma</td><td>₹30,000</td><td>05 Jan</td><td>02 Jan</td><td><span class="status-badge status-badge--primary">Early</span></td></tr>
+          </tbody></table>
+        </div>
+        <!-- TDS Reconciliation -->
+        <div class="tds-section animate-on-scroll">
+          <h3>TDS Reconciliation (FY 2025-26)</h3>
+          <p class="text-muted" style="margin-bottom:var(--space-md);">Auto-generated rent receipts and TDS statements for income tax filing. Reconciled against Form 26AS.</p>
+          <div class="tds-grid">
+            <div class="tds-card"><div class="tds-icon">📊</div><h4>Total Rental Income</h4><div class="tds-value">₹6,60,000</div><span class="text-sm text-muted">Apr 2025 – Mar 2026</span></div>
+            <div class="tds-card"><div class="tds-icon">🏛️</div><h4>TDS Deducted (Sec 194-IB)</h4><div class="tds-value">₹33,000</div><span class="text-sm text-muted">5% on rent &gt; ₹50K/mo</span></div>
+            <div class="tds-card"><div class="tds-icon">✓</div><h4>26AS Match</h4><div class="tds-value" style="color:var(--success);">Verified</div><span class="text-sm text-muted">Last checked: 10 Mar 2026</span></div>
+          </div>
+          <div class="property-actions" style="margin-top:var(--space-md);"><a href="#" class="btn btn-secondary btn-sm">Download Rent Receipts</a><a href="#" class="btn btn-primary btn-sm">Download TDS Certificate</a></div>
+        </div>
+      </div>
+
+      <!-- TAB: Maintenance -->
+      <div class="dash-panel" id="panel-tickets" style="display:none;">
+        <div class="dash-section-title animate-on-scroll"><h2>Maintenance Tickets</h2><p class="text-muted">SLA-tracked with auto-escalation. Resolution quality feeds into your Trust Score. Photo verification required for closures.</p></div>
+        <div class="tickets-grid">
+          <div class="ticket-card ticket-card--open animate-on-scroll">
+            <div class="ticket-header"><span class="ticket-id">#TKT-2847</span><span class="status-badge status-badge--warning">Open · SLA: 36h left</span></div>
+            <h3 class="ticket-title">Water heater not working in master bathroom</h3>
+            <div class="ticket-meta"><span>🏢 Prestige Shantiniketan</span><span>👤 Anita Sharma</span><span>📅 11 Mar 2026</span></div>
+            <p class="ticket-desc">Geyser stopped heating water. Pilot light not turning on. Thermostat reset attempted — no change.</p>
+            <div class="ticket-evidence"><div class="evidence-thumbnail">📸</div><div class="evidence-thumbnail">📸</div><span class="evidence-count">2 photos attached</span></div>
+            <div class="ticket-actions"><a href="#" class="btn btn-primary btn-sm">Respond & Assign</a><a href="#" class="btn btn-secondary btn-sm">Schedule Visit</a></div>
+          </div>
+          <div class="ticket-card ticket-card--resolved animate-on-scroll">
+            <div class="ticket-header"><span class="ticket-id">#TKT-2801</span><span class="status-badge status-badge--success">Resolved</span></div>
+            <h3 class="ticket-title">Leaking kitchen sink pipe</h3>
+            <div class="ticket-meta"><span>🏠 Brigade Millennium</span><span>👤 Vikram Kumar</span><span>📅 22 Feb 2026</span></div>
+            <div class="ticket-timeline">
+              <div class="timeline-step"><span class="timeline-dot timeline-dot--done"></span><span>Reported: 22 Feb, 9:15 AM</span></div>
+              <div class="timeline-step"><span class="timeline-dot timeline-dot--done"></span><span>Acknowledged: 22 Feb, 10:30 AM</span></div>
+              <div class="timeline-step"><span class="timeline-dot timeline-dot--done"></span><span>Plumber assigned: 22 Feb, 2:00 PM</span></div>
+              <div class="timeline-step"><span class="timeline-dot timeline-dot--done"></span><span>Photo-verified closure: 23 Feb, 11:00 AM</span></div>
+            </div>
+            <div class="ticket-resolution"><span class="ticket-sla-badge">⚡ Resolved within SLA (25.75 hrs)</span><span class="ticket-rating">Tenant rating: ★★★★★</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Agreements -->
+      <div class="dash-panel" id="panel-agreements" style="display:none;">
+        <div class="dash-section-title animate-on-scroll"><h2>Agreements</h2><p class="text-muted">State-specific templates with Aadhaar eSign. Modified clauses highlighted in yellow for transparency.</p></div>
+        <div class="agreements-grid">
+          <div class="agreement-card animate-on-scroll">
+            <div class="agreement-badge agreement-badge--active">Active</div>
+            <div class="agreement-icon">📄</div><h3>Rental Agreement</h3><p class="property-meta">Prestige Shantiniketan · Anita Sharma</p>
+            <div class="clause-highlights"><span class="clause-tag clause-tag--standard">Standard Clauses: 18</span><span class="clause-tag clause-tag--modified">Modified Clauses: 2 ⚠</span></div>
+            <div class="property-details-row" style="margin-top:var(--space-md);">
+              <div class="detail-item"><span class="detail-label">Signed</span><span class="detail-value">15 Jan 2025</span></div>
+              <div class="detail-item"><span class="detail-label">Expires</span><span class="detail-value">14 Jan 2026</span></div>
+              <div class="detail-item"><span class="detail-label">eSign</span><span class="detail-value" style="color:var(--success);">✓ Aadhaar</span></div>
+              <div class="detail-item"><span class="detail-label">State</span><span class="detail-value">Karnataka (L&L)</span></div>
+            </div>
+            <div class="property-actions" style="margin-top:var(--space-md);"><a href="#" class="btn btn-secondary btn-sm">Download PDF</a><a href="#" class="btn btn-primary btn-sm">Renew Agreement</a></div>
+          </div>
+          <div class="agreement-card animate-on-scroll">
+            <div class="agreement-badge agreement-badge--active">Active</div>
+            <div class="agreement-icon">📄</div><h3>Rental Agreement</h3><p class="property-meta">Brigade Millennium · Vikram Kumar</p>
+            <div class="clause-highlights"><span class="clause-tag clause-tag--standard">Standard Clauses: 18</span><span class="clause-tag clause-tag--modified">Modified Clauses: 0 ✓</span></div>
+            <div class="property-details-row" style="margin-top:var(--space-md);">
+              <div class="detail-item"><span class="detail-label">Signed</span><span class="detail-value">01 Mar 2025</span></div>
+              <div class="detail-item"><span class="detail-label">Expires</span><span class="detail-value">28 Feb 2026</span></div>
+              <div class="detail-item"><span class="detail-label">eSign</span><span class="detail-value" style="color:var(--success);">✓ Aadhaar</span></div>
+            </div>
+            <div class="property-actions" style="margin-top:var(--space-md);"><a href="#" class="btn btn-secondary btn-sm">Download PDF</a></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Move-In -->
+      <div class="dash-panel" id="panel-movein" style="display:none;">
+        <div class="dash-section-title animate-on-scroll"><h2>Move-In Inspections</h2><p class="text-muted">Digital baselines with photo proofs. Protect your property by documenting the exact condition at handover.</p></div>
+        <div class="dash-header-actions" style="margin-bottom: var(--space-xl);">
+          <button class="btn btn-primary">+ Schedule New Move-In</button>
+        </div>
+        <div class="checklist-comparison animate-on-scroll">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-md);">
+            <h3>Prestige Shantiniketan — Move-In (15 Jan 2025)</h3>
+            <a href="inspection.html" class="btn btn-primary btn-sm">View Baseline Report</a>
+          </div>
+          <div class="checklist-items">
+            <div class="checklist-row"><div class="checklist-category-header"><span>🔌 Appliances (8 items)</span><span class="status-badge status-badge--success">100% Good</span></div></div>
+            <div class="checklist-row"><div class="checklist-category-header"><span>💡 Electrical (12 items)</span><span class="status-badge status-badge--success">100% Good</span></div></div>
+            <div class="checklist-row"><div class="checklist-category-header"><span>🚿 Plumbing (6 items)</span><span class="status-badge status-badge--success">100% Good</span></div></div>
+            <div class="checklist-row"><div class="checklist-category-header"><span>🪑 Furniture (5 items)</span><span class="status-badge status-badge--warning">1 Minor Issue</span></div></div>
+            <div class="checklist-row"><div class="checklist-category-header"><span>🏠 General (10 items)</span><span class="status-badge status-badge--success">100% Good</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Move-Out -->
+      <div class="dash-panel" id="panel-moveout" style="display:none;">
+        <div class="dash-section-title animate-on-scroll"><h2>Move-Out Inspections</h2><p class="text-muted">Compare current condition with move-in baseline for fair, evidence-based deposit deductions powered by AI.</p></div>
+        <div class="dash-header-actions" style="margin-bottom: var(--space-xl);">
+          <button class="btn btn-primary">+ Schedule Move-Out</button>
+        </div>
+        <div class="checklist-comparison animate-on-scroll">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-md);">
+            <h3>Prestige Shantiniketan — Move-Out Comparison</h3>
+            <a href="inspection.html" class="btn btn-primary btn-sm">Settle Deposit</a>
+          </div>
+          <div class="comparison-grid">
+            <div class="comparison-col"><h4 class="comparison-title comparison-title--movein">Move-in Baseline</h4></div>
+            <div class="comparison-col"><h4 class="comparison-title comparison-title--current">Current Condition</h4></div>
+          </div>
+          <div class="checklist-items">
+            <div class="checklist-row"><div class="checklist-category-header"><span>🔌 Appliances (8 items)</span><span class="status-badge status-badge--success">All Match ✓</span></div></div>
+            <div class="checklist-row"><div class="checklist-category-header"><span>🪑 Furniture (5 items)</span><span class="status-badge status-badge--warning">1 Discrepancy ⚠</span></div></div>
+            <div class="checklist-row-detail">
+              <div class="comparison-grid">
+                <div class="comparison-col"><div class="comparison-item comparison-item--flagged"><div class="comparison-photo">📸</div><div><strong>Dining Table</strong><p class="text-sm text-muted">Good condition</p></div></div></div>
+                <div class="comparison-col"><div class="comparison-item comparison-item--flagged"><div class="comparison-photo">📸</div><div><strong>Dining Table</strong><p class="text-sm" style="color:var(--warning);">Water ring marks</p></div></div></div>
+              </div>
+              <div class="deduction-calc"><span>Suggested deduction:</span><strong style="color:var(--danger);">₹2,500</strong><span class="text-sm text-muted">(Refinishing)</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Trust Score -->
+      <div class="dash-panel" id="panel-trust" style="display:none;">
+        <div class="dash-section-title animate-on-scroll"><h2>Your Trust Score</h2><p class="text-muted">Portable behavioural reputation (0–1000). Earned through every interaction on the platform.</p></div>
+        <div class="trust-dashboard-grid">
+          <div class="trust-main-card animate-on-scroll">
+            <div class="trust-circle-wrap" style="width:200px;height:200px;margin:0 auto var(--space-xl);"><div class="trust-circle-bg" style="border-width:8px;"><div class="trust-score-value" style="font-size:3rem;">4.3</div><div class="trust-score-label">Trust Score</div></div></div>
+            <div class="score-history-chart"><h4 style="margin-bottom:var(--space-sm);text-align:center;">Score History</h4><div class="mini-chart"><div class="chart-bar" style="height:60%;" data-label="Oct"><span>3.8</span></div><div class="chart-bar" style="height:68%;" data-label="Nov"><span>3.9</span></div><div class="chart-bar" style="height:76%;" data-label="Dec"><span>4.0</span></div><div class="chart-bar" style="height:82%;" data-label="Jan"><span>4.1</span></div><div class="chart-bar" style="height:88%;" data-label="Feb"><span>4.2</span></div><div class="chart-bar chart-bar--current" style="height:92%;" data-label="Mar"><span>4.3</span></div></div></div>
+            <div class="trust-breakdown" style="margin-top:var(--space-lg);">
+              <div class="trust-dim"><span class="trust-dim-label">Deposit Fairness</span><div class="trust-dim-bar"><div class="trust-dim-fill" style="width:92%"></div></div><span class="trust-dim-value">4.6</span></div>
+              <div class="trust-dim"><span class="trust-dim-label">Maintenance Response</span><div class="trust-dim-bar"><div class="trust-dim-fill" style="width:88%"></div></div><span class="trust-dim-value">4.4</span></div>
+              <div class="trust-dim"><span class="trust-dim-label">Agreement Transparency</span><div class="trust-dim-bar"><div class="trust-dim-fill" style="width:84%"></div></div><span class="trust-dim-value">4.2</span></div>
+              <div class="trust-dim"><span class="trust-dim-label">Communication</span><div class="trust-dim-bar"><div class="trust-dim-fill" style="width:80%"></div></div><span class="trust-dim-value">4.0</span></div>
+              <div class="trust-dim"><span class="trust-dim-label">Property Accuracy</span><div class="trust-dim-bar"><div class="trust-dim-fill" style="width:86%"></div></div><span class="trust-dim-value">4.3</span></div>
+            </div>
+          </div>
+          <div class="trust-reviews animate-on-scroll">
+            <h4 style="margin-bottom:var(--space-lg);">Tenant Reviews</h4>
+            <div class="review-card"><div class="review-header"><div class="tenant-avatar" style="background:linear-gradient(135deg,var(--secondary),var(--secondary-light));width:36px;height:36px;font-size:0.75rem;">AS</div><div><div class="tenant-name" style="font-size:0.9rem;">Anita Sharma</div><div style="font-size:0.75rem;color:var(--text-muted);">Prestige Shantiniketan · Mar 2026</div></div><div class="review-stars">★★★★★</div></div><p class="review-text">"Excellent landlord. Always responds quickly to maintenance issues. Deposit terms were transparent from day one."</p></div>
+            <div class="review-card"><div class="review-header"><div class="tenant-avatar" style="background:linear-gradient(135deg,var(--accent),#5ED4E8);width:36px;height:36px;font-size:0.75rem;">VK</div><div><div class="tenant-name" style="font-size:0.9rem;">Vikram Kumar</div><div style="font-size:0.75rem;color:var(--text-muted);">Brigade Millennium · Feb 2026</div></div><div class="review-stars">★★★★☆</div></div><p class="review-text">"Good experience overall. Plumbing issue fixed promptly. Minor delay with AC remote but handled well."</p></div>
+            <div class="review-card"><div class="review-header"><div class="tenant-avatar" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));width:36px;height:36px;font-size:0.75rem;">PM</div><div><div class="tenant-name" style="font-size:0.9rem;">Priya Menon</div><div style="font-size:0.75rem;color:var(--text-muted);">Sobha Dream Acres · Dec 2025</div></div><div class="review-stars">★★★★★</div></div><p class="review-text">"Full deposit returned within 5 days. Move-out checklist was fair and transparent. Digital process made everything smooth."</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: RentGuard -->
+      <div class="dash-panel" id="panel-insurance" style="display:none;">
+        <div class="dash-section-title animate-on-scroll"><h2>RentGuard Insurance</h2><p class="text-muted">Protect rental income against tenant defaults. Premium calculated based on tenant's RCP score.</p></div>
+        <div class="insurance-grid">
+          <div class="insurance-card insurance-card--active animate-on-scroll">
+            <div class="insurance-status">Active Policy</div><h3>🛡️ RentGuard — Prestige Shantiniketan</h3>
+            <div class="insurance-details">
+              <div class="detail-item"><span class="detail-label">Coverage</span><span class="detail-value">₹90,000 (3 months × ₹30K)</span></div>
+              <div class="detail-item"><span class="detail-label">Premium</span><span class="detail-value">₹450/mo</span></div>
+              <div class="detail-item"><span class="detail-label">Tenant RCP</span><span class="detail-value" style="color:var(--primary);">720 (Excellent)</span></div>
+              <div class="detail-item"><span class="detail-label">Claims</span><span class="detail-value" style="color:var(--success);">0 (No defaults)</span></div>
+            </div>
+          </div>
+          <div class="insurance-card animate-on-scroll">
+            <div class="insurance-status" style="background:rgba(249,139,54,0.08);color:var(--secondary);">Not Enrolled</div><h3>🛡️ RentGuard — Brigade Millennium</h3>
+            <p style="color:var(--text-muted);margin:var(--space-sm) 0 var(--space-md);">Tenant RCP 640 (Good) — eligible for standard cover.</p>
+            <div class="insurance-details">
+              <div class="detail-item"><span class="detail-label">Est. Coverage</span><span class="detail-value">₹75,000 (3 months)</span></div>
+              <div class="detail-item"><span class="detail-label">Est. Premium</span><span class="detail-value">₹520/mo</span></div>
+            </div>
+            <a href="#" class="btn btn-accent btn-sm" style="margin-top:var(--space-md);">Enroll Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: NRI & Proxy -->
+      <div class="dash-panel" id="panel-proxy" style="display:none;">
+        <div class="dash-section-title animate-on-scroll"><h2>NRI & Proxy Management</h2><p class="text-muted">Manage properties remotely. Assign proxies (friends, brokers, or platform assistants) with granular permission levels. FEMA-compliant.</p></div>
+        <div class="nri-status-card animate-on-scroll">
+          <div class="nri-kyc-status"><span class="nri-badge">🌐 NRI Account</span><div class="kyc-checks"><span class="kyc-check kyc-check--done">✓ Passport Verified</span><span class="kyc-check kyc-check--done">✓ Overseas Address</span><span class="kyc-check kyc-check--done">✓ NRO/NRE Account Linked</span><span class="kyc-check kyc-check--done">✓ FEMA Compliant</span></div></div>
+        </div>
+        <h3 style="margin:var(--space-xl) 0 var(--space-md);">Assigned Proxies</h3>
+        <div class="proxy-grid">
+          <div class="proxy-card animate-on-scroll">
+            <div class="proxy-header"><div class="tenant-avatar" style="background:linear-gradient(135deg,var(--accent),#5ED4E8);width:44px;height:44px;">SK</div><div><div class="tenant-name">Suresh Khanna</div><div style="font-size:0.8rem;color:var(--text-muted);">Platform Broker · RERA Verified</div></div></div>
+            <div class="proxy-permissions">
+              <h5>Permissions</h5>
+              <div class="perm-grid">
+                <span class="perm-badge perm-badge--granted">👁 View Properties</span>
+                <span class="perm-badge perm-badge--granted">🎫 Raise Maintenance</span>
+                <span class="perm-badge perm-badge--granted">📄 Create Agreements</span>
+                <span class="perm-badge perm-badge--denied">💰 Collect Rent</span>
+              </div>
+            </div>
+            <div class="proxy-properties"><span class="text-sm text-muted">Managing:</span><span class="feature-tag">Sobha Dream Acres</span></div>
+          </div>
+          <div class="proxy-card animate-on-scroll">
+            <div class="proxy-header"><div class="tenant-avatar" style="background:linear-gradient(135deg,var(--secondary),var(--secondary-light));width:44px;height:44px;">DM</div><div><div class="tenant-name">Deepa Mehta</div><div style="font-size:0.8rem;color:var(--text-muted);">Family Friend · Local Contact</div></div></div>
+            <div class="proxy-permissions"><h5>Permissions</h5>
+              <div class="perm-grid"><span class="perm-badge perm-badge--granted">👁 View Properties</span><span class="perm-badge perm-badge--granted">🎫 Raise Maintenance</span><span class="perm-badge perm-badge--denied">📄 Create Agreements</span><span class="perm-badge perm-badge--denied">💰 Collect Rent</span></div>
+            </div>
+            <div class="proxy-properties"><span class="text-sm text-muted">Managing:</span><span class="feature-tag">Prestige Shantiniketan</span><span class="feature-tag">Brigade Millennium</span></div>
+          </div>
+        </div>
+        <div class="property-actions animate-on-scroll" style="margin-top:var(--space-xl);"><a href="#" class="btn btn-primary">+ Add New Proxy</a></div>
+      </div>
+
+      <!-- TAB: Portfolio -->
+      <div class="dash-panel" id="panel-portfolio" style="display:none;">
+        <div class="dash-section-title animate-on-scroll"><h2>Portfolio Analytics</h2><p class="text-muted">Multi-property dashboard with yield metrics, vacancy trends, and AI-powered rent suggestions for renewals.</p></div>
+        <div class="portfolio-metrics animate-on-scroll">
+          <div class="portfolio-metric-card"><div class="portfolio-metric-label">Gross Yield</div><div class="portfolio-metric-value" style="color:var(--primary);">5.8%</div><span class="text-sm text-muted">₹6.6L / ₹1.14Cr portfolio</span></div>
+          <div class="portfolio-metric-card"><div class="portfolio-metric-label">Occupancy Rate</div><div class="portfolio-metric-value" style="color:var(--success);">67%</div><span class="text-sm text-muted">2 of 3 properties occupied</span></div>
+          <div class="portfolio-metric-card"><div class="portfolio-metric-label">Avg Vacancy</div><div class="portfolio-metric-value" style="color:var(--secondary);">18 days</div><span class="text-sm text-muted">Between tenancies</span></div>
+          <div class="portfolio-metric-card"><div class="portfolio-metric-label">YoY Rent Growth</div><div class="portfolio-metric-value" style="color:var(--accent);">+8.2%</div><span class="text-sm text-muted">vs last year</span></div>
+        </div>
+        <!-- AI Rent Suggestion -->
+        <div class="ai-suggestion-card animate-on-scroll">
+          <div class="ai-badge">🤖 AI Insight</div>
+          <h3>Renewal Rent Suggestion</h3>
+          <p class="text-muted">Based on locality trends, comparable properties, and your Trust Score, here's the AI-recommended rent for renewals:</p>
+          <div class="ai-suggestions-grid">
+            <div class="ai-suggestion"><strong>Prestige Shantiniketan</strong><div class="ai-rent-compare"><span class="current-rent">Current: ₹30,000</span><span class="arrow">→</span><span class="suggested-rent">Suggested: ₹32,500</span></div><span class="text-sm" style="color:var(--success);">+8.3% · Market avg increase: 7.5%</span></div>
+            <div class="ai-suggestion"><strong>Brigade Millennium</strong><div class="ai-rent-compare"><span class="current-rent">Current: ₹25,000</span><span class="arrow">→</span><span class="suggested-rent">Suggested: ₹26,500</span></div><span class="text-sm" style="color:var(--success);">+6.0% · Market avg increase: 6.8%</span></div>
+          </div>
+        </div>
+        <!-- Bulk Actions -->
+        <div class="bulk-actions animate-on-scroll">
+          <h3 style="margin-bottom:var(--space-md);">Bulk Operations</h3>
+          <div class="property-actions"><a href="#" class="btn btn-secondary btn-sm">Bulk Renew Agreements</a><a href="#" class="btn btn-secondary btn-sm">Bulk Update Rents</a><a href="#" class="btn btn-primary btn-sm">Download Tax Statement</a></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="index.html" class="nav-logo">Nivantro</a><p>Fixing the broken tenant-landlord-broker ecosystem with trust, transparency, and technology.</p></div><div class="footer-col"><h4>Platform</h4><ul><li><a href="features.html">Features</a></li><li><a href="how-it-works.html">How It Works</a></li></ul></div><div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="about.html#contact">Contact</a></li></ul></div><div class="footer-col"><h4>Legal</h4><ul><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div></div><div class="footer-bottom"><span>© 2025 Nivantro India. All rights reserved.</span><div class="footer-socials"><a href="#">𝕏</a><a href="#">in</a><a href="#">📷</a></div></div></div></footer>
+  <script src="script.js"></script><script src="dashboard.js"></script>
+</body>
+</html>

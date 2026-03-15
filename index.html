@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nivantro India — Fixing the Broken Tenant-Landlord-Broker Ecosystem</title>
+  <meta name="description" content="India's first unified digital rental ecosystem. Trust Scores, Rental Credit Points, digital agreements, and more — for landlords, tenants, and brokers.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        Nivantro
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="about.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <button class="btn btn-primary js-open-role-modal">Login</button>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="pulse"></span>
+          Launching in Tier-1 & Tier-2 Cities
+        </div>
+        <h1 class="display-xl hero-title">
+          <span>Fixing India's</span>
+          <span class="text-gradient">Broken Rental</span>
+          <span>Ecosystem</span>
+        </h1>
+        <p class="hero-subtitle">
+          The first unified digital platform that brings trust, transparency, and accountability to every rental relationship — for landlords, tenants, and brokers.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg js-open-role-modal">
+            Login
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+          <a href="how-it-works.html" class="btn btn-secondary btn-lg">See How It Works</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="stat-value">11 Cr+</div>
+            <div class="stat-label">Rented Households</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-value">₹3.6L Cr</div>
+            <div class="stat-label">Rental Market Size</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-value">0</div>
+            <div class="stat-label">Existing Solutions</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <!-- Trust Score Card -->
+        <div class="hero-card hero-card--trust">
+          <div class="card-icon card-icon--green">★</div>
+          <div class="card-title">Trust Score</div>
+          <div class="card-desc">Behavioural reputation 1.0 — 5.0</div>
+          <div class="card-score">
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--green" style="width:85%"></div></div>
+            <strong style="color:var(--primary); font-size:0.9rem;">4.3</strong>
+          </div>
+        </div>
+        <!-- RCP Score Card -->
+        <div class="hero-card hero-card--rcp">
+          <div class="card-icon card-icon--orange">◆</div>
+          <div class="card-title">Rental Credit Points</div>
+          <div class="card-desc">Your Rental CIBIL Score</div>
+          <div class="card-score">
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--orange" style="width:72%"></div></div>
+            <strong style="color:var(--secondary); font-size:0.9rem;">720</strong>
+          </div>
+        </div>
+        <!-- Checklist Card -->
+        <div class="hero-card hero-card--checklist">
+          <div class="card-icon card-icon--blue">✓</div>
+          <div class="card-title">Move-in Checklist</div>
+          <div class="card-desc">Digital property inspection</div>
+          <div class="card-score">
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--blue" style="width:60%"></div></div>
+            <strong style="color:var(--accent); font-size:0.9rem;">60%</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== VIDEO EXPLAINER ========== -->
+  <section class="section" style="background-color: var(--surface-alt); padding-top: var(--space-xl); padding-bottom: var(--space-xl);">
+    <div class="container">
+      <div class="section-header animate-on-scroll" style="text-align: center; margin-bottom: var(--space-xl);">
+        <span class="label">See It In Action</span>
+        <h2 class="display-lg section-title">How Nivantro Works</h2>
+        <p class="section-desc" style="margin-left: auto; margin-right: auto;">Watch how our platform brings trust, transparency, and technology to the rental ecosystem.</p>
+      </div>
+      <div class="video-wrapper animate-on-scroll">
+        <div class="video-container">
+          <!-- Placeholder for actual iframe or video tag later -->
+          <div class="video-placeholder">
+            <div class="play-button">▶</div>
+            <p>Platform Explainer Video</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROBLEM STATEMENT ========== -->
+  <section class="section" id="problem">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="label">The Problem</span>
+        <h2 class="display-lg section-title">A ₹3.6 Lakh Crore Market<br>Running on Trust & WhatsApp</h2>
+        <p class="section-desc">India's rental market operates on informal norms, unverifiable claims, and unequal power dynamics. No scalable, neutral, digital platform exists.</p>
+      </div>
+      <div class="problems-grid">
+        <div class="problem-card animate-on-scroll">
+          <div class="card-number">01</div>
+          <h3>Trust Deficit</h3>
+          <p>No portable record of tenant or landlord behaviour. Both parties routinely lie during negotiations with zero accountability.</p>
+        </div>
+        <div class="problem-card animate-on-scroll">
+          <div class="card-number">02</div>
+          <h3>Deposit Disputes</h3>
+          <p>Unfair deposit deductions at move-out with no documented evidence. No neutral system to evaluate property condition changes.</p>
+        </div>
+        <div class="problem-card animate-on-scroll">
+          <div class="card-number">03</div>
+          <h3>Broker Opacity</h3>
+          <p>Commission structures aren't documented. Brokers vanish after the deal. No tracking, ratings, or incentive to perform post-closure.</p>
+        </div>
+        <div class="problem-card animate-on-scroll">
+          <div class="card-number">04</div>
+          <h3>Paper Agreements</h3>
+          <p>Informal rental agreements are legally weak, easily lost, and impossible to enforce — leaving both parties vulnerable.</p>
+        </div>
+        <div class="problem-card animate-on-scroll">
+          <div class="card-number">05</div>
+          <h3>Maintenance Chaos</h3>
+          <p>No formal issue-tracking. Disputes about responsibilities fester without documented evidence or SLAs.</p>
+        </div>
+        <div class="problem-card animate-on-scroll">
+          <div class="card-number">06</div>
+          <h3>NRI Landlord Gap</h3>
+          <p>Remote & NRI landlords have zero visibility into their property. They depend on unreliable middlemen for everything.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== KEY FEATURES OVERVIEW ========== -->
+  <section class="section section-dark" id="features-overview">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="label" style="color:var(--primary-light);">Core Modules</span>
+        <h2 class="display-lg section-title">10 Modules. Every Failure Point Solved.</h2>
+        <p class="section-desc">Nivantro India addresses every known failure in the tenant-landlord-broker lifecycle with purpose-built digital tools.</p>
+      </div>
+      <div class="features-showcase">
+        <div class="feature-module animate-on-scroll">
+          <div class="module-number">Module 01</div>
+          <div class="module-icon card-icon--green">★</div>
+          <h3>Trust & Rating System</h3>
+          <p>Every user carries a Trust Score (1.0-5.0) — a weighted composite of behavioural signals. Publicly visible, can't be deleted or gamed.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">Deposit Fairness</span>
+            <span class="feature-tag">Maintenance Responsiveness</span>
+            <span class="feature-tag">Communication</span>
+          </div>
+        </div>
+        <div class="feature-module animate-on-scroll">
+          <div class="module-number">Module 02</div>
+          <div class="module-icon card-icon--orange">💼</div>
+          <h3>Broker Commission Model</h3>
+          <p>Documented commission with transparent milestone-based payouts. Brokers earn ratings and build portable reputation across deals.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">Milestone Tracking</span>
+            <span class="feature-tag">Escrow Payouts</span>
+            <span class="feature-tag">Sales Agent CRM</span>
+          </div>
+        </div>
+        <div class="feature-module animate-on-scroll">
+          <div class="module-number">Module 03</div>
+          <div class="module-icon card-icon--blue">◆</div>
+          <h3>Tenant Credit Points (RCP)</h3>
+          <p>India's first Rental CIBIL. Every tenant accumulates a portable credit score based on payment history, property care, and compliance.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">Score 300-900</span>
+            <span class="feature-tag">On-time Payments</span>
+            <span class="feature-tag">Clean Exits</span>
+          </div>
+        </div>
+        <div class="feature-module animate-on-scroll">
+          <div class="module-number">Module 04</div>
+          <div class="module-icon card-icon--green">🔒</div>
+          <h3>Deposit Management</h3>
+          <p>Digital escrow for security deposits. Transparent deduction tracking with documented evidence and mutual agreement workflows.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">Escrow</span>
+            <span class="feature-tag">Evidence-based</span>
+            <span class="feature-tag">Auto-refund</span>
+          </div>
+        </div>
+        <div class="feature-module animate-on-scroll">
+          <div class="module-number">Module 05</div>
+          <div class="module-icon card-icon--orange">📋</div>
+          <h3>Move-in / Move-out Checklist</h3>
+          <p>Comprehensive digital property inspection covering appliances, electrical, plumbing, furniture — with timestamped, geotagged photo evidence.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">Photo Evidence</span>
+            <span class="feature-tag">Condition Tracking</span>
+            <span class="feature-tag">Tamper-proof</span>
+          </div>
+        </div>
+        <div class="feature-module animate-on-scroll">
+          <div class="module-number">Module 06</div>
+          <div class="module-icon card-icon--blue">🎫</div>
+          <h3>Issue Ticketing & Resolution</h3>
+          <p>Formal maintenance request system with SLA tracking, escalation, and documented resolution history for full accountability.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">SLA Tracking</span>
+            <span class="feature-tag">Escalation</span>
+            <span class="feature-tag">Photo Proof</span>
+          </div>
+        </div>
+        <div class="feature-module animate-on-scroll">
+          <div class="module-number">Module 07</div>
+          <div class="module-icon card-icon--green">⚖️</div>
+          <h3>Legal Support</h3>
+          <p>Legal-grade digital rental agreements with Aadhaar eSign integration. Templates for every state, legally enforceable and always accessible.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">Aadhaar eSign</span>
+            <span class="feature-tag">State Templates</span>
+            <span class="feature-tag">PDF Archive</span>
+          </div>
+        </div>
+        <div class="feature-module animate-on-scroll">
+          <div class="module-number">Module 08</div>
+          <div class="module-icon card-icon--orange">🏛️</div>
+          <h3>Arbitration</h3>
+          <p>Neutral dispute resolution mechanism for unresolved conflicts. Platform-mediated with documented evidence and binding decisions.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">Neutral Mediation</span>
+            <span class="feature-tag">Evidence-based</span>
+            <span class="feature-tag">Binding</span>
+          </div>
+        </div>
+        <div class="feature-module animate-on-scroll">
+          <div class="module-number">Module 09</div>
+          <div class="module-icon card-icon--blue">🛡️</div>
+          <h3>Deposit Insurance</h3>
+          <p>Tenant protection product — "Deposit Shield." Protects tenants against unfair deposit deductions by insuring the deposit amount.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">Tenant Protection</span>
+            <span class="feature-tag">Claims Process</span>
+            <span class="feature-tag">Affordable Premium</span>
+          </div>
+        </div>
+        <div class="feature-module animate-on-scroll">
+          <div class="module-number">Module 10</div>
+          <div class="module-icon card-icon--green">🏠</div>
+          <h3>Rent Default Insurance</h3>
+          <p>Landlord protection product — "RentGuard." Covers landlords against rent defaults, ensuring income continuity during tenant issues.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">Landlord Protection</span>
+            <span class="feature-tag">Income Continuity</span>
+            <span class="feature-tag">Risk-based Pricing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TRUST SCORE SECTION ========== -->
+  <section class="section trust-section" id="trust-score">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="label">Reputation Engine</span>
+        <h2 class="display-lg section-title">Your Trust Score<br>Is Your Rental Resume</h2>
+        <p class="section-desc">Like Uber rates drivers or Amazon rates sellers — Nivantro creates a verifiable, portable reputation for every participant.</p>
+      </div>
+      <div class="trust-grid">
+        <div class="trust-visual animate-on-scroll">
+          <div class="trust-circle-wrap">
+            <div class="trust-circle-bg">
+              <div class="trust-score-value">4.3</div>
+              <div class="trust-score-label">Trust Score</div>
+            </div>
+          </div>
+        </div>
+        <div class="trust-dimensions animate-on-scroll">
+          <h3 style="margin-bottom: var(--space-lg);">Landlord Rated by Tenant on:</h3>
+          <div class="trust-dim">
+            <span class="trust-dim-label">Deposit Fairness</span>
+            <div class="trust-dim-bar"><div class="trust-dim-fill" style="width:85%"></div></div>
+            <span class="trust-dim-value">30%</span>
+          </div>
+          <div class="trust-dim">
+            <span class="trust-dim-label">Maintenance Response</span>
+            <div class="trust-dim-bar"><div class="trust-dim-fill" style="width:78%"></div></div>
+            <span class="trust-dim-value">25%</span>
+          </div>
+          <div class="trust-dim">
+            <span class="trust-dim-label">Agreement Transparency</span>
+            <div class="trust-dim-bar"><div class="trust-dim-fill" style="width:70%"></div></div>
+            <span class="trust-dim-value">20%</span>
+          </div>
+          <div class="trust-dim">
+            <span class="trust-dim-label">Communication Quality</span>
+            <div class="trust-dim-bar"><div class="trust-dim-fill" style="width:65%"></div></div>
+            <span class="trust-dim-value">15%</span>
+          </div>
+          <div class="trust-dim">
+            <span class="trust-dim-label">Property Accuracy</span>
+            <div class="trust-dim-bar"><div class="trust-dim-fill" style="width:55%"></div></div>
+            <span class="trust-dim-value">10%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RCP SECTION ========== -->
+  <section class="section section-dark" id="rcp">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="label" style="color:var(--secondary-light);">Rental CIBIL</span>
+        <h2 class="display-lg section-title">Rental Credit Points (RCP)</h2>
+        <p class="section-desc">India's first rental credit score. A portable number that travels with you from one tenancy to the next.</p>
+      </div>
+      <div class="rcp-grid">
+        <div class="rcp-score-card animate-on-scroll">
+          <div class="rcp-score-number">750</div>
+          <div class="rcp-score-badge">Excellent Tenant</div>
+        </div>
+        <div class="rcp-bands animate-on-scroll">
+          <div class="rcp-band">
+            <div class="rcp-band-color" style="background: var(--primary);"></div>
+            <span class="band-range">750+</span>
+            <span class="band-name">Excellent</span>
+            <span class="band-benefit">Preferred badge, may negotiate lower deposits</span>
+          </div>
+          <div class="rcp-band">
+            <div class="rcp-band-color" style="background: var(--accent);"></div>
+            <span class="band-range">600–749</span>
+            <span class="band-name">Good</span>
+            <span class="band-benefit">Trusted tenant, fast-track matching</span>
+          </div>
+          <div class="rcp-band">
+            <div class="rcp-band-color" style="background: var(--warning);"></div>
+            <span class="band-range">400–599</span>
+            <span class="band-name">Fair</span>
+            <span class="band-benefit">Standard access, some limitations</span>
+          </div>
+          <div class="rcp-band">
+            <div class="rcp-band-color" style="background: var(--danger);"></div>
+            <span class="band-range">Below 400</span>
+            <span class="band-name">Poor</span>
+            <span class="band-benefit">Restricted features, improvement path shown</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== USER PERSONAS ========== -->
+  <section class="section" id="personas">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="label">Who It's For</span>
+        <h2 class="display-lg section-title">Built for Every Participant</h2>
+        <p class="section-desc">Whether you're a landlord managing investments, a tenant finding a home, or a broker closing deals — Nivantro serves you.</p>
+      </div>
+      <div class="personas-grid">
+        <div class="persona-card animate-on-scroll">
+          <div class="persona-header">
+            <div class="persona-avatar" style="background: rgba(13,124,102,0.1); color: var(--primary);">🏠</div>
+            <div>
+              <div class="persona-name">Landlords</div>
+              <div class="persona-type">Resident · NRI · Retiree · Institutional</div>
+            </div>
+          </div>
+          <div class="persona-body">
+            <p>Property owners renting 1-3 units. Mix of self-managed and broker-assisted across Tier-1 and Tier-2 cities.</p>
+            <div class="pain-points">
+              <div class="pain-point"><span class="icon">✕</span> No proof of tenant behaviour before signing</div>
+              <div class="pain-point"><span class="icon">✕</span> Deposit disputes at move-out</div>
+              <div class="pain-point"><span class="icon">✕</span> Informal, legally weak agreements</div>
+              <div class="pain-point"><span class="icon">✕</span> Zero remote visibility for NRI owners</div>
+            </div>
+            <a href="landlord-dashboard.html" class="btn btn-secondary" style="margin-top: 1.5rem; width: 100%; justify-content: center;">Explore Landlord Dashboard &rarr;</a>
+          </div>
+        </div>
+        <div class="persona-card animate-on-scroll">
+          <div class="persona-header">
+            <div class="persona-avatar" style="background: rgba(249,139,54,0.1); color: var(--secondary);">👤</div>
+            <div>
+              <div class="persona-name">Tenants</div>
+              <div class="persona-type">Corporate Nomads · Families · Students</div>
+            </div>
+          </div>
+          <div class="persona-body">
+            <p>Young professionals, families relocating, students moving cities — paying rent on time but getting no credit for it.</p>
+            <div class="pain-points">
+              <div class="pain-point"><span class="icon">✕</span> Unfair deposit deductions with no recourse</div>
+              <div class="pain-point"><span class="icon">✕</span> No reward for good rental behaviour</div>
+              <div class="pain-point"><span class="icon">✕</span> Maintenance requests ignored</div>
+              <div class="pain-point"><span class="icon">✕</span> Invisible rental history for future landlords</div>
+            </div>
+            <a href="tenant-dashboard.html" class="btn btn-secondary" style="margin-top: 1.5rem; width: 100%; justify-content: center;">Explore Tenant Dashboard &rarr;</a>
+          </div>
+        </div>
+        <div class="persona-card animate-on-scroll">
+          <div class="persona-header">
+            <div class="persona-avatar" style="background: rgba(30,174,201,0.1); color: var(--accent);">🤝</div>
+            <div>
+              <div class="persona-name">Brokers</div>
+              <div class="persona-type">Independent Agents · Agencies</div>
+            </div>
+          </div>
+          <div class="persona-body">
+            <p>Brokers handling property discovery, tenant matching, and deal closure — but with no documented track record.</p>
+            <div class="pain-points">
+              <div class="pain-point"><span class="icon">✕</span> Commission disputes after deal closure</div>
+              <div class="pain-point"><span class="icon">✕</span> No portable reputation or reviews</div>
+              <div class="pain-point"><span class="icon">✕</span> No CRM or deal management tools</div>
+              <div class="pain-point"><span class="icon">✕</span> Income lost when deals fall through</div>
+            </div>
+            <a href="broker-dashboard.html" class="btn btn-secondary" style="margin-top: 1.5rem; width: 100%; justify-content: center;">Explore Broker Dashboard &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TESTIMONIALS ========== -->
+  <section class="section" style="background: rgba(13,124,102,0.02);" id="testimonials">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <span class="label">Early Feedback</span>
+        <h2 class="display-lg section-title">What People Are Saying</h2>
+        <p class="section-desc">Feedback from early adopters and beta testers across India.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card animate-on-scroll">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"As an NRI landlord, I had zero visibility into my properties. Nivantro's digital checklist and trust scores finally give me the control I needed from abroad."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-author-avatar" style="background: linear-gradient(135deg, var(--primary), var(--accent));">RP</div>
+            <div>
+              <div class="testimonial-author-name">Rohit Patel</div>
+              <div class="testimonial-author-role">NRI Landlord, Dubai</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card animate-on-scroll">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"I relocate every 2 years for work. Finally a platform where my good rental behaviour actually counts. The RCP score is genius — it's like CIBIL for renters."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-author-avatar" style="background: linear-gradient(135deg, var(--secondary), var(--secondary-light));">AS</div>
+            <div>
+              <div class="testimonial-author-name">Anita Sharma</div>
+              <div class="testimonial-author-role">Corporate Tenant, Bangalore</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card animate-on-scroll">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"No more arguing about my commission after deals close. Everything is documented and transparent. Plus, my ratings now help me get more deals."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-author-avatar" style="background: linear-gradient(135deg, var(--accent), #5ED4E8);">MK</div>
+            <div>
+              <div class="testimonial-author-name">Mohan Kumar</div>
+              <div class="testimonial-author-role">Independent Broker, Pune</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA SECTION ========== -->
+  <section class="cta-section">
+    <div class="container" style="position:relative; z-index:1;">
+      <h2 class="display-lg">Ready to Rent Right?</h2>
+      <p>Join thousands of landlords, tenants, and brokers building transparent rental relationships across India.</p>
+      <div class="cta-actions">
+        <button class="btn btn-primary btn-lg js-open-role-modal">Login</button>
+        <a href="features.html" class="btn btn-secondary btn-lg">Explore Features</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon">R</div>
+            Nivantro
+          </a>
+          <p>Fixing the broken tenant-landlord-broker ecosystem with trust, transparency, and technology. India's first unified rental platform.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="#">Trust Score</a></li>
+            <li><a href="#">RCP Score</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="about.html#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Data Protection</a></li>
+            <li><a href="#">Grievance Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Nivantro India. All rights reserved.</span>
+        <div class="footer-socials">
+          <a href="#" aria-label="Twitter">𝕏</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Role Selection Modal -->
+  <div class="modal-overlay" id="roleModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Login to Nivantro</h3>
+        <button class="modal-close" id="closeRoleModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted" style="margin-bottom: var(--space-lg); text-align: center;">Select your profile to continue to your dashboard.</p>
+        <div class="role-grid">
+          <a href="tenant-dashboard.html" class="role-card-select">
+            <div class="role-icon" style="background:rgba(249,139,54,0.1);color:var(--secondary);">👤</div>
+            <h4>Tenant</h4>
+            <p>Track RCP & pay rent</p>
+          </a>
+          <a href="landlord-dashboard.html" class="role-card-select">
+            <div class="role-icon" style="background:rgba(13,124,102,0.1);color:var(--primary);">🏠</div>
+            <h4>Landlord</h4>
+            <p>Manage your properties</p>
+          </a>
+          <a href="broker-dashboard.html" class="role-card-select">
+            <div class="role-icon" style="background:rgba(30,174,201,0.1);color:var(--accent);">🤝</div>
+            <h4>Broker</h4>
+            <p>Track deals & commissions</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

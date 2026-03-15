@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Inspection — Nivantro India</title>
+  <meta name="description" content="Nivantro India Property Inspection — room-by-room photo documentation for move-in and move-out with automated deposit settlement.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">Nivantro</a>
+      <ul class="nav-links" id="navLinks"><li><a href="index.html">Home</a></li><li><a href="features.html">Features</a></li><li><a href="how-it-works.html">How It Works</a></li><li><a href="about.html">About</a></li></ul>
+      <div class="nav-cta"><div class="user-pill"><div class="user-avatar user-avatar--tenant">AS</div><span class="user-name">Anita Sharma</span><span class="user-role-badge badge-tenant">Tenant</span></div><button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></div>
+    </div>
+  </nav>
+
+  <!-- Inspection Header -->
+  <section class="dash-header">
+    <div class="container">
+      <div class="dash-header-top">
+        <div class="dash-welcome animate-on-scroll">
+          <span class="label">Property Inspection Module</span>
+          <h1 class="display-md">Prestige Shantiniketan — <span class="text-gradient">3BHK</span></h1>
+          <p class="text-muted">Whitefield, Bangalore · 1,450 sq ft · Semi-furnished · Lease: 15 Jan 2025 – 14 Jan 2026</p>
+        </div>
+        <div class="dash-header-actions animate-on-scroll">
+          <a href="tenant-dashboard.html" class="btn btn-secondary">← Back to Dashboard</a>
+        </div>
+      </div>
+      <!-- Inspection Progress -->
+      <div class="inspection-progress animate-on-scroll">
+        <div class="progress-step progress-step--done"><div class="progress-num">1</div><span>Move-In Photos</span></div>
+        <div class="progress-line progress-line--done"></div>
+        <div class="progress-step progress-step--done"><div class="progress-num">2</div><span>Landlord Approval</span></div>
+        <div class="progress-line progress-line--done"></div>
+        <div class="progress-step progress-step--done"><div class="progress-num">3</div><span>Baseline Locked</span></div>
+        <div class="progress-line progress-line--active"></div>
+        <div class="progress-step progress-step--active"><div class="progress-num">4</div><span>Move-Out Photos</span></div>
+        <div class="progress-line"></div>
+        <div class="progress-step"><div class="progress-num">5</div><span>Comparison</span></div>
+        <div class="progress-line"></div>
+        <div class="progress-step"><div class="progress-num">6</div><span>Settlement</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:var(--space-xl);">
+    <div class="container">
+      <div class="dash-tabs animate-on-scroll" id="dashTabs">
+        <button class="dash-tab active" data-tab="movein">📸 Move-In Inspection</button>
+        <button class="dash-tab" data-tab="approval">✅ Landlord Approval</button>
+        <button class="dash-tab" data-tab="moveout">📸 Move-Out Inspection</button>
+        <button class="dash-tab" data-tab="comparison">🔍 Comparison Report</button>
+        <button class="dash-tab" data-tab="settlement">💰 Settlement</button>
+      </div>
+
+      <!-- ==================== TAB 1: MOVE-IN INSPECTION ==================== -->
+      <div class="dash-panel active" id="panel-movein">
+        <div class="dash-section-title animate-on-scroll">
+          <h2>Move-In Inspection</h2>
+          <p class="text-muted">Document every part of the property with photos and condition notes. This becomes your baseline — any deposit deduction must be justified against this record.</p>
+        </div>
+
+        <div class="inspection-status-bar animate-on-scroll">
+          <div class="insp-stat"><span class="insp-stat-value" style="color:var(--success);">82</span><span class="insp-stat-label">Photos Uploaded</span></div>
+          <div class="insp-stat"><span class="insp-stat-value" style="color:var(--primary);">10/10</span><span class="insp-stat-label">Zones Complete</span></div>
+          <div class="insp-stat"><span class="insp-stat-value" style="color:var(--success);">✓ Submitted</span><span class="insp-stat-label">Status</span></div>
+          <div class="insp-stat"><span class="insp-stat-value" style="color:var(--success);">✓ Approved</span><span class="insp-stat-label">Landlord</span></div>
+        </div>
+
+        <!-- Room-by-room zones -->
+        <div class="zones-grid">
+          <!-- Zone 1: Entrance & Hallway -->
+          <div class="zone-card zone-card--complete animate-on-scroll" id="zone-entrance">
+            <div class="zone-header"><div class="zone-icon">🚪</div><div class="zone-info"><h3>Entrance & Hallway</h3><span class="zone-status zone-status--complete">✓ Complete · 6 photos</span></div><button class="zone-toggle" data-zone="entrance" aria-label="Toggle zone">▾</button></div>
+            <div class="zone-body zone-body--open">
+              <div class="zone-items">
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Main Door</strong><span class="condition-badge condition--good">Good</span><p class="zone-note">Wooden door, minor scratches on bottom edge. Lock functional.</p></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Doorbell & Intercom</strong><span class="condition-badge condition--excellent">Excellent</span><p class="zone-note">Video intercom working. Doorbell sound clear.</p></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Hallway Flooring</strong><span class="condition-badge condition--good">Good</span><p class="zone-note">Vitrified tiles, no cracks. One tile slightly loose near shoe rack area.</p></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Shoe Cabinet</strong><span class="condition-badge condition--good">Good</span><p class="zone-note">3-shelf wooden cabinet. Minor wear on edges.</p></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Switchboard (Entrance)</strong><span class="condition-badge condition--excellent">Excellent</span><p class="zone-note">4 switches, all functional. Modular panel.</p></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Walls & Ceiling</strong><span class="condition-badge condition--good">Good</span><p class="zone-note">Off-white paint. Small nail hole above door frame.</p></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zone 2: Living Room -->
+          <div class="zone-card zone-card--complete animate-on-scroll" id="zone-living">
+            <div class="zone-header"><div class="zone-icon">🛋</div><div class="zone-info"><h3>Living Room</h3><span class="zone-status zone-status--complete">✓ Complete · 12 photos</span></div><button class="zone-toggle" data-zone="living" aria-label="Toggle zone">▾</button></div>
+            <div class="zone-body">
+              <div class="zone-items">
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Overview (Wide angle)</strong><span class="condition-badge condition--good">Good</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Flooring</strong><span class="condition-badge condition--excellent">Excellent</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Walls (North)</strong><span class="condition-badge condition--good">Good</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Walls (South)</strong><span class="condition-badge condition--good">Good</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Ceiling & Fan</strong><span class="condition-badge condition--good">Good</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Windows & Curtain Rods</strong><span class="condition-badge condition--excellent">Excellent</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Balcony Door & Frame</strong><span class="condition-badge condition--good">Good</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>AC Unit</strong><span class="condition-badge condition--excellent">Excellent</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Light Fixtures</strong><span class="condition-badge condition--good">Good</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Switchboards (3)</strong><span class="condition-badge condition--excellent">Excellent</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>TV Unit / Cabinet</strong><span class="condition-badge condition--fair">Fair</span><p class="zone-note">Laminate peeling on left corner. Pre-existing.</p></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Power Outlets</strong><span class="condition-badge condition--excellent">Excellent</span></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zone 3: Kitchen -->
+          <div class="zone-card zone-card--complete animate-on-scroll" id="zone-kitchen">
+            <div class="zone-header"><div class="zone-icon">🍳</div><div class="zone-info"><h3>Kitchen</h3><span class="zone-status zone-status--complete">✓ Complete · 14 photos</span></div><button class="zone-toggle" data-zone="kitchen" aria-label="Toggle zone">▾</button></div>
+            <div class="zone-body">
+              <div class="zone-items">
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Overview</strong><span class="condition-badge condition--good">Good</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Countertop & Backsplash</strong><span class="condition-badge condition--good">Good</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Upper Cabinets</strong><span class="condition-badge condition--good">Good</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Lower Cabinets</strong><span class="condition-badge condition--fair">Fair</span><p class="zone-note">Under-sink cabinet has water stain. Documented as pre-existing.</p></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Sink & Faucet</strong><span class="condition-badge condition--excellent">Excellent</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Gas Pipeline / Stove Area</strong><span class="condition-badge condition--good">Good</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Chimney / Exhaust</strong><span class="condition-badge condition--excellent">Excellent</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Flooring</strong><span class="condition-badge condition--good">Good</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Water Purifier</strong><span class="condition-badge condition--excellent">Excellent</span></div></div>
+                <div class="zone-item"><div class="zone-photo-slot zone-photo-slot--filled">🖼</div><div class="zone-item-info"><strong>Electrical Points</strong><span class="condition-badge condition--good">Good</span></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zone 4-10: Collapsed summaries -->
+          <div class="zone-card zone-card--complete animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🛏</div><div class="zone-info"><h3>Master Bedroom</h3><span class="zone-status zone-status--complete">✓ Complete · 10 photos</span></div><button class="zone-toggle" aria-label="Toggle zone">▸</button></div>
+          </div>
+          <div class="zone-card zone-card--complete animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🛏</div><div class="zone-info"><h3>Bedroom 2</h3><span class="zone-status zone-status--complete">✓ Complete · 8 photos</span></div><button class="zone-toggle" aria-label="Toggle zone">▸</button></div>
+          </div>
+          <div class="zone-card zone-card--complete animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🛏</div><div class="zone-info"><h3>Bedroom 3 / Study</h3><span class="zone-status zone-status--complete">✓ Complete · 7 photos</span></div><button class="zone-toggle" aria-label="Toggle zone">▸</button></div>
+          </div>
+          <div class="zone-card zone-card--complete animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🚿</div><div class="zone-info"><h3>Bathroom 1 (Master)</h3><span class="zone-status zone-status--complete">✓ Complete · 9 photos</span></div><button class="zone-toggle" aria-label="Toggle zone">▸</button></div>
+          </div>
+          <div class="zone-card zone-card--complete animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🚿</div><div class="zone-info"><h3>Bathroom 2 (Common)</h3><span class="zone-status zone-status--complete">✓ Complete · 8 photos</span></div><button class="zone-toggle" aria-label="Toggle zone">▸</button></div>
+          </div>
+          <div class="zone-card zone-card--complete animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🌿</div><div class="zone-info"><h3>Balcony & Utility</h3><span class="zone-status zone-status--complete">✓ Complete · 8 photos</span></div><button class="zone-toggle" aria-label="Toggle zone">▸</button></div>
+          </div>
+        </div>
+
+        <div class="inspection-footer animate-on-scroll">
+          <div class="inspection-meta"><strong>Inspected by:</strong> Anita Sharma (Tenant) + Suresh Khanna (Broker)<br><strong>Date:</strong> 15 January 2025, 10:30 AM<br><strong>GPS Location Verified:</strong> ✓ Prestige Shantiniketan, Whitefield</div>
+          <div class="inspection-cta"><span class="status-badge status-badge--success" style="font-size:0.9rem;padding:0.5rem 1.2rem;">✓ Submitted & Approved as Baseline</span></div>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 2: LANDLORD APPROVAL ==================== -->
+      <div class="dash-panel" id="panel-approval" style="display:none;">
+        <div class="dash-section-title animate-on-scroll"><h2>Landlord Baseline Approval</h2><p class="text-muted">The landlord reviews all photos and condition notes. Once approved, this becomes the locked baseline for deposit settlement.</p></div>
+
+        <div class="approval-timeline animate-on-scroll">
+          <div class="approval-step approval-step--done"><div class="approval-dot"></div><div class="approval-content"><strong>Move-In Photos Submitted</strong><p class="text-muted">15 Jan 2025, 10:30 AM · By Anita Sharma (Tenant) & Suresh Khanna (Broker)</p></div></div>
+          <div class="approval-step approval-step--done"><div class="approval-dot"></div><div class="approval-content"><strong>Landlord Received Notification</strong><p class="text-muted">15 Jan 2025, 10:31 AM · Email + App push to Rohit Patel</p></div></div>
+          <div class="approval-step approval-step--done"><div class="approval-dot"></div><div class="approval-content"><strong>Landlord Reviewed — Comment Added</strong><p class="text-muted">16 Jan 2025, 2:15 PM<br>💬 "Please also capture the geyser in master bathroom. Rest looks accurate."</p></div></div>
+          <div class="approval-step approval-step--done"><div class="approval-dot"></div><div class="approval-content"><strong>Additional Photo Uploaded</strong><p class="text-muted">16 Jan 2025, 4:30 PM · Master bathroom geyser photo added by tenant</p></div></div>
+          <div class="approval-step approval-step--done"><div class="approval-dot"></div><div class="approval-content"><strong>Landlord Approved ✓</strong><p class="text-muted">16 Jan 2025, 5:00 PM · Rohit Patel digitally signed off</p><div class="approval-signature">🔒 <strong>Baseline Locked</strong> — Aadhaar eSign by both parties. Tamper-proof record created.</div></div></div>
+        </div>
+
+        <div class="baseline-summary animate-on-scroll">
+          <h3>Locked Baseline Summary</h3>
+          <div class="baseline-stats">
+            <div class="baseline-stat"><div class="baseline-stat-value">82</div><div class="baseline-stat-label">Total Photos</div></div>
+            <div class="baseline-stat"><div class="baseline-stat-value">10</div><div class="baseline-stat-label">Zones Covered</div></div>
+            <div class="baseline-stat"><div class="baseline-stat-value">47</div><div class="baseline-stat-label">Items Documented</div></div>
+            <div class="baseline-stat"><div class="baseline-stat-value">3</div><div class="baseline-stat-label">Pre-existing Issues</div></div>
+          </div>
+          <div class="baseline-condition-summary">
+            <div class="condition-count"><span class="condition-badge condition--excellent">Excellent</span><strong>18 items</strong></div>
+            <div class="condition-count"><span class="condition-badge condition--good">Good</span><strong>24 items</strong></div>
+            <div class="condition-count"><span class="condition-badge condition--fair">Fair</span><strong>5 items</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 3: MOVE-OUT INSPECTION ==================== -->
+      <div class="dash-panel" id="panel-moveout" style="display:none;">
+        <div class="dash-section-title animate-on-scroll"><h2>Move-Out Inspection</h2><p class="text-muted">Document the property condition at move-out. The same 10 zones and 47 items from your baseline — now capture the current state.</p></div>
+
+        <div class="inspection-status-bar animate-on-scroll">
+          <div class="insp-stat"><span class="insp-stat-value" style="color:var(--secondary);">34</span><span class="insp-stat-label">Photos Uploaded</span></div>
+          <div class="insp-stat"><span class="insp-stat-value" style="color:var(--secondary);">4/10</span><span class="insp-stat-label">Zones Complete</span></div>
+          <div class="insp-stat"><span class="insp-stat-value" style="color:var(--warning);">In Progress</span><span class="insp-stat-label">Status</span></div>
+          <div class="insp-stat"><span class="insp-stat-value" style="color:var(--text-muted);">Pending</span><span class="insp-stat-label">Landlord Review</span></div>
+        </div>
+
+        <div class="zones-grid">
+          <!-- Zone 1 Move-Out: Entrance -->
+          <div class="zone-card zone-card--complete animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🚪</div><div class="zone-info"><h3>Entrance & Hallway</h3><span class="zone-status zone-status--complete">✓ Complete · 6 photos</span></div><button class="zone-toggle" aria-label="Toggle zone">▸</button></div>
+          </div>
+          <!-- Zone 2: Living Room -->
+          <div class="zone-card zone-card--complete animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🛋</div><div class="zone-info"><h3>Living Room</h3><span class="zone-status zone-status--complete">✓ Complete · 12 photos · <span style="color:var(--warning);">⚠ 2 changes flagged</span></span></div><button class="zone-toggle" aria-label="Toggle zone">▸</button></div>
+          </div>
+          <!-- Zone 3: Kitchen -->
+          <div class="zone-card zone-card--complete animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🍳</div><div class="zone-info"><h3>Kitchen</h3><span class="zone-status zone-status--complete">✓ Complete · 10 photos · <span style="color:var(--warning);">⚠ 1 change flagged</span></span></div><button class="zone-toggle" aria-label="Toggle zone">▸</button></div>
+          </div>
+          <!-- Zone 4: Master Bedroom — in progress -->
+          <div class="zone-card zone-card--inprogress animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🛏</div><div class="zone-info"><h3>Master Bedroom</h3><span class="zone-status zone-status--inprogress">⏳ 6/10 photos uploaded</span></div><button class="zone-toggle" aria-label="Toggle zone">▸</button></div>
+          </div>
+          <!-- Remaining zones: pending -->
+          <div class="zone-card zone-card--pending animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🛏</div><div class="zone-info"><h3>Bedroom 2</h3><span class="zone-status zone-status--pending">○ Not started — 8 photos required</span></div><button class="zone-toggle zone-upload-btn" aria-label="Start upload">+ Upload</button></div>
+          </div>
+          <div class="zone-card zone-card--pending animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🛏</div><div class="zone-info"><h3>Bedroom 3 / Study</h3><span class="zone-status zone-status--pending">○ Not started — 7 photos required</span></div><button class="zone-toggle zone-upload-btn" aria-label="Start upload">+ Upload</button></div>
+          </div>
+          <div class="zone-card zone-card--pending animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🚿</div><div class="zone-info"><h3>Bathroom 1 (Master)</h3><span class="zone-status zone-status--pending">○ Not started — 9 photos required</span></div><button class="zone-toggle zone-upload-btn" aria-label="Start upload">+ Upload</button></div>
+          </div>
+          <div class="zone-card zone-card--pending animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🚿</div><div class="zone-info"><h3>Bathroom 2 (Common)</h3><span class="zone-status zone-status--pending">○ Not started — 8 photos required</span></div><button class="zone-toggle zone-upload-btn" aria-label="Start upload">+ Upload</button></div>
+          </div>
+          <div class="zone-card zone-card--pending animate-on-scroll">
+            <div class="zone-header"><div class="zone-icon">🌿</div><div class="zone-info"><h3>Balcony & Utility</h3><span class="zone-status zone-status--pending">○ Not started — 8 photos required</span></div><button class="zone-toggle zone-upload-btn" aria-label="Start upload">+ Upload</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 4: COMPARISON REPORT ==================== -->
+      <div class="dash-panel" id="panel-comparison" style="display:none;">
+        <div class="dash-section-title animate-on-scroll"><h2>Move-In vs Move-Out Comparison</h2><p class="text-muted">Side-by-side view of every item. AI auto-detects changes and flags potential deductions. Both parties review before settlement.</p></div>
+
+        <div class="comparison-summary-bar animate-on-scroll">
+          <div class="comp-stat"><span class="comp-stat-value" style="color:var(--success);">39</span><span class="comp-stat-label">No Change</span></div>
+          <div class="comp-stat"><span class="comp-stat-value" style="color:var(--primary);">4</span><span class="comp-stat-label">Normal Wear</span></div>
+          <div class="comp-stat"><span class="comp-stat-value" style="color:var(--warning);">3</span><span class="comp-stat-label">Damage Found</span></div>
+          <div class="comp-stat"><span class="comp-stat-value" style="color:var(--danger);">1</span><span class="comp-stat-label">Missing Item</span></div>
+        </div>
+
+        <!-- Comparison Items -->
+        <div class="comparison-list">
+          <div class="comparison-card comparison-card--damage animate-on-scroll">
+            <div class="comparison-badge comparison-badge--damage">⚠ Damage</div>
+            <h4>Living Room — TV Unit / Cabinet</h4>
+            <div class="comparison-photos">
+              <div class="comparison-side"><div class="comparison-label">Move-In (15 Jan 2025)</div><div class="comparison-photo-box"><div class="photo-placeholder">🖼<span>Laminate peeling on left corner (pre-existing)</span></div></div><span class="condition-badge condition--fair">Fair</span></div>
+              <div class="comparison-vs">VS</div>
+              <div class="comparison-side"><div class="comparison-label">Move-Out (14 Jan 2026)</div><div class="comparison-photo-box"><div class="photo-placeholder photo-placeholder--flagged">🖼<span>Large water ring stain on top surface + deeper peeling</span></div></div><span class="condition-badge condition--poor">Poor</span></div>
+            </div>
+            <div class="comparison-assessment"><strong>AI Assessment:</strong> Additional damage beyond pre-existing condition. Water damage on top surface is new. <br><strong>Estimated Repair:</strong> ₹3,500 (laminate replacement)</div>
+          </div>
+
+          <div class="comparison-card comparison-card--damage animate-on-scroll">
+            <div class="comparison-badge comparison-badge--damage">⚠ Damage</div>
+            <h4>Living Room — Wall (South)</h4>
+            <div class="comparison-photos">
+              <div class="comparison-side"><div class="comparison-label">Move-In</div><div class="comparison-photo-box"><div class="photo-placeholder">🖼<span>Clean off-white paint</span></div></div><span class="condition-badge condition--good">Good</span></div>
+              <div class="comparison-vs">VS</div>
+              <div class="comparison-side"><div class="comparison-label">Move-Out</div><div class="comparison-photo-box"><div class="photo-placeholder photo-placeholder--flagged">🖼<span>Multiple nail holes + paint marks from removed artwork</span></div></div><span class="condition-badge condition--fair">Fair</span></div>
+            </div>
+            <div class="comparison-assessment"><strong>AI Assessment:</strong> 8 nail holes and paint discoloration from hung frames. <br><strong>Estimated Repair:</strong> ₹2,000 (patch + touch-up paint · 1 wall)</div>
+          </div>
+
+          <div class="comparison-card comparison-card--damage animate-on-scroll">
+            <div class="comparison-badge comparison-badge--damage">⚠ Damage</div>
+            <h4>Kitchen — Countertop</h4>
+            <div class="comparison-photos">
+              <div class="comparison-side"><div class="comparison-label">Move-In</div><div class="comparison-photo-box"><div class="photo-placeholder">🖼<span>Clean granite countertop</span></div></div><span class="condition-badge condition--good">Good</span></div>
+              <div class="comparison-vs">VS</div>
+              <div class="comparison-side"><div class="comparison-label">Move-Out</div><div class="comparison-photo-box"><div class="photo-placeholder photo-placeholder--flagged">🖼<span>Burn mark near stove area</span></div></div><span class="condition-badge condition--fair">Fair</span></div>
+            </div>
+            <div class="comparison-assessment"><strong>AI Assessment:</strong> Heat damage / burn mark on granite near stove. <br><strong>Estimated Repair:</strong> ₹1,500 (polishing & restoration)</div>
+          </div>
+
+          <div class="comparison-card comparison-card--missing animate-on-scroll">
+            <div class="comparison-badge comparison-badge--missing">✕ Missing</div>
+            <h4>Entrance — Shoe Cabinet</h4>
+            <div class="comparison-photos">
+              <div class="comparison-side"><div class="comparison-label">Move-In</div><div class="comparison-photo-box"><div class="photo-placeholder">🖼<span>3-shelf wooden shoe cabinet present</span></div></div><span class="condition-badge condition--good">Good</span></div>
+              <div class="comparison-vs">VS</div>
+              <div class="comparison-side"><div class="comparison-label">Move-Out</div><div class="comparison-photo-box photo-placeholder--missing"><span style="font-size:2.5rem;">✕</span><span>Item missing from property</span></div></div>
+            </div>
+            <div class="comparison-assessment"><strong>AI Assessment:</strong> Furnished item not present at move-out. <br><strong>Estimated Replacement:</strong> ₹4,500 (similar shoe cabinet)</div>
+          </div>
+
+          <div class="comparison-card comparison-card--ok animate-on-scroll">
+            <div class="comparison-badge comparison-badge--ok">✓ No Change</div>
+            <h4>Living Room — AC Unit</h4>
+            <div class="comparison-photos">
+              <div class="comparison-side"><div class="comparison-label">Move-In</div><div class="comparison-photo-box"><div class="photo-placeholder">🖼<span>1.5 ton split AC, working</span></div></div><span class="condition-badge condition--excellent">Excellent</span></div>
+              <div class="comparison-vs">VS</div>
+              <div class="comparison-side"><div class="comparison-label">Move-Out</div><div class="comparison-photo-box"><div class="photo-placeholder">🖼<span>Same condition, serviced recently</span></div></div><span class="condition-badge condition--excellent">Excellent</span></div>
+            </div>
+            <div class="comparison-assessment"><strong>AI Assessment:</strong> No damage detected. Normal condition maintained.</div>
+          </div>
+
+          <div class="comparison-remaining animate-on-scroll"><p>+ <strong>42 more items</strong> with <strong>No Change</strong> or <strong>Normal Wear</strong> — no deductions applicable</p></div>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 5: SETTLEMENT ==================== -->
+      <div class="dash-panel" id="panel-settlement" style="display:none;">
+        <div class="dash-section-title animate-on-scroll"><h2>Deposit Settlement Report</h2><p class="text-muted">Final settlement computed from the comparison report. Both parties must agree or raise a dispute within 7 days.</p></div>
+
+        <div class="settlement-card animate-on-scroll">
+          <div class="settlement-header"><h3>Settlement Summary</h3><span class="status-badge status-badge--warning">Pending Approval</span></div>
+          <div class="settlement-body">
+            <div class="settlement-row"><span>Original Security Deposit (Escrow)</span><span class="settlement-value">₹90,000</span></div>
+            <div class="settlement-divider"></div>
+            <div class="settlement-row settlement-row--deduction"><span>🔧 TV Cabinet — Water damage repair</span><span class="settlement-value">- ₹3,500</span></div>
+            <div class="settlement-row settlement-row--deduction"><span>🎨 Living room wall — Nail holes + paint</span><span class="settlement-value">- ₹2,000</span></div>
+            <div class="settlement-row settlement-row--deduction"><span>🔥 Kitchen countertop — Burn mark repair</span><span class="settlement-value">- ₹1,500</span></div>
+            <div class="settlement-row settlement-row--deduction"><span>👟 Shoe cabinet — Replacement cost</span><span class="settlement-value">- ₹4,500</span></div>
+            <div class="settlement-divider"></div>
+            <div class="settlement-row settlement-row--subtotal"><span>Total Deductions</span><span class="settlement-value" style="color:var(--danger);">- ₹11,500</span></div>
+            <div class="settlement-row settlement-row--total"><span>Refundable to Tenant</span><span class="settlement-value" style="color:var(--primary);font-size:1.8rem;">₹78,500</span></div>
+          </div>
+        </div>
+
+        <div class="settlement-actions animate-on-scroll">
+          <div class="settlement-action-card settlement-action-card--tenant">
+            <h4>👤 Tenant Response</h4>
+            <p class="text-muted">Review deductions and accept or dispute within 7 days.</p>
+            <div class="settlement-buttons"><a href="#" class="btn btn-primary">Accept Settlement</a><a href="#" class="btn btn-secondary">Dispute Deduction</a></div>
+            <div class="settlement-dispute-note"><strong>Dispute Process:</strong> If you disagree with any deduction, the item goes to Tier 3 mediation. A neutral assessor will physically inspect and give a binding decision within 7 days.</div>
+          </div>
+          <div class="settlement-action-card settlement-action-card--landlord">
+            <h4>🏠 Landlord Response</h4>
+            <p class="text-muted">Rohit Patel — awaiting review.</p>
+            <div class="settlement-status"><span class="status-badge status-badge--warning">Pending Review</span><p class="text-sm text-muted" style="margin-top:0.5rem;">Sent 13 Mar 2026 · Auto-approves in 7 days if no response</p></div>
+          </div>
+        </div>
+
+        <div class="settlement-timeline animate-on-scroll">
+          <h4 style="margin-bottom:var(--space-md);">Settlement Timeline</h4>
+          <div class="stl-timeline">
+            <div class="stl-step stl-step--done"><div class="stl-dot"></div><div><strong>Move-out inspection completed</strong><p class="text-sm text-muted">13 Mar 2026</p></div></div>
+            <div class="stl-step stl-step--done"><div class="stl-dot"></div><div><strong>AI comparison report generated</strong><p class="text-sm text-muted">13 Mar 2026 — 3 damages, 1 missing item</p></div></div>
+            <div class="stl-step stl-step--active"><div class="stl-dot"></div><div><strong>Settlement sent to both parties</strong><p class="text-sm text-muted">13 Mar 2026 — 7 day review window</p></div></div>
+            <div class="stl-step"><div class="stl-dot"></div><div><strong>Both parties accept or dispute</strong><p class="text-sm text-muted">Due by 20 Mar 2026</p></div></div>
+            <div class="stl-step"><div class="stl-dot"></div><div><strong>Deposit released from escrow</strong><p class="text-sm text-muted">Within 2 business days of agreement</p></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="index.html" class="nav-logo">Nivantro</a><p>Fixing the broken tenant-landlord-broker ecosystem with trust, transparency, and technology.</p></div><div class="footer-col"><h4>Platform</h4><ul><li><a href="features.html">Features</a></li><li><a href="how-it-works.html">How It Works</a></li></ul></div><div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="about.html#contact">Contact</a></li></ul></div><div class="footer-col"><h4>Legal</h4><ul><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div></div><div class="footer-bottom"><span>© 2025 Nivantro India. All rights reserved.</span><div class="footer-socials"><a href="#">𝕏</a><a href="#">in</a><a href="#">📷</a></div></div></div></footer>
+  <script src="script.js"></script><script src="dashboard.js"></script>
+</body>
+</html>
