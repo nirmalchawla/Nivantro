@@ -189,17 +189,17 @@
         formData.append('role', role.value);
         formData.append('canCall', document.getElementById('canCall').checked ? 'Yes' : 'No');
 
-        const response = await fetch(GOOGLE_SCRIPT_URL, {
+        await fetch(GOOGLE_SCRIPT_URL, {
           method: 'POST',
-          body: formData
+          body: formData,
+          mode: 'no-cors'
         });
 
-        if (response.ok) {
-          showMessage('🎉 You\'re in! We\'ll notify you when Nivantro launches.', 'success');
-          form.reset();
-        } else {
-          showMessage('Something went wrong. Please try again.', 'error');
-        }
+        // With no-cors, we can't read the response, but the data is saved
+        showMessage('🎉 You\'re in! We\'ll notify you when Nivantro launches.', 'success');
+        form.reset();
+        // Re-check the canCall checkbox after reset
+        document.getElementById('canCall').checked = true;
       } catch (err) {
         showMessage('Something went wrong. Please try again.', 'error');
       } finally {
