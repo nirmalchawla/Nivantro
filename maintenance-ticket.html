@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket #TCK-8921 — Nivantro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background-color: var(--surface-alt); padding-bottom: 6rem; }
+    
+    .ticket-header {
+      background: var(--surface-dark); color: #fff; padding: 3rem 1.5rem 2rem; border-radius: 0 0 24px 24px;
+      margin-bottom: 2rem; position: relative;
+    }
+    .ticket-badge {
+      display: inline-block; background: rgba(243,156,18,0.2); color: #F39C12; padding: 0.4rem 0.8rem;
+      border-radius: 50px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem;
+    }
+    .ticket-title { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .ticket-meta { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+
+    /* The Evidence Card */
+    .card { background: var(--surface); border-radius: 12px; margin: 0 1.5rem 1.5rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border); padding: 1.5rem; }
+    .card h3 { font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    
+    .evidence-image { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; background: #eee; }
+    .evidence-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; background: var(--surface-alt); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--primary-light); }
+    
+    /* Timeline Ledger */
+    .timeline { padding-left: 1rem; margin-top: 1rem; border-left: 2px solid var(--border); position: relative; }
+    .timeline-item { position: relative; margin-bottom: 1.5rem; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -1.35rem; top: 0.2rem; width: 12px; height: 12px;
+      border-radius: 50%; background: var(--primary);
+    }
+    .timeline-item.pending::before { background: var(--surface); border: 2px solid var(--border); }
+    .timeline-item.success::before { background: var(--success); }
+    
+    .tl-date { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.2rem; }
+    .tl-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.2rem; }
+    .tl-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* Action Footer */
+    .fixed-action {
+      position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); padding: 1rem 1.5rem;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05); display: flex; gap: 1rem; z-index: 50;
+    }
+    .btn-outline { flex: 1; padding: 1rem; border-radius: 8px; font-weight: 600; border: 1px solid var(--danger); color: var(--danger); background: transparent; cursor: pointer; text-align: center; }
+    .btn-fill { flex: 2; padding: 1rem; border-radius: 8px; font-weight: 600; background: var(--primary); color: #fff; border: none; cursor: pointer; text-align: center; }
+
+    /* Role display logic */
+    .role-tenant, .role-landlord { display: none; }
+    body[data-role="tenant"] .role-tenant { display: block; }
+    body[data-role="landlord"] .role-landlord { display: block; }
+    body[data-role="tenant"] .action-tenant { display: flex !important; }
+    body[data-role="landlord"] .action-landlord { display: flex !important; }
+    .action-tenant, .action-landlord { display: none; }
+  </style>
+</head>
+<body data-role="landlord" id="bodyRole">
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="maintenance.html" class="nav-back" id="backBtn">← Hub</a>
+      <div class="nav-logo" style="display:flex; align-items:center; gap:8px;">
+        <img src="logo.png" alt="Nivantro Logo" style="height:80px; width:auto; object-fit:contain; mix-blend-mode:multiply;">
+        <span style="font-size:1.1rem; font-weight:700;">Tickets</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="ticket-header">
+    <div class="ticket-badge" id="ticketStatus">⚠️ Awaiting Landlord Approval</div>
+    <h1 class="ticket-title">Leaking Kitchen Sink Pipe</h1>
+    <div class="ticket-meta">
+      Ticket #TCK-8921 | Urgent Priority<br>
+      📍 Prestige Shantiniketan, Apt 402
+    </div>
+  </header>
+
+  <!-- Initial Request Evidence -->
+  <div class="card">
+    <h3>Tenant Report Evidence</h3>
+    <!-- Stock photo of a leaking pipe under a sink -->
+    <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Leaking Pipe" class="evidence-image">
+    <div class="evidence-desc">
+      <strong>Tenant (Priya):</strong> "The U-bend under the sink is dripping constantly. It's soaking the wooden cabinet base. Needs immediate attention to prevent rot."
+    </div>
+  </div>
+
+  <!-- Immutable Resolution Timeline -->
+  <div class="card">
+    <h3>Resolution Ledger</h3>
+    
+    <div class="timeline">
+      <div class="timeline-item success">
+        <div class="tl-date">Oct 24, 2024 • 09:15 AM</div>
+        <div class="tl-title">Request Raised</div>
+        <div class="tl-desc">Tenant submitted issue with photo evidence. Ranked as High Priority.</div>
+      </div>
+      
+      <div class="timeline-item pending" id="stepApproval">
+        <div class="tl-date">Pending</div>
+        <div class="tl-title">Landlord Review & Approval</div>
+        <div class="tl-desc">Awaiting Landlord to authorize repairs and assign a vendor.</div>
+      </div>
+      
+      <div class="timeline-item pending" id="stepVendor">
+        <div class="tl-date">Pending</div>
+        <div class="tl-title">Vendor Assigned & Dispatched</div>
+        <div class="tl-desc">A certified plumber will be routed to the property.</div>
+      </div>
+
+      <div class="timeline-item pending" id="stepVerify">
+        <div class="tl-date">Pending</div>
+        <div class="tl-title">Tenant Final Verification</div>
+        <div class="tl-desc">Tenant must confirm the repair is successful before funds are released to vendor.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Bar -->
+  <div class="fixed-action action-tenant" id="tenantAct">
+    <button class="btn-outline">Cancel Ticket</button>
+    <button class="btn-fill" disabled title="Waiting for Landlord">Wait for Landlord</button>
+  </div>
+
+  <div class="fixed-action action-landlord" id="landlordAct">
+    <button class="btn-outline">Reject Request</button>
+    <button class="btn-fill" id="approveFixBtn">Approve & Assign Vendor (Est ₹850)</button>
+  </div>
+
+  <script>
+    // Simulate role from URL
+    const params = new URLSearchParams(window.location.search);
+    const role = params.get('role') || 'landlord'; 
+    document.getElementById('bodyRole').setAttribute('data-role', role);
+    document.getElementById('backBtn').href = `maintenance.html?role=${role}`;
+
+    // Landlord Approval Simulation
+    const approveBtn = document.getElementById('approveFixBtn');
+    
+    if (approveBtn) {
+      approveBtn.addEventListener('click', () => {
+        // Update UI state
+        document.getElementById('ticketStatus').className = 'ticket-badge';
+        document.getElementById('ticketStatus').style.background = 'rgba(69,123,157,0.2)';
+        document.getElementById('ticketStatus').style.color = '#457B9D';
+        document.getElementById('ticketStatus').textContent = '🔧 Vendor Dispatched';
+        
+        // Update timeline
+        const stepApprove = document.getElementById('stepApproval');
+        stepApprove.className = 'timeline-item success';
+        stepApprove.querySelector('.tl-date').textContent = 'Oct 24, 2024 • 10:30 AM (Just now)';
+        stepApprove.querySelector('.tl-desc').textContent = 'Landlord (Rohit) approved estimate (₹850).';
+
+        const stepVendor = document.getElementById('stepVendor');
+        stepVendor.className = 'timeline-item success';
+        stepVendor.querySelector('.tl-date').textContent = 'Oct 24, 2024 • 10:31 AM (Just now)';
+        stepVendor.querySelector('.tl-desc').textContent = 'UrbanCompany Plumber assigned. ETA: 2 hours.';
+
+        // Change actions
+        const actions = document.getElementById('landlordAct');
+        actions.innerHTML = `<button class="btn-fill" style="background:var(--success)" disabled>Vendor En-Route</button>`;
+      });
+    }
+  </script>
+</body>
+</html>

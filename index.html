@@ -15,7 +15,7 @@
   <!-- ========== NAVBAR ========== -->
   <nav class="lp-nav">
     <div class="lp-container">
-      <a href="#" class="lp-logo">Nivantro</a>
+      <a href="#" class="lp-logo" style="display:flex; align-items:center;"><img src="logo.png" alt="Nivantro Logo" style="height:80px; width:auto; object-fit:contain; mix-blend-mode:multiply;"></a>
       <a href="#register" class="lp-nav-cta">Register for Early Access</a>
     </div>
   </nav>
@@ -57,13 +57,23 @@
     <div class="lp-container">
       <h2 class="lp-section-title">See How It Works</h2>
       <p class="lp-section-desc">Watch how Nivantro brings trust, transparency, and technology to the rental ecosystem.</p>
-      <div class="lp-video-wrapper">
-        <div class="lp-video-container" id="videoContainer">
-          <!-- Replace the placeholder below with a YouTube iframe when video is ready -->
-          <!-- Example: <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" ...></iframe> -->
-          <div class="lp-video-placeholder" id="videoPlaceholder">
-            <div class="lp-play-btn">▶</div>
-            <p>Explainer Video Coming Soon</p>
+      <div class="lp-video-grid">
+        <div class="lp-video-col">
+          <span class="lp-video-lang">🇬🇧 English</span>
+          <div class="lp-video-wrapper">
+            <a href="https://www.youtube.com/watch?v=aLZUWjT0Ecw" target="_blank" rel="noopener" class="lp-video-thumb">
+              <img src="https://img.youtube.com/vi/aLZUWjT0Ecw/hqdefault.jpg" alt="Nivantro Explainer - English" loading="lazy">
+              <div class="lp-play-btn">▶</div>
+            </a>
+          </div>
+        </div>
+        <div class="lp-video-col">
+          <span class="lp-video-lang">🇮🇳 हिन्दी</span>
+          <div class="lp-video-wrapper">
+            <a href="https://www.youtube.com/watch?v=rpndxI9tSkk" target="_blank" rel="noopener" class="lp-video-thumb">
+              <img src="https://img.youtube.com/vi/rpndxI9tSkk/hqdefault.jpg" alt="Nivantro Explainer - Hindi" loading="lazy">
+              <div class="lp-play-btn">▶</div>
+            </a>
           </div>
         </div>
       </div>
@@ -137,7 +147,7 @@
   <!-- ========== FOOTER ========== -->
   <footer class="lp-footer">
     <div class="lp-container">
-      <span class="lp-footer-logo">Nivantro</span>
+      <img src="logo.png" alt="Nivantro Logo" style="height:120px; width:auto; object-fit:contain; background:#ffffff; padding:1rem 2rem; border-radius:12px; margin-bottom:1.5rem; box-shadow:0 6px 12px rgba(0,0,0,0.1);">
       <p>&copy; 2026 Nivantro. All rights reserved.</p>
     </div>
   </footer>

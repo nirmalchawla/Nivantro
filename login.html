@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Nivantro India</title>
+  <meta name="description" content="Login to your Nivantro account. Access your rental dashboard as a Landlord, Tenant, or Broker.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="landing.css">
+  <style>
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .login-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: calc(80px + var(--space-xl)) var(--space-lg) var(--space-xl);
+      background: linear-gradient(175deg, var(--surface) 0%, var(--surface-alt) 50%, rgba(29,53,87,0.04) 100%);
+    }
+    .login-container {
+      max-width: 440px;
+      width: 100%;
+    }
+    .login-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+    .login-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: var(--space-sm);
+      letter-spacing: -0.5px;
+    }
+    .login-header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-lg);
+    }
+    .login-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-sm);
+      background: var(--surface-alt);
+      border-radius: var(--radius-md);
+      padding: 4px;
+      margin-bottom: var(--space-xl);
+    }
+    .login-tab {
+      padding: 0.7rem 1rem;
+      border: none;
+      background: transparent;
+      border-radius: calc(var(--radius-md) - 2px);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .login-tab.active {
+      background: var(--surface);
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .login-field {
+      margin-bottom: var(--space-lg);
+    }
+    .login-field label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: var(--space-sm);
+    }
+    .login-field input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text);
+      background: var(--surface);
+      transition: all var(--dur-fast) var(--ease-out);
+      outline: none;
+    }
+    .login-field input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(29,53,87,0.1);
+    }
+    .login-role-select {
+      margin-bottom: var(--space-lg);
+    }
+    .login-role-select label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: var(--space-sm);
+    }
+    .login-role-pills {
+      display: flex;
+      gap: var(--space-sm);
+    }
+    .login-role-pill {
+      flex: 1;
+      text-align: center;
+    }
+    .login-role-pill input {
+      display: none;
+    }
+    .login-role-pill span {
+      display: block;
+      padding: 0.65rem 0.5rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .login-role-pill input:checked + span {
+      border-color: var(--primary);
+      background: rgba(29,53,87,0.06);
+      color: var(--primary);
+    }
+    .login-role-pill span:hover {
+      border-color: var(--primary);
+    }
+    /* OTP Section */
+    .otp-section {
+      display: none;
+      text-align: center;
+    }
+    .otp-section.active {
+      display: block;
+    }
+    .otp-sent-msg {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: var(--space-lg);
+    }
+    .otp-sent-msg strong {
+      color: var(--text);
+    }
+    .otp-inputs {
+      display: flex;
+      gap: var(--space-sm);
+      justify-content: center;
+      margin-bottom: var(--space-lg);
+    }
+    .otp-inputs input {
+      width: 50px;
+      height: 55px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      outline: none;
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .otp-inputs input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(29,53,87,0.1);
+    }
+    .otp-resend {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: var(--space-lg);
+    }
+    .otp-resend a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .login-form-section {
+      display: block;
+    }
+    .login-form-section.hidden {
+      display: none;
+    }
+    .reg-link {
+      text-align: center;
+      margin-top: var(--space-lg);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+    .reg-link a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .reg-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body class="login-page">
+
+  <!-- Navbar -->
+  <nav class="lp-nav">
+    <div class="lp-container" style="max-width:1100px;">
+      <a href="index.html" class="lp-logo">Nivantro</a>
+      <a href="register.html" class="lp-nav-cta">Register</a>
+    </div>
+  </nav>
+
+  <!-- Login Form -->
+  <main class="login-main">
+    <div class="login-container">
+      <div class="login-header">
+        <h1>Welcome back</h1>
+        <p>Login to your Nivantro dashboard</p>
+      </div>
+
+      <div class="login-card">
+        <!-- Login Method Tabs -->
+        <div class="login-tabs">
+          <button class="login-tab active" data-method="phone" id="tabPhone">📱 Phone</button>
+          <button class="login-tab" data-method="email" id="tabEmail">✉️ Email</button>
+        </div>
+
+        <form id="loginForm" novalidate>
+          <!-- Phone Login -->
+          <div class="login-form-section" id="phoneSection">
+            <div class="login-field">
+              <label for="loginPhone">Phone Number</label>
+              <div class="lp-phone-input">
+                <span class="lp-phone-prefix">+91</span>
+                <input type="tel" id="loginPhone" name="phone" placeholder="98765 43210" pattern="[0-9]{10}" maxlength="10">
+              </div>
+            </div>
+          </div>
+
+          <!-- Email Login -->
+          <div class="login-form-section hidden" id="emailSection">
+            <div class="login-field">
+              <label for="loginEmail">Email Address</label>
+              <input type="email" id="loginEmail" name="email" placeholder="e.g. priya@example.com">
+            </div>
+          </div>
+
+          <!-- Role Selection -->
+          <div class="login-role-select">
+            <label>Login as</label>
+            <div class="login-role-pills">
+              <label class="login-role-pill">
+                <input type="radio" name="loginRole" value="Landlord" checked>
+                <span>🏢 Landlord</span>
+              </label>
+              <label class="login-role-pill">
+                <input type="radio" name="loginRole" value="Tenant">
+                <span>🔑 Tenant</span>
+              </label>
+              <label class="login-role-pill">
+                <input type="radio" name="loginRole" value="Broker">
+                <span>🤝 Broker</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Send OTP button -->
+          <button type="submit" class="lp-submit-btn" id="loginSubmitBtn">
+            <span class="lp-submit-text">Send OTP</span>
+            <span class="lp-submit-loading" style="display:none;">Sending...</span>
+          </button>
+
+          <div class="lp-form-msg" id="loginMsg" style="display:none;"></div>
+        </form>
+
+        <!-- OTP Verification (shown after sending OTP) -->
+        <div class="otp-section" id="otpSection">
+          <p class="otp-sent-msg">We've sent a 6-digit code to <strong id="otpTarget"></strong></p>
+          <div class="otp-inputs">
+            <input type="text" maxlength="1" class="otp-digit" data-index="0" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-digit" data-index="1" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-digit" data-index="2" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-digit" data-index="3" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-digit" data-index="4" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-digit" data-index="5" inputmode="numeric">
+          </div>
+          <p class="otp-resend">Didn't receive the code? <a id="resendOtp">Resend OTP</a></p>
+          <button class="lp-submit-btn" id="verifyOtpBtn">Verify & Login</button>
+          <div class="lp-form-msg" id="otpMsg" style="display:none;"></div>
+        </div>
+
+        <p class="reg-link">Don't have an account? <a href="register.html">Register here</a></p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="lp-footer">
+    <img src="logo.png" alt="Nivantro Logo" style="height:120px; width:auto; object-fit:contain; background:#ffffff; padding:1rem 2rem; border-radius:12px; margin-bottom:1.5rem; box-shadow:0 6px 12px rgba(0,0,0,0.1);">
+    <p>&copy; 2025 Nivantro India. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Tab switching
+    const tabPhone = document.getElementById('tabPhone');
+    const tabEmail = document.getElementById('tabEmail');
+    const phoneSection = document.getElementById('phoneSection');
+    const emailSection = document.getElementById('emailSection');
+
+    tabPhone.addEventListener('click', () => {
+      tabPhone.classList.add('active');
+      tabEmail.classList.remove('active');
+      phoneSection.classList.remove('hidden');
+      emailSection.classList.add('hidden');
+    });
+
+    tabEmail.addEventListener('click', () => {
+      tabEmail.classList.add('active');
+      tabPhone.classList.remove('active');
+      emailSection.classList.remove('hidden');
+      phoneSection.classList.add('hidden');
+    });
+
+    // OTP digit auto-focus
+    const otpDigits = document.querySelectorAll('.otp-digit');
+    otpDigits.forEach((input, index) => {
+      input.addEventListener('input', (e) => {
+        if (e.target.value && index < otpDigits.length - 1) {
+          otpDigits[index + 1].focus();
+        }
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !e.target.value && index > 0) {
+          otpDigits[index - 1].focus();
+        }
+      });
+    });
+
+    // Login form submission (visual demo)
+    const loginForm = document.getElementById('loginForm');
+    const loginMsg = document.getElementById('loginMsg');
+    const otpSection = document.getElementById('otpSection');
+    const otpTarget = document.getElementById('otpTarget');
+
+    function showLoginMsg(msg, type) {
+      loginMsg.textContent = msg;
+      loginMsg.className = 'lp-form-msg lp-form-msg--' + type;
+      loginMsg.style.display = 'block';
+    }
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const isPhone = !phoneSection.classList.contains('hidden');
+
+      if (isPhone) {
+        const phone = document.getElementById('loginPhone').value.trim();
+        if (!phone || phone.length !== 10 || !/^\d{10}$/.test(phone)) {
+          showLoginMsg('Please enter a valid 10-digit phone number.', 'error');
+          return;
+        }
+        otpTarget.textContent = '+91 ' + phone;
+      } else {
+        const email = document.getElementById('loginEmail').value.trim();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showLoginMsg('Please enter a valid email address.', 'error');
+          return;
+        }
+        otpTarget.textContent = email;
+      }
+
+      // Show OTP section, hide form
+      loginForm.style.display = 'none';
+      otpSection.classList.add('active');
+      loginMsg.style.display = 'none';
+      otpDigits[0].focus();
+    });
+
+    // Verify OTP (simulated — redirects to dashboard)
+    const verifyBtn = document.getElementById('verifyOtpBtn');
+    const otpMsg = document.getElementById('otpMsg');
+
+    verifyBtn.addEventListener('click', function() {
+      const otp = Array.from(otpDigits).map(d => d.value).join('');
+      if (otp.length !== 6) {
+        otpMsg.textContent = 'Please enter all 6 digits.';
+        otpMsg.className = 'lp-form-msg lp-form-msg--error';
+        otpMsg.style.display = 'block';
+        return;
+      }
+
+      // Simulate success — redirect to dashboard
+      otpMsg.textContent = '✅ Verified! Redirecting...';
+      otpMsg.className = 'lp-form-msg lp-form-msg--success';
+      otpMsg.style.display = 'block';
+      verifyBtn.disabled = true;
+
+      const role = loginForm.querySelector('input[name="loginRole"]:checked').value;
+      const dashboards = {
+        'Landlord': 'landlord-dashboard.html',
+        'Tenant': 'tenant-dashboard.html',
+        'Broker': 'broker-dashboard.html'
+      };
+
+      setTimeout(() => {
+        window.location.href = dashboards[role] || 'index.html';
+      }, 1500);
+    });
+
+    // Resend OTP
+    document.getElementById('resendOtp').addEventListener('click', function() {
+      this.textContent = 'OTP sent! ✓';
+      this.style.color = 'var(--success)';
+      setTimeout(() => {
+        this.textContent = 'Resend OTP';
+        this.style.color = '';
+      }, 3000);
+    });
+  </script>
+</body>
+</html>

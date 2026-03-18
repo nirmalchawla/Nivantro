@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raise Maintenance Request — Nivantro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background-color: var(--surface-alt); }
+    
+    .form-header {
+      background: var(--primary); color: #fff; padding: 3rem 1.5rem 2rem; border-radius: 0 0 24px 24px;
+      margin-bottom: 2rem; position: relative;
+    }
+    .form-header h1 { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 0.5rem; }
+    
+    .create-form-container {
+      max-width: 600px; margin: -3rem auto 4rem; padding: 0 1.5rem; position: relative; z-index: 10;
+    }
+    .create-card {
+      background: var(--surface); border-radius: 12px; padding: 2rem; box-shadow: var(--shadow-md); border: 1px solid var(--border);
+    }
+    
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--primary); }
+    .form-control { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 1rem; background: var(--surface-alt); transition: border-color 0.2s; }
+    .form-control:focus { outline: none; border-color: var(--primary); background: var(--surface); }
+    
+    /* Category Grid */
+    .category-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    @media(min-width: 480px) { .category-grid { grid-template-columns: repeat(4, 1fr); } }
+    
+    .cat-btn {
+      background: var(--surface-alt); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 0.5rem;
+      text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 0.5rem; align-items: center;
+    }
+    .cat-icon { font-size: 1.8rem; }
+    .cat-label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+    
+    .cat-btn:hover { border-color: var(--primary); background: rgba(29,53,87,0.02); }
+    .cat-btn.selected { border-color: var(--primary); background: rgba(29,53,87,0.05); box-shadow: 0 0 0 2px var(--primary); }
+    .cat-btn.selected .cat-label { color: var(--primary); }
+
+    /* Photo Upload Area */
+    .upload-area {
+      border: 2px dashed var(--border); border-radius: 8px; padding: 2rem 1rem; text-align: center;
+      background: var(--surface-alt); cursor: pointer; transition: background 0.2s;
+    }
+    .upload-area:hover { background: rgba(29,53,87,0.02); border-color: var(--primary); }
+    .upload-icon { font-size: 2rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .upload-text { font-weight: 600; color: var(--primary); margin-bottom: 0.2rem; }
+    .upload-subtext { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* Floating Action */
+    .form-actions { margin-top: 2rem; display: flex; gap: 1rem; }
+    .btn-submit { flex: 2; padding: 1rem; border-radius: 8px; font-weight: 600; font-size: 1rem; background: var(--primary); color: #fff; border: none; cursor: pointer; }
+    .btn-cancel { flex: 1; padding: 1rem; border-radius: 8px; font-weight: 600; font-size: 1rem; background: transparent; color: var(--text-muted); border: 1px solid var(--border); cursor: pointer; }
+
+    /* File preview mock */
+    .file-preview {
+      display: none; margin-top: 1rem; align-items: center; gap: 1rem; padding: 1rem; background: rgba(39,174,96,0.1); border-radius: 8px; border: 1px solid rgba(39,174,96,0.2);
+    }
+    .file-preview.active { display: flex; }
+    .preview-thumb { width: 50px; height: 50px; border-radius: 6px; object-fit: cover; }
+    .preview-info { flex: 1; }
+    .preview-name { font-weight: 600; font-size: 0.9rem; color: var(--success); }
+    .preview-meta { font-size: 0.75rem; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <!-- Top Nav -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="maintenance.html" class="nav-back">← Back</a>
+      <div class="nav-logo" style="display:flex; align-items:center; gap:8px;">
+        <img src="logo.png" alt="Nivantro Logo" style="height:80px; width:auto; object-fit:contain; mix-blend-mode:multiply;">
+        <span style="font-size:1.1rem; font-weight:700;">Maintenance</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="form-header">
+    <div class="container">
+      <h1>Raise Repair Request</h1>
+    </div>
+  </header>
+
+  <!-- Form Container -->
+  <main class="create-form-container">
+    <form class="create-card" id="ticketForm" onsubmit="submitTicket(event)">
+      
+      <!-- Category Selection -->
+      <div class="form-group">
+        <label>Issue Category</label>
+        <div class="category-grid" id="categoryGrid">
+          <div class="cat-btn" data-cat="Plumbing">
+            <div class="cat-icon">🚰</div><div class="cat-label">Plumbing</div>
+          </div>
+          <div class="cat-btn" data-cat="Electrical">
+            <div class="cat-icon">⚡</div><div class="cat-label">Electrical</div>
+          </div>
+          <div class="cat-btn selected" data-cat="Appliance">
+            <div class="cat-icon">♨️</div><div class="cat-label">Appliance</div>
+          </div>
+          <div class="cat-btn" data-cat="Other">
+            <div class="cat-icon">🔧</div><div class="cat-label">Other</div>
+          </div>
+        </div>
+        <input type="hidden" id="categoryInput" value="Appliance" required>
+      </div>
+
+      <!-- Evidence Upload -->
+      <div class="form-group">
+        <label>Photo/Video Evidence</label>
+        <div class="upload-area" id="uploadBtn">
+          <div class="upload-icon">📷</div>
+          <div class="upload-text">Tap to Upload Photo</div>
+          <div class="upload-subtext">Visual evidence expedites landlord approval.</div>
+        </div>
+        
+        <!-- Mock Preview -->
+        <div class="file-preview" id="filePreview">
+          <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Evidence" class="preview-thumb">
+          <div class="preview-info">
+            <div class="preview-name">washing-machine-error.jpg</div>
+            <div class="preview-meta">2.4 MB • Uploaded Just Now</div>
+          </div>
+          <button type="button" class="btn-cancel" style="padding: 0.3rem 0.6rem; flex:0;" onclick="removeFile()">✕</button>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="desc">Issue Description</label>
+        <textarea id="desc" class="form-control" rows="4" placeholder="E.g., The washing machine spins but is making a loud grinding noise..." required></textarea>
+      </div>
+
+      <!-- Priority -->
+      <div class="form-group">
+        <label for="priority">Priority Level</label>
+        <select id="priority" class="form-control">
+          <option value="low">Low (Doesn't affect daily living)</option>
+          <option value="medium" selected>Medium (Inconvenient, needs fix soon)</option>
+          <option value="high">High (Urgent, water leak, safety issue)</option>
+        </select>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" onclick="window.location.href='maintenance.html'">Cancel</button>
+        <button type="submit" class="btn-submit">Submit Request</button>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    // Category selection logic
+    const catBtns = document.querySelectorAll('.cat-btn');
+    const categoryInput = document.getElementById('categoryInput');
+
+    catBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        catBtns.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        categoryInput.value = btn.getAttribute('data-cat');
+      });
+    });
+
+    // Mock Upload Logic
+    const uploadBtn = document.getElementById('uploadBtn');
+    const filePreview = document.getElementById('filePreview');
+
+    uploadBtn.addEventListener('click', () => {
+      // Simulate generic file picker delay
+      setTimeout(() => {
+        uploadBtn.style.display = 'none';
+        filePreview.classList.add('active');
+      }, 500);
+    });
+
+    function removeFile() {
+      filePreview.classList.remove('active');
+      uploadBtn.style.display = 'block';
+    }
+
+    // Submit Simulation
+    function submitTicket(e) {
+      e.preventDefault();
+      const submitBtn = document.querySelector('.btn-submit');
+      const originalText = submitBtn.textContent;
+      
+      submitBtn.textContent = 'Submitting...';
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        alert("Maintenance Ticket Raised! The Landlord has been notified for approval.");
+        window.location.href = 'maintenance.html?role=tenant';
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

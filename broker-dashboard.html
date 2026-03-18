@@ -11,7 +11,7 @@
 <body>
   <nav class="navbar scrolled" id="navbar">
     <div class="container">
-      <a href="index.html" class="nav-logo">Nivantro</a>
+      <a href="index.html" class="nav-logo" style="display:flex; align-items:center;"><img src="logo.png" alt="Nivantro Logo" style="height:80px; width:auto; object-fit:contain; mix-blend-mode:multiply;"></a>
       <ul class="nav-links" id="navLinks"><li><a href="index.html">Home</a></li><li><a href="features.html">Features</a></li><li><a href="how-it-works.html">How It Works</a></li><li><a href="about.html">About</a></li></ul>
       <div class="nav-cta"><div class="user-pill"><div class="user-avatar user-avatar--broker">SK</div><span class="user-name">Suresh Khanna</span><span class="user-role-badge badge-broker">Broker</span><span class="broker-tier-badge">🏆 Power Broker</span></div><a href="index.html" class="btn btn-secondary" style="margin-left: 1rem;">Logout</a><button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></div>
     </div>
@@ -25,14 +25,14 @@
           <h1 class="display-md">Welcome back, <span class="text-gradient">Suresh</span> 👋</h1>
           <p class="text-muted"><strong>3 active deals</strong>, <strong>₹45K pending payout</strong>, and <strong>2 hot leads</strong> this week.</p>
         </div>
-        <div class="dash-header-actions animate-on-scroll"><a href="#" class="btn btn-primary">+ Add New Deal</a><a href="#" class="btn btn-secondary">Browse Listings</a></div>
+        <div class="dash-header-actions animate-on-scroll"><a href="list-property.html?role=broker" class="btn btn-primary">+ List Property</a><a href="#" class="btn btn-secondary">Browse Listings</a></div>
       </div>
       <div class="metric-strip animate-on-scroll">
-        <div class="metric-card"><div class="metric-icon" style="background:rgba(13,124,102,0.1);color:var(--primary);">📊</div><div><div class="metric-value">3</div><div class="metric-label">Active Deals</div></div></div>
+        <div class="metric-card"><div class="metric-icon" style="background:rgba(29,53,87,0.1);color:var(--primary);">📊</div><div><div class="metric-value">3</div><div class="metric-label">Active Deals</div></div></div>
         <div class="metric-card"><div class="metric-icon" style="background:rgba(34,197,94,0.1);color:var(--success);">✓</div><div><div class="metric-value">18</div><div class="metric-label">Deals Closed</div></div></div>
         <div class="metric-card"><div class="metric-icon" style="background:rgba(249,139,54,0.1);color:var(--secondary);">₹</div><div><div class="metric-value">₹4.2L</div><div class="metric-label">Total Earnings</div></div></div>
-        <div class="metric-card"><div class="metric-icon" style="background:rgba(30,174,201,0.1);color:var(--accent);">₹</div><div><div class="metric-value">₹45K</div><div class="metric-label">Pending Payout</div></div></div>
-        <div class="metric-card"><div class="metric-icon" style="background:rgba(13,124,102,0.1);color:var(--primary);">★</div><div><div class="metric-value">4.6</div><div class="metric-label">Broker Rating</div></div></div>
+        <div class="metric-card"><div class="metric-icon" style="background:rgba(69,123,157,0.1);color:var(--accent);">₹</div><div><div class="metric-value">₹45K</div><div class="metric-label">Pending Payout</div></div></div>
+        <div class="metric-card"><div class="metric-icon" style="background:rgba(29,53,87,0.1);color:var(--primary);">★</div><div><div class="metric-value">4.6</div><div class="metric-label">Broker Rating</div></div></div>
         <div class="metric-card"><div class="metric-icon" style="background:rgba(239,68,68,0.1);color:var(--danger);">🔥</div><div><div class="metric-value">2</div><div class="metric-label">Hot Leads</div></div></div>
       </div>
     </div>
@@ -200,7 +200,7 @@
         <div class="dash-section-title animate-on-scroll"><h2>Client Maintenance Tickets</h2><p class="text-muted">Monitor maintenance requests for your managed properties. Step in to assist NRI landlords or escalate delayed tickets to protect your deal's reputation.</p></div>
         
         <div class="dash-header-actions" style="margin-bottom: var(--space-xl);">
-          <button class="btn btn-primary" style="width:100%; justify-content:center;">+ Raise Request for Client</button>
+          <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="window.location.href='maintenance.html?role=broker'">Enter Maintenance CRM Hub</button>
         </div>
 
         <div class="tickets-grid">
@@ -210,7 +210,7 @@
             <div class="ticket-meta"><span>🏢 Godrej Splendour</span><span>👤 Landlord: Pradeep Verma (NRI)</span><span>📅 14 Mar 2026</span></div>
             <p class="ticket-desc">Tenant reporting AC blowing warm air. Compressor might need checking.</p>
             <div class="ticket-evidence"><div class="evidence-thumbnail">📸</div><span class="evidence-count">1 photo attached</span></div>
-            <div class="ticket-actions"><a href="#" class="btn btn-primary btn-sm">Assign Vendor</a><a href="#" class="btn btn-secondary btn-sm">Message Tenant</a></div>
+            <div class="ticket-actions"><a href="maintenance-ticket.html?role=broker&id=2850" class="btn btn-primary btn-sm">Assign Vendor & Manage Ticket</a></div>
           </div>
           <div class="ticket-card ticket-card--resolved animate-on-scroll">
             <div class="ticket-header"><span class="ticket-id">#TKT-2822</span><span class="status-badge status-badge--success">Resolved</span></div>
@@ -231,12 +231,12 @@
       <div class="dash-panel" id="panel-movein" style="display:none;">
         <div class="dash-section-title animate-on-scroll"><h2>Move-In Overview</h2><p class="text-muted">Oversee digital move-in inspections for your managed properties.</p></div>
         <div class="dash-header-actions" style="margin-bottom: var(--space-xl);">
-          <button class="btn btn-primary" style="width:100%; justify-content:center;">+ Initiate Move-In</button>
+          <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="window.location.href='inspection-camera.html?role=broker'">+ Initiate Move-In</button>
         </div>
         <div class="checklist-comparison animate-on-scroll">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-md);">
             <h3>Brigade Millennium — Move-In (01 Mar 2025)</h3>
-            <a href="inspection.html" class="btn btn-secondary btn-sm">View Status</a>
+            <a href="inspection-report.html?role=broker" class="btn btn-secondary btn-sm">View Status</a>
           </div>
           <div class="checklist-items" style="margin-bottom: 0;">
             <div class="checklist-row"><div class="checklist-category-header"><span>Status</span><span class="status-badge status-badge--warning">Pending Tenant Signature</span></div></div>
@@ -250,12 +250,12 @@
       <div class="dash-panel" id="panel-moveout" style="display:none;">
         <div class="dash-section-title animate-on-scroll"><h2>Move-Out Overview</h2><p class="text-muted">Oversee move-out inspections and settlement reports to ensure smooth transitions.</p></div>
         <div class="dash-header-actions" style="margin-bottom: var(--space-xl);">
-          <button class="btn btn-primary" style="width:100%; justify-content:center;">+ Initiate Move-Out</button>
+          <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="window.location.href='inspection-compare.html?role=broker'">+ Initiate Move-Out</button>
         </div>
         <div class="checklist-comparison animate-on-scroll">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-md);">
             <h3>Sobha Forest View — Move-Out (15 Feb 2026)</h3>
-            <a href="inspection.html" class="btn btn-secondary btn-sm">View Settlement Report</a>
+            <a href="inspection-compare.html?role=broker" class="btn btn-secondary btn-sm">View Settlement Report</a>
           </div>
           <div class="checklist-items" style="margin-bottom: 0;">
             <div class="checklist-row"><div class="checklist-category-header"><span>Status</span><span class="status-badge status-badge--success">Completed & Settled</span></div></div>
@@ -330,7 +330,7 @@
     </div>
   </section>
 
-  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="index.html" class="nav-logo">Nivantro</a><p>Fixing the broken tenant-landlord-broker ecosystem with trust, transparency, and technology.</p></div><div class="footer-col"><h4>Platform</h4><ul><li><a href="features.html">Features</a></li><li><a href="how-it-works.html">How It Works</a></li></ul></div><div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="about.html#contact">Contact</a></li></ul></div><div class="footer-col"><h4>Legal</h4><ul><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div></div><div class="footer-bottom"><span>© 2025 Nivantro India. All rights reserved.</span><div class="footer-socials"><a href="#">𝕏</a><a href="#">in</a><a href="#">📷</a></div></div></div></footer>
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="index.html" class="nav-logo" style="display:flex; align-items:center;"><img src="logo.png" alt="Nivantro Logo" style="height:80px; width:auto; object-fit:contain; mix-blend-mode:multiply;"></a><p>Fixing the broken tenant-landlord-broker ecosystem with trust, transparency, and technology.</p></div><div class="footer-col"><h4>Platform</h4><ul><li><a href="features.html">Features</a></li><li><a href="how-it-works.html">How It Works</a></li></ul></div><div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="about.html#contact">Contact</a></li></ul></div><div class="footer-col"><h4>Legal</h4><ul><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div></div><div class="footer-bottom"><span>© 2025 Nivantro India. All rights reserved.</span><div class="footer-socials"><a href="#">𝕏</a><a href="#">in</a><a href="#">📷</a></div></div></div></footer>
   <script src="script.js"></script><script src="dashboard.js"></script>
 </body>
 </html>

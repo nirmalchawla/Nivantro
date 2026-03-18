@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Smart Inspection Camera — Nivantro</title>
+  <meta name="description" content="AI-powered property health checkup">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1D3557;
+      --accent: #457B9D;
+      --surface: #ffffff;
+      --surface-dark: #0d1b2a;
+      --text: #ffffff;
+      --success: #27AE60;
+      --warning: #F39C12;
+      --danger: #E74C3C;
+      --font-body: 'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-body);
+      background-color: #000;
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Top Bar */
+    .cam-header {
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 10;
+    }
+    .cam-close, .cam-flash {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: #fff;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(10px);
+    }
+    .cam-room {
+      background: rgba(0,0,0,0.5);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex; align-items: center; gap: 0.5rem;
+      backdrop-filter: blur(10px);
+    }
+    .cam-room-select {
+      background: none; border: none; color: #fff; font-weight: 600; font-family: inherit; font-size: 0.9rem; outline: none; cursor: pointer;
+    }
+
+    /* Viewfinder */
+    .viewfinder {
+      flex: 1;
+      position: relative;
+      background-color: #111;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .mock-camera-feed {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+    .scan-line {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 2px;
+      background: #457B9D;
+      box-shadow: 0 0 15px 2px #457B9D;
+      transform: translateY(-100%);
+      display: none;
+      z-index: 5;
+    }
+    .scanning .scan-line {
+      display: block;
+      animation: scan 2s linear infinite;
+    }
+    @keyframes scan {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100vh); }
+    }
+
+    /* Grid Overlay */
+    .cam-grid {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 33.33% 33.33%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Watermark/Metadata Overlay (Auto-applied) */
+    .metadata-overlay {
+      position: absolute;
+      bottom: 1rem; left: 1rem;
+      background: rgba(0,0,0,0.6);
+      padding: 0.6rem 0.8rem;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.75rem;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.9);
+      backdrop-filter: blur(5px);
+      border-left: 3px solid #F39C12;
+      display: none;
+      z-index: 6;
+      pointer-events: none;
+    }
+    .metadata-overlay.active { display: block; }
+    .metadata-label { color: #457B9D; font-weight: bold; }
+
+    /* AI Defect Bounding Box */
+    .ai-bbox {
+      position: absolute;
+      border: 2px solid #E74C3C;
+      background: rgba(231,76,60,0.1);
+      border-radius: 4px;
+      display: none;
+      z-index: 6;
+      pointer-events: none;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(0,0,0,0.5);
+    }
+    .ai-bbox::after {
+      content: attr(data-label);
+      position: absolute;
+      top: -24px; left: -2px;
+      background: #E74C3C;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .ai-bbox.active { display: block; animation: pulseBox 2s infinite; }
+    @keyframes pulseBox {
+      0% { box-shadow: 0 0 0 0 rgba(231,76,60,0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(231,76,60,0); }
+      100% { box-shadow: 0 0 0 0 rgba(231,76,60,0); }
+    }
+
+    /* Bottom Controls */
+    .cam-controls {
+      padding: 1.5rem 2rem 2.5rem;
+      background: #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+    }
+    .gallery-btn, .switch-cam-btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: #222;
+      border: none; color: #fff; font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .gallery-btn {
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>');
+      background-position: center; background-repeat: no-repeat;
+    }
+    
+    .capture-btn {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: #fff;
+      border: 4px solid #000;
+      outline: 3px solid #fff;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.1s;
+    }
+    .capture-btn:active { transform: scale(0.95); }
+    
+    /* Processing Overlay */
+    .processing-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 20;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s;
+      backdrop-filter: blur(5px);
+    }
+    .processing-overlay.active { opacity: 1; pointer-events: all; }
+    
+    .spinner {
+      width: 50px; height: 50px;
+      border: 3px solid rgba(255,255,255,0.2);
+      border-top-color: #457B9D;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .processing-text { font-weight: 600; font-size: 1.1rem; }
+    .processing-subtext { color: #aaa; font-size: 0.85rem; margin-top: 0.5rem; text-align: center; max-width: 250px; }
+
+    /* Results Action Bar (replaces controls after capture) */
+    .results-actions {
+      display: none;
+      padding: 1.5rem 1rem 2.5rem;
+      background: #1D3557;
+      justify-content: space-between;
+      gap: 1rem;
+      position: relative;
+      z-index: 10;
+    }
+    .results-actions.active { display: flex; }
+    .btn-retake {
+      flex: 1; padding: 1rem; border-radius: 8px; font-weight: 600; font-size: 1rem;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; cursor: pointer;
+    }
+    .btn-save {
+      flex: 2; padding: 1rem; border-radius: 8px; font-weight: 600; font-size: 1rem;
+      background: #fff; border: none; color: #1D3557; cursor: pointer;
+    }
+    
+    #shutterFlash {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #fff; opacity: 0; z-index: 50; pointer-events: none;
+    }
+    .flash-anim { animation: flashAnim 0.3s ease-out; }
+    @keyframes flashAnim { 0% { opacity: 1; } 100% { opacity: 0; } }
+  </style>
+</head>
+<body>
+
+  <!-- Flash Effect -->
+  <div id="shutterFlash"></div>
+
+  <!-- Header -->
+  <header class="cam-header">
+    <button class="cam-close" onclick="window.location.href='landlord-dashboard.html'">✕</button>
+    <div class="cam-room">
+      📍 <select class="cam-room-select" id="roomCategory">
+        <option>Living Room</option>
+        <option>Master Bedroom</option>
+        <option>Kitchen</option>
+        <option>Bathroom 1</option>
+      </select>
+    </div>
+    <button class="cam-flash">⚡</button>
+  </header>
+
+  <!-- Viewfinder -->
+  <main class="viewfinder" id="viewfinder">
+    <!-- Grid -->
+    <div class="cam-grid" id="camGrid"></div>
+    
+    <!-- Using a placeholder image to simulate live camera feed showing a slightly damaged wall/door -->
+    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Camera Feed" class="mock-camera-feed" id="mockFeed">
+    
+    <!-- Scan Line Effect -->
+    <div class="scan-line"></div>
+
+    <!-- AI Bounding Box (Hidden initially) -->
+    <!-- Positioned to align with a spot on the mock image that looks like a defect -->
+    <div class="ai-bbox" id="aiDefectBox" style="top: 40%; left: 30%; width: 120px; height: 180px;" data-label="Wall Scratch (Moderate)"></div>
+
+    <!-- Metadata Overlay -->
+    <div class="metadata-overlay" id="metadataOverlay">
+      <div><span class="metadata-label">LAT:</span> 19.1176 N</div>
+      <div><span class="metadata-label">LON:</span> 72.8272 E</div>
+      <div id="metaDate"><span class="metadata-label">DATE:</span> --</div>
+      <div id="metaTime"><span class="metadata-label">TIME:</span> --</div>
+      <div><span class="metadata-label">HASH:</span> <span style="color:#F39C12" id="metaHash">...</span></div>
+    </div>
+
+    <!-- Processing Overlay -->
+    <div class="processing-overlay" id="processingOverlay">
+      <div class="spinner"></div>
+      <div class="processing-text" id="procText">Analyzing Image...</div>
+      <div class="processing-subtext" id="procSub">Nivantro AI is writing immutable metadata and scanning for structural defects.</div>
+    </div>
+  </main>
+
+  <!-- Bottom Controls (Capture Mode) -->
+  <div class="cam-controls" id="captureControls">
+    <button class="gallery-btn" title="Open Gallery"></button>
+    <button class="capture-btn" id="captureBtn" title="Take Photo"></button>
+    <button class="switch-cam-btn" title="Switch Camera">↻</button>
+  </div>
+
+  <!-- Bottom Controls (Result Mode) -->
+  <div class="results-actions" id="resultControls">
+    <button class="btn-retake" id="retakeBtn">Retake</button>
+    <button class="btn-save" id="saveBtn">Approve & Save to Ledger</button>
+  </div>
+
+  <script>
+    const captureBtn = document.getElementById('captureBtn');
+    const captureControls = document.getElementById('captureControls');
+    const resultControls = document.getElementById('resultControls');
+    const processingOverlay = document.getElementById('processingOverlay');
+    const procText = document.getElementById('procText');
+    const procSub = document.getElementById('procSub');
+    const shutterFlash = document.getElementById('shutterFlash');
+    const viewfinder = document.getElementById('viewfinder');
+    const metadataOverlay = document.getElementById('metadataOverlay');
+    const aiDefectBox = document.getElementById('aiDefectBox');
+    const camGrid = document.getElementById('camGrid');
+    const mockFeed = document.getElementById('mockFeed');
+    const metaDate = document.getElementById('metaDate');
+    const metaTime = document.getElementById('metaTime');
+    const metaHash = document.getElementById('metaHash');
+    
+    // Simulate updating time
+    function updateDateTime() {
+      const now = new Date();
+      metaDate.innerHTML = `<span class="metadata-label">DATE:</span> ${now.toISOString().split('T')[0]}`;
+      metaTime.innerHTML = `<span class="metadata-label">TIME:</span> ${now.toTimeString().split(' ')[0]}`;
+      // Generate a fake hash for "immutability"
+      const hash = Math.random().toString(36).substring(2, 10).toUpperCase();
+      metaHash.textContent = '0x' + hash;
+    }
+
+    captureBtn.addEventListener('click', () => {
+      // 1. Flash effect
+      shutterFlash.classList.add('flash-anim');
+      setTimeout(() => shutterFlash.classList.remove('flash-anim'), 300);
+
+      // 2. Hide controls & grid, show processing
+      captureControls.style.display = 'none';
+      camGrid.style.display = 'none';
+      viewfinder.classList.add('scanning');
+      processingOverlay.classList.add('active');
+      mockFeed.style.opacity = '1';
+
+      updateDateTime();
+
+      // 3. Simulate AI sequence
+      setTimeout(() => {
+        procText.textContent = "Embedding Metadata...";
+        procSub.textContent = "Writing GPS, Timestamp, and Cryptographic Hash to image exif layers.";
+      }, 1000);
+
+      setTimeout(() => {
+        procText.textContent = "Running Computer Vision...";
+        procSub.textContent = "Scanning surfaces for scratches, cracks, and anomalies.";
+      }, 2000);
+
+      setTimeout(() => {
+        // AI Done - Show results
+        processingOverlay.classList.remove('active');
+        viewfinder.classList.remove('scanning');
+        
+        // Show metadata stamp & bounding box
+        metadataOverlay.classList.add('active');
+        aiDefectBox.classList.add('active');
+        
+        // Show approval action bar
+        resultControls.classList.add('active');
+      }, 3500);
+    });
+
+    // Retake Button
+    document.getElementById('retakeBtn').addEventListener('click', () => {
+      metadataOverlay.classList.remove('active');
+      aiDefectBox.classList.remove('active');
+      resultControls.classList.remove('active');
+      
+      captureControls.style.display = 'flex';
+      camGrid.style.display = 'block';
+      mockFeed.style.opacity = '0.8';
+      
+      procText.textContent = "Analyzing Image...";
+      procSub.textContent = "Nivantro AI is writing immutable metadata and scanning for structural defects.";
+    });
+
+    // Save Button
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      // Navigate to the Report/Ledger view
+      window.location.href = 'inspection-report.html';
+    });
+  </script>
+</body>
+</html>

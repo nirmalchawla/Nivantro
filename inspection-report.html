@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Health Report — Nivantro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background-color: var(--surface-alt); padding-bottom: 6rem; }
+    
+    .report-header {
+      background: var(--primary);
+      color: #fff;
+      padding: 3rem 1.5rem 2rem;
+      border-radius: 0 0 24px 24px;
+      margin-bottom: -2rem;
+      position: relative;
+    }
+    .report-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 0.4rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      backdrop-filter: blur(5px);
+    }
+    .report-title { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .report-meta { color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+    /* Dual Approval Status */
+    .approval-bar {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: var(--shadow-md);
+      margin: 0 1.5rem 2rem;
+      position: relative;
+      z-index: 10;
+    }
+    .stakeholder-status {
+      flex: 1; text-align: center;
+      padding: 1rem;
+      border-radius: 8px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+    }
+    .stakeholder-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .stakeholder-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+    .status-badge {
+      display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;
+    }
+    .status-pending { background: rgba(243,156,18,0.1); color: var(--warning); }
+    .status-approved { background: rgba(39,174,96,0.1); color: var(--success); }
+
+    /* Report Sections */
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      padding: 0 1.5rem;
+    }
+    
+    .room-card {
+      background: var(--surface);
+      border-radius: 12px;
+      margin: 0 1.5rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .room-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .room-name { font-weight: 600; font-size: 1.1rem; }
+    .ai-tag { background: rgba(43,74,122,0.1); color: var(--primary-light); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    
+    /* Photo Evidence Grid */
+    .evidence-grid {
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .evidence-item {
+      position: relative;
+    }
+    .evidence-photo {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #eee;
+      display: block;
+    }
+    .evidence-meta {
+      position: absolute; bottom: 0.5rem; left: 0.5rem; right: 0.5rem;
+      background: rgba(0,0,0,0.6);
+      padding: 0.5rem; border-radius: 6px;
+      color: rgba(255,255,255,0.9); font-family: monospace; font-size: 0.65rem;
+      backdrop-filter: blur(4px); pointer-events: none;
+    }
+    
+    /* Defect Callout */
+    .defect-box {
+      background: rgba(231,76,60,0.05);
+      border: 1px dashed var(--danger);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .defect-icon { background: rgba(231,76,60,0.1); color: var(--danger); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: bold; }
+    .defect-title { font-weight: 600; color: var(--danger); font-size: 0.9rem; margin-bottom: 0.3rem; }
+    .defect-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* Fixed Bottom Action */
+    .fixed-action {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--surface);
+      padding: 1rem 1.5rem;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      display: flex; gap: 1rem;
+      z-index: 50;
+    }
+    .btn-outline {
+      flex: 1; padding: 1rem; border-radius: 8px; font-weight: 600; border: 1px solid var(--primary); color: var(--primary); background: transparent; cursor: pointer; text-align: center;
+    }
+    .btn-fill {
+      flex: 2; padding: 1rem; border-radius: 8px; font-weight: 600; background: var(--primary); color: #fff; border: none; cursor: pointer; text-align: center;
+    }
+    .btn-fill:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Success Overlay state */
+    .ledger-locked {
+      background: linear-gradient(135deg, rgba(39,174,96,0.1), rgba(39,174,96,0.02));
+      border: 1px solid rgba(39,174,96,0.3);
+      padding: 1.5rem; border-radius: 12px; margin: 0 1.5rem 2rem;
+      text-align: center; display: none;
+    }
+    .ledger-locked.active { display: block; }
+    .locked-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .locked-title { font-weight: 700; color: var(--success); font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .locked-desc { font-size: 0.9rem; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <!-- Top Nav -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="landlord-dashboard.html" class="nav-back">← Back</a>
+      <div class="nav-logo" style="display:flex; align-items:center; gap:8px;"><img src="logo.png" alt="Nivantro Logo" style="height:80px; width:auto; object-fit:contain; mix-blend-mode:multiply;"> <span style="font-size:1.1rem; font-weight:700;">Inspect</span></div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="report-header">
+    <div class="report-badge">AI Health Checkup</div>
+    <h1 class="report-title">Move-In Baseline Report</h1>
+    <div class="report-meta">
+      <div>📍 402, Sea View Apartments, Mumbai</div>
+      <div id="reportDate">Generated: Oct 24, 2024</div>
+    </div>
+  </header>
+
+  <!-- Dual Approval Bar -->
+  <div class="approval-bar">
+    <div class="stakeholder-status" id="landlordStatusBoard">
+      <div class="stakeholder-icon">🏢</div>
+      <div class="stakeholder-name">Rohit (Landlord)</div>
+      <div class="status-badge status-pending" id="landlordBadge">⏳ Pending Review</div>
+    </div>
+    <div class="stakeholder-status" id="tenantStatusBoard">
+      <div class="stakeholder-icon">🔑</div>
+      <div class="stakeholder-name">Priya (Tenant)</div>
+      <div class="status-badge status-pending" id="tenantBadge">⏳ Pending Review</div>
+    </div>
+  </div>
+
+  <!-- Locked Ledger State (Hidden by default) -->
+  <div class="ledger-locked" id="ledgerLocked">
+    <div class="locked-icon">🔒</div>
+    <div class="locked-title">Immutable Baseline Locked</div>
+    <div class="locked-desc">Both parties have approved the current state of the property. This ledger is cryptographically sealed and cannot be altered. It will be used as the ultimate reference during Move-Out.</div>
+  </div>
+
+  <h2 class="section-title">AI Property Scan Results</h2>
+
+  <!-- Living Room Room -->
+  <div class="room-card">
+    <div class="room-header">
+      <div class="room-name">Living Room</div>
+      <div class="ai-tag">AI Verified</div>
+    </div>
+    <div class="evidence-grid">
+      <div class="evidence-item">
+        <!-- The photo taken in the camera UI -->
+        <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Living Room" class="evidence-photo">
+        <!-- Simulated AI Box for Report View -->
+        <div style="position:absolute; top:40%; left:30%; width:120px; height:180px; border:2px solid #E74C3C; background:rgba(231,76,60,0.1); border-radius:4px; pointer-events:none;"></div>
+        
+        <div class="evidence-meta">
+          LAT: 19.1176 | LON: 72.8272<br>
+          TIME: <span id="photoTime1">--</span> | HASH: 0x8F9A2B<br>
+          <span style="color:#27AE60">✓ Geolocated & Timestamped</span>
+        </div>
+      </div>
+      
+      <!-- Defect Highlight -->
+      <div class="defect-box">
+        <div class="defect-icon">!</div>
+        <div>
+          <div class="defect-title">Wall Scratch Detected (Moderate)</div>
+          <div class="defect-desc">AI has detected a superficial scratch on the left wall plaster. Length approximately 40cm.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kitchen Room -->
+  <div class="room-card">
+    <div class="room-header">
+      <div class="room-name">Kitchen</div>
+      <div class="ai-tag">AI Verified</div>
+    </div>
+    <div class="evidence-grid">
+      <div class="evidence-item">
+        <img src="https://images.unsplash.com/photo-1556910103-1c02745a828$ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Kitchen" class="evidence-photo">
+        <div class="evidence-meta">
+          LAT: 19.1176 | LON: 72.8272<br>
+          TIME: <span id="photoTime2">--</span> | HASH: 0x9B1C3D<br>
+          <span style="color:#27AE60">✓ Geolocated & Timestamped</span>
+        </div>
+      </div>
+      <div style="padding: 0.5rem 0; font-size: 0.9rem; color: var(--text-muted);">
+        <span style="color:var(--success); font-weight:bold;">✓ Clear:</span> AI scan complete. No structural anomalies detected in this zone. All appliances appear intact.
+      </div>
+    </div>
+  </div>
+
+  <br><br><br>
+
+  <!-- Action Bar -->
+  <div class="fixed-action" id="actionBar">
+    <button class="btn-outline" id="requestFixBtn">Request Fix</button>
+    <button class="btn-fill" id="approveBtn">Approve Baseline</button>
+  </div>
+
+  <script>
+    // Set simulated times
+    document.getElementById('reportDate').textContent = 'Generated: ' + new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    document.getElementById('photoTime1').textContent = new Date(Date.now() - 300000).toTimeString().split(' ')[0];
+    document.getElementById('photoTime2').textContent = new Date(Date.now() - 240000).toTimeString().split(' ')[0];
+
+    let landlordApproved = false;
+    let tenantApproved = false; // Simulate one party is acting
+
+    // Using URL param to simulate who is viewing this report
+    const params = new URLSearchParams(window.location.search);
+    const role = params.get('role') || 'tenant';
+
+    const landlordBadge = document.getElementById('landlordBadge');
+    const tenantBadge = document.getElementById('tenantBadge');
+    const approveBtn = document.getElementById('approveBtn');
+    const requestFixBtn = document.getElementById('requestFixBtn');
+    const actionBar = document.getElementById('actionBar');
+    const ledgerLocked = document.getElementById('ledgerLocked');
+
+    // Simulate clicking approve
+    approveBtn.addEventListener('click', function() {
+      if (role === 'landlord') {
+        landlordApproved = true;
+        landlordBadge.className = 'status-badge status-approved';
+        landlordBadge.textContent = '✓ Approved';
+      } else {
+        tenantApproved = true;
+        tenantBadge.className = 'status-badge status-approved';
+        tenantBadge.textContent = '✓ Approved';
+      }
+
+      this.disabled = true;
+      this.textContent = 'Approved by You';
+      requestFixBtn.style.display = 'none';
+
+      // Simulate the other party automatically approving after 2 seconds for demo purposes
+      if (!landlordApproved || !tenantApproved) {
+        setTimeout(() => {
+          if (role === 'tenant') {
+            landlordApproved = true;
+            landlordBadge.className = 'status-badge status-approved';
+            landlordBadge.textContent = '✓ Approved';
+          } else {
+            tenantApproved = true;
+            tenantBadge.className = 'status-badge status-approved';
+            tenantBadge.textContent = '✓ Approved';
+          }
+          checkLock();
+        }, 1500);
+      } else {
+        checkLock();
+      }
+    });
+
+    function checkLock() {
+      if (landlordApproved && tenantApproved) {
+        // Both approved! Lock the ledger.
+        setTimeout(() => {
+          actionBar.style.display = 'none';
+          document.body.style.paddingBottom = '2rem';
+          ledgerLocked.classList.add('active');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 800);
+      }
+    }
+
+    // Request Fix
+    requestFixBtn.addEventListener('click', function() {
+      alert("Maintenance request triggered! The Landlord will be notified to fix the marked defect before baseline can be approved.");
+    });
+  </script>
+</body>
+</html>

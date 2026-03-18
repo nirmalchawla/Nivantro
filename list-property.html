@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List Your Property — Nivantro India</title>
+  <meta name="description" content="List your rental property on Nivantro. Reach verified tenants and brokers in India's trusted rental ecosystem.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="landing.css">
+  <style>
+    .list-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .list-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: calc(80px + var(--space-xl)) var(--space-lg) var(--space-xl);
+      background: linear-gradient(175deg, var(--surface) 0%, var(--surface-alt) 50%, rgba(29,53,87,0.04) 100%);
+    }
+    .list-container {
+      max-width: 520px;
+      width: 100%;
+    }
+    .list-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+    .list-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: var(--space-sm);
+      letter-spacing: -0.5px;
+    }
+    .list-header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+    .list-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-lg);
+    }
+    .list-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    .list-field {
+      display: flex;
+      flex-direction: column;
+    }
+    .list-field.full-width {
+      grid-column: 1 / -1;
+    }
+    .list-field label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: var(--space-sm);
+    }
+    .list-field label .optional {
+      font-weight: 400;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    .list-field input,
+    .list-field select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text);
+      background: var(--surface);
+      transition: all var(--dur-fast) var(--ease-out);
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .list-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235f7a72' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      cursor: pointer;
+    }
+    .list-field input:focus,
+    .list-field select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(29,53,87,0.1);
+    }
+    .list-note {
+      text-align: center;
+      margin-top: var(--space-md);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .list-back {
+      text-align: center;
+      margin-top: var(--space-lg);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+    .list-back a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .list-back a:hover {
+      text-decoration: underline;
+    }
+
+    /* Step 2: Attach Tenant & Broker */
+    .step-2 {
+      display: none;
+    }
+    .step-2.active {
+      display: block;
+    }
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-xl);
+    }
+    .step-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border: 2px solid var(--border);
+      color: var(--text-muted);
+      background: var(--surface);
+      transition: all var(--dur-normal) var(--ease-out);
+    }
+    .step-dot.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    .step-dot.done {
+      background: var(--success);
+      border-color: var(--success);
+      color: #fff;
+    }
+    .step-line {
+      width: 40px;
+      height: 2px;
+      background: var(--border);
+      transition: background var(--dur-normal) var(--ease-out);
+    }
+    .step-line.done {
+      background: var(--success);
+    }
+    .property-success-card {
+      background: rgba(39,174,96,0.06);
+      border: 1px solid rgba(39,174,96,0.2);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+    .property-success-card .prop-name {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: var(--space-sm);
+    }
+    .property-success-card .prop-meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .attach-section {
+      margin-bottom: var(--space-lg);
+    }
+    .attach-label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: var(--space-sm);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .attach-label .skip-tag {
+      font-weight: 400;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .attach-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-sm);
+    }
+    .attach-fields input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--surface);
+      outline: none;
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .attach-fields input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(29,53,87,0.1);
+    }
+    .attach-divider {
+      height: 1px;
+      background: var(--border);
+      margin: var(--space-lg) 0;
+    }
+    .btn-row {
+      display: flex;
+      gap: var(--space-md);
+    }
+    .btn-row .lp-submit-btn {
+      flex: 1;
+    }
+    .btn-skip {
+      flex: 1;
+      padding: 1rem;
+      background: var(--surface);
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--dur-normal) var(--ease-out);
+    }
+    .btn-skip:hover {
+      border-color: var(--text-muted);
+      color: var(--text);
+    }
+    /* Phone Lookup */
+    .lookup-row {
+      display: flex;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+    .lookup-row input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--surface);
+      outline: none;
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .lookup-row input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(29,53,87,0.1);
+    }
+    .lookup-btn {
+      padding: 0.75rem 1.2rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all var(--dur-fast) var(--ease-out);
+      white-space: nowrap;
+    }
+    .lookup-btn:hover {
+      background: var(--primary-dark);
+    }
+    .lookup-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .profile-result {
+      display: none;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      border: 2px solid rgba(39,174,96,0.3);
+      background: rgba(39,174,96,0.04);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-sm);
+    }
+    .profile-result.active {
+      display: flex;
+    }
+    .profile-result.not-found {
+      border-color: rgba(231,76,60,0.3);
+      background: rgba(231,76,60,0.04);
+    }
+    .profile-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .profile-info {
+      flex: 1;
+    }
+    .profile-info .profile-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+    .profile-info .profile-detail {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .profile-remove {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0.3rem;
+      transition: color var(--dur-fast);
+    }
+    .profile-remove:hover {
+      color: var(--danger);
+    }
+    /* Step 3: Notification Status */
+    .step-3 {
+      display: none;
+    }
+    .step-3.active {
+      display: block;
+    }
+    .notif-card {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-md);
+      transition: all var(--dur-normal) var(--ease-out);
+    }
+    .notif-card.sent {
+      border-color: rgba(249,139,54,0.3);
+      background: rgba(249,139,54,0.04);
+    }
+    .notif-card.accepted {
+      border-color: rgba(39,174,96,0.3);
+      background: rgba(39,174,96,0.04);
+    }
+    .notif-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+    .notif-info {
+      flex: 1;
+    }
+    .notif-info .notif-name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+    }
+    .notif-info .notif-role {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .notif-status {
+      padding: 0.35rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+    .notif-status.pending {
+      background: rgba(249,139,54,0.12);
+      color: #E8972C;
+    }
+    .notif-status.accepted {
+      background: rgba(39,174,96,0.12);
+      color: #27AE60;
+    }
+    .notif-summary {
+      text-align: center;
+      padding: var(--space-lg);
+      background: var(--surface-alt);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+    .notif-summary p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: var(--space-sm);
+    }
+    .notif-summary strong {
+      color: var(--text);
+    }
+    @media (max-width: 768px) {
+      .list-form-grid, .attach-fields {
+        grid-template-columns: 1fr;
+      }
+      .btn-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body class="list-page">
+
+  <!-- Navbar -->
+  <nav class="lp-nav">
+    <div class="lp-container" style="max-width:1100px;">
+      <a href="index.html" class="lp-logo">Nivantro</a>
+      <a id="backLink" href="landlord-dashboard.html" class="lp-nav-cta">← Dashboard</a>
+    </div>
+  </nav>
+
+  <!-- Property Listing Form -->
+  <main class="list-main">
+    <div class="list-container">
+      <div class="list-header">
+        <h1 id="pageTitle">Add a Property</h1>
+        <p id="pageDesc">Register your property on Nivantro. You can add more details later.</p>
+      </div>
+
+      <!-- Step Indicator -->
+      <div class="step-indicator">
+        <div class="step-dot active" id="stepDot1">1</div>
+        <div class="step-line" id="stepLine1"></div>
+        <div class="step-dot" id="stepDot2">2</div>
+        <div class="step-line" id="stepLine2"></div>
+        <div class="step-dot" id="stepDot3">3</div>
+      </div>
+
+      <div class="list-card">
+        <!-- STEP 1: Property Details -->
+        <form id="listPropertyForm" class="step-1" novalidate>
+          <div class="list-form-grid">
+            <div class="list-field full-width">
+              <label for="propName">Property Name / Label</label>
+              <input type="text" id="propName" placeholder="e.g. Green Park 2BHK, MG Road Flat" required>
+            </div>
+            <div class="list-field">
+              <label for="propType">Property Type</label>
+              <select id="propType" required>
+                <option value="" disabled selected>Select type</option>
+                <option value="Apartment">Apartment</option>
+                <option value="Independent House">Independent House</option>
+                <option value="Villa">Villa</option>
+                <option value="Studio">Studio</option>
+                <option value="PG / Shared">PG / Shared</option>
+                <option value="Office Space">Office Space</option>
+                <option value="Shop / Commercial">Shop / Commercial</option>
+              </select>
+            </div>
+            <div class="list-field">
+              <label for="propBHK">BHK</label>
+              <select id="propBHK" required>
+                <option value="" disabled selected>Select BHK</option>
+                <option value="1 RK">1 RK</option>
+                <option value="1 BHK">1 BHK</option>
+                <option value="2 BHK">2 BHK</option>
+                <option value="3 BHK">3 BHK</option>
+                <option value="4 BHK">4 BHK</option>
+                <option value="4+ BHK">4+ BHK</option>
+              </select>
+            </div>
+            <div class="list-field full-width">
+              <label for="propAddress">Address</label>
+              <input type="text" id="propAddress" placeholder="e.g. 12B, Green Park Apartments, MG Road" required>
+            </div>
+            <div class="list-field">
+              <label for="propCity">City</label>
+              <input type="text" id="propCity" placeholder="e.g. Mumbai" required>
+            </div>
+            <div class="list-field">
+              <label for="propLocality">Locality <span class="optional">(optional)</span></label>
+              <input type="text" id="propLocality" placeholder="e.g. Andheri West">
+            </div>
+          </div>
+
+          <button type="submit" class="lp-submit-btn" id="listSubmitBtn">
+            <span class="lp-submit-text">Add Property</span>
+            <span class="lp-submit-loading" style="display:none;">Adding...</span>
+          </button>
+
+          <div class="lp-form-msg" id="listMsg" style="display:none;"></div>
+        </form>
+
+        <!-- STEP 2: Attach Tenant & Broker -->
+        <div class="step-2" id="step2">
+          <div class="property-success-card">
+            <div style="font-size:2rem;">✅</div>
+            <div class="prop-name" id="listedPropName"></div>
+            <div class="prop-meta" id="listedPropMeta"></div>
+          </div>
+
+          <!-- Attach Person 1 -->
+          <div class="attach-section" id="attachSection1">
+            <div class="attach-label" id="attach1Label">🔑 Attach Tenant <span class="skip-tag">— optional, can be added later</span></div>
+            <div class="lookup-row">
+              <input type="tel" id="person1Phone" placeholder="Enter phone number" maxlength="10" inputmode="numeric">
+              <button class="lookup-btn" id="lookup1Btn" type="button">Search</button>
+            </div>
+            <div class="profile-result" id="profile1"></div>
+          </div>
+
+          <div class="attach-divider"></div>
+
+          <!-- Attach Person 2 -->
+          <div class="attach-section" id="attachSection2">
+            <div class="attach-label" id="attach2Label">🤝 Attach Broker <span class="skip-tag">— optional, can be added later</span></div>
+            <div class="lookup-row">
+              <input type="tel" id="person2Phone" placeholder="Enter phone number" maxlength="10" inputmode="numeric">
+              <button class="lookup-btn" id="lookup2Btn" type="button">Search</button>
+            </div>
+            <div class="profile-result" id="profile2"></div>
+          </div>
+
+          <div class="btn-row" style="margin-top: var(--space-xl);">
+            <button class="btn-skip" id="skipBtn">Skip for Now</button>
+            <button class="lp-submit-btn" id="saveAttachBtn">Save & Continue</button>
+          </div>
+
+          <div class="lp-form-msg" id="attachMsg" style="display:none;"></div>
+        </div>
+
+        <!-- STEP 3: Notification Status -->
+        <div class="step-3" id="step3">
+          <div class="property-success-card">
+            <div style="font-size:2rem;">📨</div>
+            <div class="prop-name">Invitations Sent!</div>
+            <div class="prop-meta">Waiting for all stakeholders to accept</div>
+          </div>
+
+          <div id="notifCards"></div>
+
+          <div class="notif-summary">
+            <p>Property listing will be marked <strong>Active</strong> once all invited stakeholders accept.</p>
+            <p>They will receive a notification to review and accept the invitation.</p>
+          </div>
+
+          <button class="lp-submit-btn" id="goToDashBtn">Go to Dashboard</button>
+        </div>
+
+        <p class="list-back"><a id="backLink2" href="landlord-dashboard.html">← Back to Dashboard</a></p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="lp-footer">
+    <img src="logo.png" alt="Nivantro Logo" style="height:120px; width:auto; object-fit:contain; background:#ffffff; padding:1rem 2rem; border-radius:12px; margin-bottom:1.5rem; box-shadow:0 6px 12px rgba(0,0,0,0.1);">
+    <p>&copy; 2025 Nivantro India. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Detect role from URL
+    const params = new URLSearchParams(window.location.search);
+    const isBroker = params.get('role') === 'broker';
+    const dashboardUrl = isBroker ? 'broker-dashboard.html' : 'landlord-dashboard.html';
+
+    // Update nav and back links
+    document.getElementById('backLink').href = dashboardUrl;
+    document.getElementById('backLink2').href = dashboardUrl;
+
+    // Role labels
+    const role1 = isBroker ? { icon: '🏢', label: 'Landlord' } : { icon: '🔑', label: 'Tenant' };
+    const role2 = isBroker ? { icon: '🔑', label: 'Tenant' } : { icon: '🤝', label: 'Broker' };
+
+    // Update Step 2 labels based on role
+    if (isBroker) {
+      document.getElementById('attach1Label').innerHTML = '🏢 Attach Landlord <span class="skip-tag">— optional, can be added later</span>';
+      document.getElementById('person1Phone').placeholder = 'Enter landlord phone number';
+      document.getElementById('attach2Label').innerHTML = '🔑 Attach Tenant <span class="skip-tag">— optional, can be added later</span>';
+      document.getElementById('person2Phone').placeholder = 'Enter tenant phone number';
+    }
+
+    // ===== SIMULATED REGISTERED PROFILES DATABASE =====
+    // In production, this would be a Firebase/API lookup
+    const registeredProfiles = {
+      '9876543210': { name: 'Rohit Patel', role: 'Landlord', city: 'Mumbai', email: 'rohit@example.com' },
+      '9876543211': { name: 'Priya Sharma', role: 'Tenant', city: 'Mumbai', email: 'priya@example.com' },
+      '9876543212': { name: 'Suresh Kumar', role: 'Broker', city: 'Mumbai', email: 'suresh@example.com' },
+      '9123456789': { name: 'Anita Desai', role: 'Tenant', city: 'Pune', email: 'anita@example.com' },
+      '9123456780': { name: 'Vikram Singh', role: 'Landlord', city: 'Delhi', email: 'vikram@example.com' },
+      '9123456781': { name: 'Meena Reddy', role: 'Broker', city: 'Bangalore', email: 'meena@example.com' },
+    };
+
+    // Track found profiles
+    const foundProfiles = { 1: null, 2: null };
+
+    // Helpers
+    function showMsg(el, msg, type) {
+      el.textContent = msg;
+      el.className = 'lp-form-msg lp-form-msg--' + type;
+      el.style.display = 'block';
+    }
+
+    function advanceStep(from, to) {
+      document.getElementById('stepDot' + from).classList.remove('active');
+      document.getElementById('stepDot' + from).classList.add('done');
+      document.getElementById('stepDot' + from).textContent = '✓';
+      document.getElementById('stepLine' + from).classList.add('done');
+      document.getElementById('stepDot' + to).classList.add('active');
+    }
+
+    function getInitials(name) {
+      return name.split(' ').map(function(w) { return w[0]; }).join('').toUpperCase().slice(0, 2);
+    }
+
+    // ===== PHONE LOOKUP =====
+    function lookupProfile(num) {
+      var phone = document.getElementById('person' + num + 'Phone').value.trim();
+      var profileEl = document.getElementById('profile' + num);
+      var btn = document.getElementById('lookup' + num + 'Btn');
+      var expectedRole = (num === 1) ? role1.label : role2.label;
+
+      if (!phone || phone.length !== 10 || !/^\d{10}$/.test(phone)) {
+        profileEl.className = 'profile-result active not-found';
+        profileEl.innerHTML = '<div class="profile-avatar" style="background:var(--danger);">!</div><div class="profile-info"><div class="profile-name">Invalid Number</div><div class="profile-detail">Please enter a valid 10-digit phone number</div></div>';
+        foundProfiles[num] = null;
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Searching...';
+
+      setTimeout(function() {
+        var profile = registeredProfiles[phone];
+
+        if (profile) {
+          foundProfiles[num] = { name: profile.name, role: profile.role, city: profile.city, email: profile.email, phone: phone };
+          profileEl.className = 'profile-result active';
+          profileEl.innerHTML = '<div class="profile-avatar">' + getInitials(profile.name) + '</div>' +
+            '<div class="profile-info"><div class="profile-name">' + profile.name + '</div>' +
+            '<div class="profile-detail">' + profile.role + ' · ' + profile.city + ' · ' + profile.email + '</div></div>' +
+            '<button class="profile-remove" onclick="removeProfile(' + num + ')" title="Remove">✕</button>';
+          document.getElementById('person' + num + 'Phone').disabled = true;
+          btn.style.display = 'none';
+        } else {
+          foundProfiles[num] = null;
+          profileEl.className = 'profile-result active not-found';
+          profileEl.innerHTML = '<div class="profile-avatar" style="background:#E8972C;">?</div>' +
+            '<div class="profile-info"><div class="profile-name">No registered ' + expectedRole.toLowerCase() + ' found</div>' +
+            '<div class="profile-detail">+91 ' + phone + ' is not registered on Nivantro yet</div></div>';
+          btn.textContent = 'Search';
+          btn.disabled = false;
+        }
+      }, 800);
+    }
+
+    function removeProfile(num) {
+      foundProfiles[num] = null;
+      var profileEl = document.getElementById('profile' + num);
+      profileEl.className = 'profile-result';
+      profileEl.innerHTML = '';
+      var phoneInput = document.getElementById('person' + num + 'Phone');
+      phoneInput.disabled = false;
+      phoneInput.value = '';
+      phoneInput.focus();
+      var btn = document.getElementById('lookup' + num + 'Btn');
+      btn.style.display = '';
+      btn.disabled = false;
+      btn.textContent = 'Search';
+    }
+
+    // Bind search buttons
+    document.getElementById('lookup1Btn').addEventListener('click', function() { lookupProfile(1); });
+    document.getElementById('lookup2Btn').addEventListener('click', function() { lookupProfile(2); });
+
+    // Search on Enter key
+    document.getElementById('person1Phone').addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); lookupProfile(1); } });
+    document.getElementById('person2Phone').addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); lookupProfile(2); } });
+
+    // ===== STEP 1: Add Property =====
+    var form = document.getElementById('listPropertyForm');
+    var submitBtn = document.getElementById('listSubmitBtn');
+    var formMsg = document.getElementById('listMsg');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      var required = ['propName', 'propType', 'propBHK', 'propAddress', 'propCity'];
+      for (var i = 0; i < required.length; i++) {
+        var el = document.getElementById(required[i]);
+        if (!el.value.trim()) {
+          showMsg(formMsg, 'Please fill in all required fields.', 'error');
+          el.focus();
+          return;
+        }
+      }
+
+      submitBtn.disabled = true;
+      form.querySelector('.lp-submit-text').style.display = 'none';
+      form.querySelector('.lp-submit-loading').style.display = 'inline';
+
+      var propName = document.getElementById('propName').value.trim();
+      var propType = document.getElementById('propType').value;
+      var propBHK = document.getElementById('propBHK').value;
+      var propCity = document.getElementById('propCity').value.trim();
+
+      window._propData = { propName: propName, propType: propType, propBHK: propBHK, propCity: propCity };
+
+      setTimeout(function() {
+        form.style.display = 'none';
+        document.getElementById('step2').classList.add('active');
+        advanceStep(1, 2);
+
+        document.getElementById('pageTitle').textContent = 'Attach People';
+        document.getElementById('pageDesc').textContent = isBroker
+          ? 'Search registered profiles to connect the landlord and tenant.'
+          : 'Search registered profiles to connect a tenant and broker.';
+
+        document.getElementById('listedPropName').textContent = propName;
+        document.getElementById('listedPropMeta').textContent = propBHK + ' ' + propType + ' · ' + propCity;
+      }, 1000);
+    });
+
+    // ===== STEP 2: Attach People =====
+    var attachMsg = document.getElementById('attachMsg');
+
+    function goToStep3(people) {
+      document.getElementById('step2').classList.remove('active');
+      document.getElementById('step2').style.display = 'none';
+      document.getElementById('step3').classList.add('active');
+      advanceStep(2, 3);
+
+      document.getElementById('pageTitle').textContent = 'Notifications Sent';
+      document.getElementById('pageDesc').textContent = 'Invitations sent to all stakeholders for acceptance.';
+
+      var container = document.getElementById('notifCards');
+      container.innerHTML = '';
+
+      if (people.length === 0) {
+        document.getElementById('step3').querySelector('.property-success-card .prop-name').textContent = 'Property Listed!';
+        document.getElementById('step3').querySelector('.property-success-card .prop-meta').textContent = 'No stakeholders attached yet — you can add them later from your dashboard.';
+        document.querySelector('.notif-summary').style.display = 'none';
+      }
+
+      for (var i = 0; i < people.length; i++) {
+        var p = people[i];
+        var card = document.createElement('div');
+        card.className = 'notif-card sent';
+        card.innerHTML = '<div class="notif-icon">' + p.icon + '</div>' +
+          '<div class="notif-info"><div class="notif-name">' + p.name + '</div>' +
+          '<div class="notif-role">' + p.role + ' · +91 ' + p.phone + ' · ' + p.city + '</div></div>' +
+          '<span class="notif-status pending">⏳ Pending</span>';
+        container.appendChild(card);
+      }
+    }
+
+    document.getElementById('saveAttachBtn').addEventListener('click', function() {
+      var people = [];
+
+      if (foundProfiles[1]) {
+        people.push({ name: foundProfiles[1].name, phone: foundProfiles[1].phone, city: foundProfiles[1].city, icon: role1.icon, role: role1.label });
+      }
+      if (foundProfiles[2]) {
+        people.push({ name: foundProfiles[2].name, phone: foundProfiles[2].phone, city: foundProfiles[2].city, icon: role2.icon, role: role2.label });
+      }
+
+      if (people.length === 0) {
+        showMsg(attachMsg, 'Please search and select at least one registered profile, or click "Skip for Now".', 'error');
+        return;
+      }
+
+      this.disabled = true;
+      document.getElementById('skipBtn').disabled = true;
+
+      setTimeout(function() { goToStep3(people); }, 800);
+    });
+
+    document.getElementById('skipBtn').addEventListener('click', function() {
+      this.disabled = true;
+      document.getElementById('saveAttachBtn').disabled = true;
+      setTimeout(function() { goToStep3([]); }, 500);
+    });
+
+    // ===== STEP 3: Go to Dashboard =====
+    document.getElementById('goToDashBtn').addEventListener('click', function() {
+      window.location.href = dashboardUrl;
+    });
+  </script>
+
+</body>
+</html>

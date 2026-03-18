@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Move-Out Comparison — Nivantro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background-color: var(--surface-alt); padding-bottom: 6rem; }
+    
+    .compare-header {
+      background: var(--surface-dark);
+      color: #fff;
+      padding: 3rem 1.5rem 2rem;
+      border-radius: 0 0 24px 24px;
+      margin-bottom: 2rem;
+    }
+    .compare-badge {
+      display: inline-block;
+      background: rgba(232,151,44,0.2);
+      color: var(--secondary);
+      padding: 0.4rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .compare-title { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .compare-meta { color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+    /* Summary Bar */
+    .summary-bar {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: var(--shadow-md);
+      margin: -3.5rem 1.5rem 2rem;
+      position: relative;
+    }
+    .summary-stat { text-align: center; flex: 1; }
+    .summary-val { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+    .summary-lbl { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+    .val-danger { color: var(--danger); }
+
+    /* Layout for Comparison */
+    .compare-card {
+      background: var(--surface);
+      border-radius: 12px;
+      margin: 0 1.5rem 2rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .room-header {
+      padding: 1rem 1.5rem;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .room-name { font-weight: 600; font-size: 1.1rem; }
+    .status-tag { padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    .status-clear { background: rgba(39,174,96,0.1); color: var(--success); }
+    .status-alert { background: rgba(231,76,60,0.1); color: var(--danger); }
+
+    .split-view {
+      display: flex;
+      flex-direction: column;
+    }
+    @media(min-width: 768px) { .split-view { flex-direction: row; } }
+    
+    .view-side {
+      flex: 1;
+      padding: 1rem;
+      position: relative;
+    }
+    .view-side:first-child { border-bottom: 1px solid var(--border); }
+    @media(min-width: 768px) {
+      .view-side:first-child { border-bottom: none; border-right: 1px solid var(--border); }
+    }
+    
+    .view-label {
+      position: absolute; top: 1.5rem; left: 1.5rem; z-index: 2;
+      background: rgba(0,0,0,0.7); color: #fff; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; backdrop-filter: blur(4px);
+    }
+    .view-photo {
+      width: 100%; height: 200px; object-fit: cover; border-radius: 8px; display: block;
+    }
+    
+    /* Discrepancy Box */
+    .discrepancy {
+      padding: 1rem 1.5rem;
+      background: rgba(231,76,60,0.03);
+      border-top: 1px solid rgba(231,76,60,0.1);
+    }
+    .discrepancy-title { font-weight: 600; color: var(--danger); font-size: 0.95rem; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;}
+    .discrepancy-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* Fixed Bottom Action */
+    .fixed-action {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--surface);
+      padding: 1rem 1.5rem;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      display: flex; gap: 1rem;
+      z-index: 50;
+    }
+    .btn-outline {
+      flex: 1; padding: 1rem; border-radius: 8px; font-weight: 600; border: 1px solid var(--danger); color: var(--danger); background: transparent; cursor: pointer; text-align: center;
+    }
+    .btn-fill {
+      flex: 2; padding: 1rem; border-radius: 8px; font-weight: 600; background: var(--primary); color: #fff; border: none; cursor: pointer; text-align: center;
+    }
+
+    /* Final State Overlay */
+    .settlement-card {
+      background: var(--primary); color: #fff;
+      border-radius: 12px; margin: 0 1.5rem 2rem; padding: 1.5rem;
+      display: none; box-shadow: var(--shadow-lg);
+    }
+    .settlement-card.active { display: block; }
+    .settlement-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .settlement-desc { font-size: 0.9rem; opacity: 0.8; margin-bottom: 1.5rem; }
+    .deduction-row { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 0; font-size: 0.9rem; }
+    .deduction-row:last-child { border-bottom: none; font-weight: 700; font-size: 1.1rem; padding-top: 1rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Nav -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="landlord-dashboard.html" class="nav-back">← Back</a>
+      <div class="nav-logo" style="display:flex; align-items:center; gap:8px;"><img src="logo.png" alt="Nivantro Logo" style="height:80px; width:auto; object-fit:contain; mix-blend-mode:multiply;"> <span style="font-size:1.1rem; font-weight:700;">Compare</span></div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="compare-header">
+    <div class="compare-badge">AI End-of-Lease Scan</div>
+    <h1 class="compare-title">Move-Out Analysis</h1>
+    <div class="compare-meta">
+      📍 402, Sea View Apartments, Mumbai<br>
+      Comparing: Oct 2024 (Baseline) vs Oct 2025 (Current)
+    </div>
+  </header>
+
+  <!-- Summary Bar -->
+  <div class="summary-bar">
+    <div class="summary-stat">
+      <div class="summary-val">8</div>
+      <div class="summary-lbl">Zones Checked</div>
+    </div>
+    <div class="summary-stat">
+      <div class="summary-val val-danger">1</div>
+      <div class="summary-lbl">New Defect</div>
+    </div>
+    <div class="summary-stat">
+      <div class="summary-val" style="color:var(--success)">7</div>
+      <div class="summary-lbl">Matched</div>
+    </div>
+  </div>
+
+  <!-- Settlement Card (Hidden initially) -->
+  <div class="settlement-card" id="settlementCard">
+    <div class="settlement-title">Final Settlement Agreed</div>
+    <div class="settlement-desc">Both parties have approved the move-out ledger. The calculated deduction will be processed from the Escrow deposit automatically.</div>
+    <div class="deduction-row">
+      <span>Original Deposit</span>
+      <span>₹90,000</span>
+    </div>
+    <div class="deduction-row" style="color:#E74C3C">
+      <span>Wall Repair (Living Room)</span>
+      <span>- ₹4,500</span>
+    </div>
+    <div class="deduction-row" style="color:#E74C3C">
+      <span>Standard Deep Cleaning</span>
+      <span>- ₹2,000</span>
+    </div>
+    <div class="deduction-row">
+      <span>Final Refund to Tenant</span>
+      <span>₹83,500</span>
+    </div>
+  </div>
+
+  <h2 class="section-title">Discrepancy Detected</h2>
+
+  <!-- Discrepancy Card -->
+  <div class="compare-card">
+    <div class="room-header">
+      <div class="room-name">Living Room — Left Wall</div>
+      <div class="status-tag status-alert">⚠️ Review Required</div>
+    </div>
+    
+    <div class="split-view">
+      <!-- Move In Baseline -->
+      <div class="view-side">
+        <div class="view-label">Baseline (Oct '24)</div>
+        <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Move In" class="view-photo">
+      </div>
+      <!-- Move Out Current -->
+      <div class="view-side">
+        <div class="view-label" style="background:var(--danger)">Current (Oct '25)</div>
+        <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Move Out" class="view-photo" style="filter: brightness(0.9) contrast(1.1);">
+        <!-- Simulated new defect AI box -->
+        <div style="position:absolute; top:30%; left:50%; width:150px; height:200px; border:2px solid #E74C3C; background:rgba(231,76,60,0.1); border-radius:4px; pointer-events:none;"></div>
+      </div>
+    </div>
+
+    <div class="discrepancy">
+      <div class="discrepancy-title"><span>!</span> New Damage Detected: Large Scuff/Dent</div>
+      <div class="discrepancy-desc">AI comparison shows a new 15x20cm abrasion on the central wall area that was not present in the baseline ledger. Classified as damage (not standard wear and tear). Estimated repair cost: ₹4,500.</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Cleared Zones</h2>
+
+  <!-- Clean Room -->
+  <div class="compare-card">
+    <div class="room-header">
+      <div class="room-name">Kitchen Counter</div>
+      <div class="status-tag status-clear">✓ Matches Baseline</div>
+    </div>
+    <div class="split-view">
+      <div class="view-side">
+        <div class="view-label">Baseline (Oct '24)</div>
+        <img src="https://images.unsplash.com/photo-1556910103-1c02745a828$ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Move In" class="view-photo" style="height: 120px;">
+      </div>
+      <div class="view-side">
+        <div class="view-label" style="background:var(--success)">Current (Oct '25)</div>
+        <img src="https://images.unsplash.com/photo-1556910103-1c02745a828$ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Move Out" class="view-photo" style="height: 120px;">
+      </div>
+    </div>
+  </div>
+  
+  <br><br><br>
+
+  <!-- Action Bar -->
+  <div class="fixed-action" id="actionBar">
+    <button class="btn-outline" id="disputeBtn">Dispute Claim</button>
+    <button class="btn-fill" id="approveBtn">Accept Liability & Settle</button>
+  </div>
+
+  <script>
+    const approveBtn = document.getElementById('approveBtn');
+    const disputeBtn = document.getElementById('disputeBtn');
+    const actionBar = document.getElementById('actionBar');
+    const settlementCard = document.getElementById('settlementCard');
+
+    // Simulate clicking accept liability
+    approveBtn.addEventListener('click', function() {
+      // Hide action bar
+      actionBar.style.display = 'none';
+      document.body.style.paddingBottom = '2rem';
+      
+      // Show Final Settlement
+      settlementCard.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    disputeBtn.addEventListener('click', function() {
+      alert("Dispute raised. A Nivantro arbitrator will review the AI evidence ledger and the baseline photos within 24 hours.");
+    });
+  </script>
+</body>
+</html>

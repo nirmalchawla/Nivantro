@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register — Nivantro India</title>
+  <meta name="description" content="Create your Nivantro account as a Landlord, Tenant, or Broker. Join India's first trusted rental ecosystem.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="landing.css">
+  <style>
+    /* Registration Page Specific Styles */
+    .reg-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .reg-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: calc(80px + var(--space-xl)) var(--space-lg) var(--space-xl);
+      background: linear-gradient(175deg, var(--surface) 0%, var(--surface-alt) 50%, rgba(29,53,87,0.04) 100%);
+    }
+    .reg-container {
+      max-width: 560px;
+      width: 100%;
+    }
+    .reg-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+    .reg-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: var(--space-sm);
+      letter-spacing: -0.5px;
+    }
+    .reg-header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+    .reg-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-lg);
+    }
+    .reg-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin: var(--space-xl) 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    .reg-divider::before, .reg-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .reg-login-link {
+      text-align: center;
+      margin-top: var(--space-lg);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+    .reg-login-link a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .reg-login-link a:hover {
+      text-decoration: underline;
+    }
+    .reg-form-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    .reg-form-fields .lp-field input[type="text"],
+    .reg-form-fields .lp-field input[type="email"] {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text);
+      background: var(--surface);
+      transition: all var(--dur-fast) var(--ease-out);
+      outline: none;
+    }
+    .reg-form-fields .lp-field input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(29,53,87,0.1);
+    }
+    @media (max-width: 768px) {
+      .reg-form-fields {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="reg-page">
+
+  <!-- Navbar -->
+  <nav class="lp-nav">
+    <div class="lp-container" style="max-width:1100px;">
+      <a href="index.html" class="lp-logo">Nivantro</a>
+      <a href="login.html" class="lp-nav-cta">Login</a>
+    </div>
+  </nav>
+
+  <!-- Registration Form -->
+  <main class="reg-main">
+    <div class="reg-container">
+      <div class="reg-header">
+        <h1>Create your account</h1>
+        <p>Join India's first trusted rental ecosystem</p>
+      </div>
+
+      <div class="reg-card">
+        <form id="registerForm" novalidate>
+          <!-- Step 1: Role Selection -->
+          <p style="font-weight:600; font-size:0.95rem; margin-bottom:var(--space-md); color:var(--text);">I am a...</p>
+          <div class="lp-role-selector">
+            <label class="lp-role-option">
+              <input type="radio" name="role" value="Landlord" required>
+              <div class="lp-role-card">
+                <span class="lp-role-icon">🏢</span>
+                <span class="lp-role-label">Landlord</span>
+              </div>
+            </label>
+            <label class="lp-role-option">
+              <input type="radio" name="role" value="Tenant">
+              <div class="lp-role-card">
+                <span class="lp-role-icon">🔑</span>
+                <span class="lp-role-label">Tenant</span>
+              </div>
+            </label>
+            <label class="lp-role-option">
+              <input type="radio" name="role" value="Broker">
+              <div class="lp-role-card">
+                <span class="lp-role-icon">🤝</span>
+                <span class="lp-role-label">Broker</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="reg-divider">Profile Details</div>
+
+          <!-- Step 2: Profile Fields -->
+          <div class="reg-form-fields">
+            <div class="lp-field">
+              <label for="regName">Full Name</label>
+              <input type="text" id="regName" name="name" placeholder="e.g. Priya Sharma" required>
+            </div>
+            <div class="lp-field">
+              <label for="regEmail">Email Address</label>
+              <input type="email" id="regEmail" name="email" placeholder="e.g. priya@example.com" required>
+            </div>
+            <div class="lp-field">
+              <label for="regPhone">Phone Number</label>
+              <div class="lp-phone-input">
+                <span class="lp-phone-prefix">+91</span>
+                <input type="tel" id="regPhone" name="phone" placeholder="98765 43210" pattern="[0-9]{10}" maxlength="10" required>
+              </div>
+            </div>
+            <div class="lp-field">
+              <label for="regCity">City</label>
+              <input type="text" id="regCity" name="city" placeholder="e.g. Mumbai" required>
+            </div>
+          </div>
+
+          <button type="submit" class="lp-submit-btn" id="regSubmitBtn">
+            <span class="lp-submit-text">Create Account</span>
+            <span class="lp-submit-loading" style="display:none;">Creating account...</span>
+          </button>
+
+          <div class="lp-form-msg" id="regMsg" style="display:none;"></div>
+        </form>
+
+        <p class="reg-login-link">Already have an account? <a href="login.html">Login here</a></p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="lp-footer">
+    <img src="logo.png" alt="Nivantro Logo" style="height:120px; width:auto; object-fit:contain; background:#ffffff; padding:1rem 2rem; border-radius:12px; margin-bottom:1.5rem; box-shadow:0 6px 12px rgba(0,0,0,0.1);">
+    <p>&copy; 2025 Nivantro India. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Registration Form Submission
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQCJDSPpHypPjJL9265tik0pAz0nlfMpFEZ2be-V1lkRMZWgQPg3iTVKD-0vFl-f0w/exec';
+
+    const form = document.getElementById('registerForm');
+    const submitBtn = document.getElementById('regSubmitBtn');
+    const formMsg = document.getElementById('regMsg');
+    const submitText = form.querySelector('.lp-submit-text');
+    const submitLoading = form.querySelector('.lp-submit-loading');
+
+    function showMessage(msg, type) {
+      formMsg.textContent = msg;
+      formMsg.className = 'lp-form-msg lp-form-msg--' + type;
+      formMsg.style.display = 'block';
+    }
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      // Validate role
+      const role = form.querySelector('input[name="role"]:checked');
+      if (!role) {
+        showMessage('Please select your role.', 'error');
+        return;
+      }
+
+      // Validate name
+      const name = document.getElementById('regName').value.trim();
+      if (!name) {
+        showMessage('Please enter your full name.', 'error');
+        return;
+      }
+
+      // Validate email
+      const email = document.getElementById('regEmail').value.trim();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showMessage('Please enter a valid email address.', 'error');
+        return;
+      }
+
+      // Validate phone
+      const phone = document.getElementById('regPhone').value.trim();
+      if (!phone || phone.length !== 10 || !/^\d{10}$/.test(phone)) {
+        showMessage('Please enter a valid 10-digit phone number.', 'error');
+        return;
+      }
+
+      // Validate city
+      const city = document.getElementById('regCity').value.trim();
+      if (!city) {
+        showMessage('Please enter your city.', 'error');
+        return;
+      }
+
+      // Disable button
+      submitBtn.disabled = true;
+      submitText.style.display = 'none';
+      submitLoading.style.display = 'inline';
+
+      try {
+        const formData = new FormData();
+        formData.append('source', 'registration');
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('phone', phone);
+        formData.append('city', city);
+        formData.append('role', role.value);
+
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          body: formData,
+          mode: 'no-cors'
+        });
+
+        showMessage('🎉 Account created! Redirecting to your dashboard...', 'success');
+        form.reset();
+
+        // Redirect to role-specific dashboard after 2 seconds
+        setTimeout(() => {
+          const dashboards = {
+            'Landlord': 'landlord-dashboard.html',
+            'Tenant': 'tenant-dashboard.html',
+            'Broker': 'broker-dashboard.html'
+          };
+          window.location.href = dashboards[role.value] || 'index.html';
+        }, 2000);
+
+      } catch (err) {
+        showMessage('Something went wrong. Please try again.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitText.style.display = 'inline';
+        submitLoading.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

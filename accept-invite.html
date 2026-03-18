@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accept Invitation — Nivantro India</title>
+  <meta name="description" content="Review and accept your property invitation on Nivantro.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="landing.css">
+  <style>
+    .invite-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .invite-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: calc(80px + var(--space-xl)) var(--space-lg) var(--space-xl);
+      background: linear-gradient(175deg, var(--surface) 0%, var(--surface-alt) 50%, rgba(29,53,87,0.04) 100%);
+    }
+    .invite-container {
+      max-width: 520px;
+      width: 100%;
+    }
+    .invite-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+    .invite-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: var(--space-sm);
+      letter-spacing: -0.5px;
+    }
+    .invite-header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+    .invite-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-lg);
+    }
+    .invite-from {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      background: var(--surface-alt);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-xl);
+    }
+    .invite-from-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .invite-from-info {
+      flex: 1;
+    }
+    .invite-from-name {
+      font-weight: 700;
+      color: var(--text);
+    }
+    .invite-from-role {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .invite-property {
+      text-align: center;
+      padding: var(--space-xl);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-xl);
+    }
+    .invite-property-icon {
+      font-size: 2.5rem;
+      margin-bottom: var(--space-sm);
+    }
+    .invite-property-name {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: var(--space-xs);
+    }
+    .invite-property-meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: var(--space-sm);
+    }
+    .invite-property-addr {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .invite-role-badge {
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      background: rgba(29,53,87,0.08);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: 50px;
+      margin-bottom: var(--space-xl);
+    }
+    .invite-msg {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+    .invite-msg p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .invite-msg strong {
+      color: var(--text);
+    }
+    .invite-actions {
+      display: flex;
+      gap: var(--space-md);
+    }
+    .invite-actions button {
+      flex: 1;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all var(--dur-normal) var(--ease-out);
+      border: none;
+    }
+    .btn-accept {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(29,53,87,0.25);
+    }
+    .btn-accept:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(29,53,87,0.35);
+    }
+    .btn-decline {
+      background: var(--surface);
+      color: var(--text-muted);
+      border: 2px solid var(--border) !important;
+    }
+    .btn-decline:hover {
+      border-color: var(--danger) !important;
+      color: var(--danger);
+    }
+    .invite-result {
+      text-align: center;
+      padding: var(--space-xl);
+      display: none;
+    }
+    .invite-result.active {
+      display: block;
+    }
+    .invite-result-icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-md);
+    }
+    .invite-result h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: var(--space-sm);
+    }
+    .invite-result p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .invite-result.accepted h2 { color: var(--success); }
+    .invite-result.declined h2 { color: var(--danger); }
+    @media (max-width: 480px) {
+      .invite-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body class="invite-page">
+
+  <!-- Navbar -->
+  <nav class="lp-nav">
+    <div class="lp-container" style="max-width:1100px;">
+      <a href="index.html" class="lp-logo">Nivantro</a>
+    </div>
+  </nav>
+
+  <main class="invite-main">
+    <div class="invite-container">
+      <div class="invite-header">
+        <h1>You've been invited!</h1>
+        <p>Review the details below and accept or decline</p>
+      </div>
+
+      <div class="invite-card">
+        <!-- Invitation Content -->
+        <div id="inviteContent">
+          <!-- From -->
+          <div class="invite-from">
+            <div class="invite-from-avatar" id="fromAvatar">RP</div>
+            <div class="invite-from-info">
+              <div class="invite-from-name" id="fromName">Rohit Patel</div>
+              <div class="invite-from-role" id="fromRole">Landlord · +91 98765 43210</div>
+            </div>
+          </div>
+
+          <!-- Your Role -->
+          <div style="text-align:center;">
+            <span class="invite-role-badge" id="yourRole">You're invited as: Tenant</span>
+          </div>
+
+          <!-- Property Details -->
+          <div class="invite-property">
+            <div class="invite-property-icon">🏠</div>
+            <div class="invite-property-name" id="propName">Green Park 2BHK</div>
+            <div class="invite-property-meta" id="propMeta">2 BHK Apartment · Mumbai</div>
+            <div class="invite-property-addr" id="propAddr">12B, Green Park Apartments, MG Road, Andheri West</div>
+          </div>
+
+          <!-- Message -->
+          <div class="invite-msg">
+            <p>By accepting this invitation, you confirm that you are associated with this property as the <strong id="roleText">Tenant</strong>. All parties will be notified and the property listing will become <strong>Active</strong>.</p>
+          </div>
+
+          <!-- Actions -->
+          <div class="invite-actions">
+            <button class="btn-decline" id="declineBtn">Decline</button>
+            <button class="btn-accept" id="acceptBtn">Accept Invitation</button>
+          </div>
+        </div>
+
+        <!-- Result: Accepted -->
+        <div class="invite-result accepted" id="resultAccepted">
+          <div class="invite-result-icon">✅</div>
+          <h2>Invitation Accepted!</h2>
+          <p>You've been added to this property. All stakeholders have been notified.</p>
+          <button class="lp-submit-btn" style="margin-top:var(--space-xl);" id="goToDash">Go to My Dashboard</button>
+        </div>
+
+        <!-- Result: Declined -->
+        <div class="invite-result declined" id="resultDeclined">
+          <div class="invite-result-icon">❌</div>
+          <h2>Invitation Declined</h2>
+          <p>You've declined this invitation. The property owner has been notified.</p>
+          <button class="lp-submit-btn" style="margin-top:var(--space-xl);" onclick="window.location.href='index.html'">Back to Home</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="lp-footer">
+    <img src="logo.png" alt="Nivantro Logo" style="height:120px; width:auto; object-fit:contain; background:#ffffff; padding:1rem 2rem; border-radius:12px; margin-bottom:1.5rem; box-shadow:0 6px 12px rgba(0,0,0,0.1);">
+    <p>&copy; 2025 Nivantro India. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // In real implementation, invitation data would come from DB via URL token
+    // For demo, we read from URL params
+    const params = new URLSearchParams(window.location.search);
+    const role = params.get('role') || 'Tenant';
+
+    // Set dashboard URL based on role
+    const dashMap = {
+      'Tenant': 'tenant-dashboard.html',
+      'Landlord': 'landlord-dashboard.html',
+      'Broker': 'broker-dashboard.html'
+    };
+
+    document.getElementById('yourRole').textContent = "You're invited as: " + role;
+    document.getElementById('roleText').textContent = role;
+    document.getElementById('goToDash').addEventListener('click', () => {
+      window.location.href = dashMap[role] || 'index.html';
+    });
+
+    // Accept
+    document.getElementById('acceptBtn').addEventListener('click', function() {
+      document.getElementById('inviteContent').style.display = 'none';
+      document.getElementById('resultAccepted').classList.add('active');
+    });
+
+    // Decline
+    document.getElementById('declineBtn').addEventListener('click', function() {
+      document.getElementById('inviteContent').style.display = 'none';
+      document.getElementById('resultDeclined').classList.add('active');
+    });
+  </script>
+</body>
+</html>

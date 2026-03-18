@@ -7,18 +7,18 @@
 
 :root {
   /* Brand Colors */
-  --primary: #0D7C66;
-  --primary-dark: #095e4d;
-  --primary-light: #10a37f;
-  --accent: #1EAEC9;
-  --accent-light: #5bc8db;
+  --primary: #1D3557;
+  --primary-dark: #152844;
+  --primary-light: #2B4A7A;
+  --accent: #457B9D;
+  --accent-light: #6CA0BD;
   --secondary: #E8972C;
   --surface: #ffffff;
-  --surface-alt: #f8faf9;
-  --surface-dark: #0b1a14;
-  --text: #1a2e28;
-  --text-muted: #5f7a72;
-  --border: rgba(13,124,102,0.1);
+  --surface-alt: #f6f8fb;
+  --surface-dark: #0d1b2a;
+  --text: #1a1f2e;
+  --text-muted: #596275;
+  --border: rgba(29,53,87,0.1);
   --danger: #E74C3C;
   --success: #27AE60;
   --warning: #F39C12;
@@ -113,13 +113,13 @@ body {
 .lp-nav-cta:hover {
   background: var(--primary-dark);
   transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(13,124,102,0.3);
+  box-shadow: 0 4px 15px rgba(29,53,87,0.3);
 }
 
 /* ========== HERO / EXPLAINER ========== */
 .lp-hero {
   padding: calc(80px + var(--space-3xl)) 0 var(--space-3xl);
-  background: linear-gradient(175deg, var(--surface) 0%, var(--surface-alt) 50%, rgba(13,124,102,0.04) 100%);
+  background: linear-gradient(175deg, var(--surface) 0%, var(--surface-alt) 50%, rgba(29,53,87,0.04) 100%);
 }
 .lp-hero-content {
   text-align: center;
@@ -129,7 +129,7 @@ body {
 .lp-badge {
   display: inline-block;
   padding: 0.4rem 1.2rem;
-  background: rgba(13,124,102,0.08);
+  background: rgba(29,53,87,0.08);
   color: var(--primary);
   font-weight: 600;
   font-size: 0.85rem;
@@ -158,7 +158,7 @@ body {
   left: 0;
   right: 0;
   height: 6px;
-  background: rgba(13,124,102,0.15);
+  background: rgba(29,53,87,0.15);
   border-radius: 3px;
 }
 .lp-subtitle {
@@ -259,11 +259,11 @@ body {
   border-radius: var(--radius-md);
   text-decoration: none;
   transition: all var(--dur-normal) var(--ease-out);
-  box-shadow: 0 6px 20px rgba(13,124,102,0.25);
+  box-shadow: 0 6px 20px rgba(29,53,87,0.25);
 }
 .lp-hero-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(13,124,102,0.35);
+  box-shadow: 0 10px 30px rgba(29,53,87,0.35);
 }
 
 /* ========== VIDEO SECTION ========== */
@@ -286,6 +286,28 @@ body {
   max-width: 550px;
   margin: 0 auto var(--space-xl);
 }
+/* Video Grid */
+.lp-video-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.lp-video-col {
+  text-align: center;
+}
+.lp-video-lang {
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: var(--space-md);
+  letter-spacing: 0.3px;
+}
 .lp-video-wrapper {
   max-width: 800px;
   margin: 0 auto;
@@ -299,7 +321,7 @@ body {
   padding-bottom: 56.25%; /* 16:9 */
   height: 0;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(13,124,102,0.2), rgba(30,174,201,0.1));
+  background: linear-gradient(135deg, rgba(29,53,87,0.2), rgba(69,123,157,0.1));
 }
 .lp-video-container iframe {
   position: absolute;
@@ -308,6 +330,43 @@ body {
   width: 100%;
   height: 100%;
   border: none;
+}
+.lp-video-thumb {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+.lp-video-thumb img {
+  width: 100%;
+  display: block;
+  transition: transform var(--dur-normal) var(--ease-out);
+}
+.lp-video-thumb:hover img {
+  transform: scale(1.05);
+}
+.lp-video-thumb .lp-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  transition: all var(--dur-normal) var(--ease-out);
+  padding-left: 4px;
+}
+.lp-video-thumb:hover .lp-play-btn {
+  transform: translate(-50%, -50%) scale(1.15);
+  background: var(--accent);
+  box-shadow: 0 15px 50px rgba(69,123,157,0.5);
 }
 .lp-video-placeholder {
   position: absolute;
@@ -329,14 +388,14 @@ body {
   justify-content: center;
   font-size: 2.2rem;
   margin: 0 auto var(--space-md);
-  box-shadow: 0 10px 40px rgba(13,124,102,0.5);
+  box-shadow: 0 10px 40px rgba(29,53,87,0.5);
   transition: all var(--dur-normal) var(--ease-out);
   padding-left: 5px;
 }
 .lp-video-placeholder:hover .lp-play-btn {
   transform: scale(1.1);
   background: var(--accent);
-  box-shadow: 0 15px 50px rgba(30,174,201,0.5);
+  box-shadow: 0 15px 50px rgba(69,123,157,0.5);
 }
 .lp-video-placeholder p {
   font-weight: 600;
@@ -395,8 +454,8 @@ body {
 }
 .lp-role-option input[type="radio"]:checked + .lp-role-card {
   border-color: var(--primary);
-  background: rgba(13,124,102,0.06);
-  box-shadow: 0 0 0 3px rgba(13,124,102,0.15);
+  background: rgba(29,53,87,0.06);
+  box-shadow: 0 0 0 3px rgba(29,53,87,0.15);
 }
 .lp-role-icon {
   font-size: 2rem;
@@ -422,7 +481,8 @@ body {
   margin-bottom: var(--space-sm);
 }
 .lp-field input[type="text"],
-.lp-field input[type="tel"] {
+.lp-field input[type="tel"],
+.lp-field input[type="email"] {
   width: 100%;
   padding: 0.85rem 1rem;
   border: 2px solid var(--border);
@@ -436,7 +496,7 @@ body {
 }
 .lp-field input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(13,124,102,0.1);
+  box-shadow: 0 0 0 3px rgba(29,53,87,0.1);
 }
 .lp-phone-input {
   display: flex;
@@ -448,7 +508,7 @@ body {
 }
 .lp-phone-input:focus-within {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(13,124,102,0.1);
+  box-shadow: 0 0 0 3px rgba(29,53,87,0.1);
 }
 .lp-phone-prefix {
   display: flex;
@@ -483,11 +543,11 @@ body {
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--dur-normal) var(--ease-out);
-  box-shadow: 0 6px 20px rgba(13,124,102,0.25);
+  box-shadow: 0 6px 20px rgba(29,53,87,0.25);
 }
 .lp-submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(13,124,102,0.35);
+  box-shadow: 0 10px 30px rgba(29,53,87,0.35);
 }
 .lp-submit-btn:disabled {
   opacity: 0.6;
@@ -531,7 +591,7 @@ body {
 }
 .lp-checkbox-wrap:hover {
   border-color: var(--primary);
-  background: rgba(13,124,102,0.02);
+  background: rgba(29,53,87,0.02);
 }
 .lp-checkbox-wrap input[type="checkbox"] {
   display: none;
@@ -600,6 +660,9 @@ body {
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
   .lp-explainer {
+    grid-template-columns: 1fr;
+  }
+  .lp-video-grid {
     grid-template-columns: 1fr;
   }
   .lp-stats {
