@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Video Inspection | Nivantro</title>
+  <title>Move-Out Video Inspection | Nivantro</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
     body { background-color: #000; color: #fff; margin: 0; overflow: hidden; font-family: 'Inter', sans-serif; }
     
-    /* Viewfinder */
     .viewfinder { position: absolute; inset: 0; background: #111; display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .camera-feed { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9); }
     
-    /* HUD Overlay */
-    .hud { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem; pointer-events: none; }
+    /* The AR Ghost Overlay */
+    .baseline-ghost {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; mix-blend-mode: screen; pointer-events: none;
+    }
     
-    /* Top HUD */
+    /* HUD Overlay */
+    .hud { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem; pointer-events: none; z-index: 10; }
+    
     .hud-top { display: flex; justify-content: space-between; align-items: flex-start; }
     .room-badge { background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); padding: 0.5rem 1rem; border-radius: 50px; font-weight: 600; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; gap: 0.5rem; }
     .rec-indicator { width: 10px; height: 10px; background: var(--danger); border-radius: 50%; display: none; }
@@ -24,15 +27,10 @@
     
     .meta-tags { text-align: right; background: rgba(0,0,0,0.6); padding: 0.5rem; border-radius: 8px; font-size: 0.75rem; font-family: monospace; color: rgba(255,255,255,0.7); }
     
-    /* Center Guidance OSD */
-    .guidance-osd { align-self: center; text-align: center; max-width: 80%; }
-    .osd-text { background: rgba(29,53,87,0.8); backdrop-filter: blur(10px); padding: 1rem 1.5rem; border-radius: 12px; font-size: 1.1rem; font-weight: 500; line-height: 1.4; border: 1px solid rgba(255,255,255,0.2); animation: slideUp 0.3s forwards; }
+    .guidance-osd { align-self: center; text-align: center; max-width: 90%; }
+    .osd-text { background: rgba(29,53,87,0.8); backdrop-filter: blur(10px); padding: 0.8rem 1.2rem; border-radius: 12px; font-size: 0.95rem; font-weight: 500; line-height: 1.4; border: 1px solid rgba(255,255,255,0.2); animation: slideUp 0.3s forwards; }
     
-    /* Bottom Controls */
     .hud-bottom { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; pointer-events: auto; }
-    
-    .progress-track { width: 100%; height: 6px; background: rgba(255,255,255,0.2); border-radius: 50px; overflow: hidden; display: none; }
-    .progress-fill { height: 100%; background: var(--success); width: 0%; transition: width 1s linear; }
     
     .control-btn { width: 70px; height: 70px; border-radius: 50%; border: 4px solid #fff; background: rgba(255,255,255,0.2); display: flex; justify-content: center; align-items: center; cursor: pointer; transition: all 0.2s; }
     .control-btn.recording { border-color: rgba(255,255,255,0.5); background: transparent; }
@@ -45,7 +43,7 @@
     .processing-overlay { position: fixed; inset: 0; background: var(--primary); z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; }
     .spinner { width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.2); border-top-color: #fff; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 2rem; }
     .proc-text { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.5rem; }
-    .proc-sub { color: rgba(255,255,255,0.7); max-width: 300px; line-height: 1.4; }
+    .proc-sub { color: rgba(255,255,255,0.7); max-width: 300px; line-height: 1.4; font-size:0.9rem;}
 
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
     @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -54,127 +52,85 @@
 </head>
 <body>
 
-  <div class="viewfinder">
-    <!-- Simulated Camera Feed representing a Living Room to start -->
-    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Camera Feed" class="camera-feed" id="camFeed">
+  <div class="viewfinder" id="viewfinder">
+    <!-- Live camera feed (simulated as current state) -->
+    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Camera Feed" class="camera-feed" id="camFeed" style="filter: brightness(0.7) sepia(0.2);">
+    
+    <!-- Move-in Baseline Ghost Overlay -->
+    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Ghost" class="baseline-ghost" id="ghostImage">
   </div>
 
   <div class="hud">
-    <!-- Top Meta -->
     <div class="hud-top">
       <div class="room-badge" id="hudContainer">
         <span class="rec-indicator"></span>
         <span id="roomName">Living Room (1/3)</span>
       </div>
       <div class="meta-tags" id="metaOverlay">
-        LAT: 12.9716 N<br>LON: 77.5946 E<br>
+        MOVE-OUT MODE<br>Locked Sequence<br>
         <span id="timeClock">14:02:11 IST</span><br>
-        SHA-256 (Pending)
       </div>
     </div>
 
     <!-- Center Guidance -->
     <div class="guidance-osd" id="osdGuidance">
-      <div class="osd-text">Start at the entrance.<br>Pan slowly left to right capturing all four walls.</div>
+      <div class="osd-text">Move-Out Video Sequence Loaded.<br>Align the live camera with the faint ghost overlay to match the Move-In framing exactly.</div>
     </div>
 
     <!-- Bottom Controls -->
     <div class="hud-bottom">
-      <div class="progress-track" id="progTrack"><div class="progress-fill" id="progFill"></div></div>
-      
       <div style="display:flex; width:100%; justify-content:space-between; align-items:center; padding: 0 1rem;">
-        <button class="nav-btn" id="prevBtn" onclick="window.location.href='inspection-setup.html'">Cancel</button>
+        <button class="nav-btn" id="prevBtn" onclick="window.location.href='landlord-dashboard.html'" style="display:block;">Cancel</button>
         <div class="control-btn" id="recordBtn" onclick="toggleRecord()"></div>
         <button class="nav-btn" id="nextBtn" onclick="nextRoom()">Next Room</button>
       </div>
-      <div id="minTimeWarn" style="color:var(--warning); font-size:0.8rem; font-weight:600; display:none;">Minimum 15s required by AI</div>
     </div>
   </div>
 
   <!-- Processing State -->
   <div class="processing-overlay" id="procOverlay">
     <div class="spinner"></div>
-    <div class="proc-text" id="procTitle">Extracting Frames...</div>
-    <div class="proc-sub" id="procSub">FFmpeg scene detection isolating sharpest structural states for the baseline ledger.</div>
+    <div class="proc-text" id="procTitle">Analyzing Discrepancies...</div>
+    <div class="proc-sub" id="procSub">Running visual diff check via CLIP matching. Mapping move-out frames 1:1 against the hashed move-in baseline.</div>
   </div>
 
   <script>
+    // Strict identical sequence loaded from Move-In
     const rooms = [
-      { name: "Living Room (1/3)", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80", minTime: 15 },
-      { name: "Master Bedroom (2/3)", img: "https://images.unsplash.com/photo-1522771731478-446370baeb1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80", minTime: 10 },
-      { name: "Kitchen (3/3)", img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80", minTime: 15 }
+      { name: "Living Room (1/3)", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80", ghost: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" },
+      { name: "Master Bedroom (2/3)", img: "https://images.unsplash.com/photo-1522771731478-446370baeb1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80", ghost: "https://images.unsplash.com/photo-1522771731478-446370baeb1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" },
+      { name: "Kitchen (3/3)", img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80", ghost: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" }
     ];
     let currentRoom = 0;
-    
     let isRecording = false;
-    let recTimer = 0;
     let recInterval;
 
     const recordBtn = document.getElementById('recordBtn');
-    const progTrack = document.getElementById('progTrack');
-    const progFill = document.getElementById('progFill');
     const nextBtn = document.getElementById('nextBtn');
     const prevBtn = document.getElementById('prevBtn');
-    const minTimeWarn = document.getElementById('minTimeWarn');
 
-    // Live Clock
     setInterval(() => {
       document.getElementById('timeClock').textContent = new Date().toLocaleTimeString('en-US', { hour12: false }) + ' IST';
     }, 1000);
 
     function toggleRecord() {
       if (!isRecording) {
-        // Start Recording
         isRecording = true;
         document.getElementById('hudContainer').classList.add('recording');
         recordBtn.classList.add('recording');
-        progTrack.style.display = 'block';
         nextBtn.style.display = 'none';
-        prevBtn.style.display = 'none';
-        minTimeWarn.style.display = 'none';
-        document.getElementById('osdGuidance').style.display = 'block';
-        
-        // Progress Logic
-        recTimer = 0;
-        progFill.style.width = '0%';
-        const minReq = rooms[currentRoom].minTime;
-        
-        recInterval = setInterval(() => {
-          recTimer++;
-          const perc = Math.min((recTimer / minReq) * 100, 100);
-          progFill.style.width = perc + '%';
-          
-          if(recTimer === 5) {
-            document.querySelector('.osd-text').innerHTML = "Show the ceiling and floor.<br>Pause briefly on any existing marks.";
-          }
-          if(recTimer >= minReq) {
-            progFill.style.background = 'var(--success)';
-            document.querySelector('.osd-text').innerHTML = "Minimum duration met.<br>Tap stop when finished.";
-          } else {
-            progFill.style.background = 'var(--warning)';
-          }
-        }, 1000);
+        document.getElementById('osdGuidance').style.display = 'none';
       } else {
-        // Stop Recording
-        const minReq = rooms[currentRoom].minTime;
-        if (recTimer < minReq) {
-          minTimeWarn.style.display = 'block';
-          minTimeWarn.textContent = `Keep recording! Minimum ${minReq}s required for AI mapping.`;
-          return; // Enforce hard gate
-        }
-
-        clearInterval(recInterval);
         isRecording = false;
         document.getElementById('hudContainer').classList.remove('recording');
         recordBtn.classList.remove('recording');
-        document.getElementById('osdGuidance').style.display = 'none';
         
         if (currentRoom < rooms.length - 1) {
           nextBtn.style.display = 'block';
           nextBtn.textContent = 'Next Room';
         } else {
           nextBtn.style.display = 'block';
-          nextBtn.textContent = 'Submit All & Process';
+          nextBtn.textContent = 'Submit For AI Compare';
           nextBtn.style.background = 'var(--success)';
         }
       }
@@ -185,11 +141,9 @@
         currentRoom++;
         document.getElementById('roomName').textContent = rooms[currentRoom].name;
         document.getElementById('camFeed').src = rooms[currentRoom].img;
-        progTrack.style.display = 'none';
+        document.getElementById('ghostImage').src = rooms[currentRoom].ghost;
         nextBtn.style.display = 'none';
         document.getElementById('osdGuidance').style.display = 'block';
-        document.querySelector('.osd-text').innerHTML = "Start at the entrance.<br>Pan slowly left to right capturing all four walls.";
-        minTimeWarn.style.display = 'none';
       } else {
         triggerAIPipeline();
       }
@@ -202,18 +156,13 @@
       proc.style.display = 'flex';
 
       setTimeout(() => {
-        title.textContent = 'Classifying Imagery...';
-        sub.textContent = 'Running Vision-Language models to detect damage vs normal wear & tear.';
-      }, 2000);
+        title.textContent = 'Detecting Damage...';
+        sub.textContent = 'Applying wear-and-tear classification rules to detected structural changes.';
+      }, 2500);
 
       setTimeout(() => {
-        title.textContent = 'Generating Ledger...';
-        sub.textContent = 'Hashing specific items and finalizing the structured baseline report.';
-      }, 4000);
-
-      setTimeout(() => {
-        window.location.href = 'inspection-report.html';
-      }, 5500);
+        window.location.href = 'inspection-compare.html';
+      }, 5000);
     }
   </script>
 </body>

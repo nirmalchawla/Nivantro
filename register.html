@@ -178,6 +178,24 @@
             </div>
           </div>
 
+          <!-- Broker-Specific Fields (shown only when Broker role is selected) -->
+          <div id="brokerFields" style="display:none; margin-bottom: var(--space-lg);">
+            <div class="reg-divider">Professional Details</div>
+            <div style="background: rgba(29,53,87,0.04); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 0.5rem;">
+              <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1rem;">&#9989; Required for RERA-verified broker badge on your profile.</p>
+              <div class="reg-form-fields" style="margin-bottom:0;">
+                <div class="lp-field">
+                  <label for="regAgency">Agency / Company Name</label>
+                  <input type="text" id="regAgency" name="agency" placeholder="e.g. PropSphere Realty">
+                </div>
+                <div class="lp-field">
+                  <label for="regRera">RERA Registration Number</label>
+                  <input type="text" id="regRera" name="rera_id" placeholder="e.g. PRM/KA/RERA/1251/308">
+                </div>
+              </div>
+            </div>
+          </div>
+
           <button type="submit" class="lp-submit-btn" id="regSubmitBtn">
             <span class="lp-submit-text">Create Account</span>
             <span class="lp-submit-loading" style="display:none;">Creating account...</span>
@@ -193,7 +211,9 @@
 
   <!-- Footer -->
   <footer class="lp-footer">
-    <img src="logo.png" alt="Nivantro Logo" style="height:120px; width:auto; object-fit:contain; background:#ffffff; padding:1rem 2rem; border-radius:12px; margin-bottom:1.5rem; box-shadow:0 6px 12px rgba(0,0,0,0.1);">
+    <div style="display:inline-block; background:#ffffff; padding:0.8rem 2rem; border-radius:12px; margin-bottom:1.5rem; box-shadow:0 4px 20px rgba(0,0,0,0.2);">
+      <img src="logo.png" alt="Nivantro Logo" style="height:60px; width:auto; object-fit:contain; display:block;">
+    </div>
     <p>&copy; 2025 Nivantro India. All rights reserved.</p>
   </footer>
 
@@ -212,6 +232,13 @@
       formMsg.className = 'lp-form-msg lp-form-msg--' + type;
       formMsg.style.display = 'block';
     }
+
+    // Show/hide broker fields when role changes
+    form.querySelectorAll('input[name="role"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        document.getElementById('brokerFields').style.display = this.value === 'Broker' ? 'block' : 'none';
+      });
+    });
 
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -251,6 +278,14 @@
         return;
       }
 
+      // Validate broker-specific fields
+      const agency = document.getElementById('regAgency').value.trim();
+      const rera = document.getElementById('regRera').value.trim();
+      if (role.value === 'Broker' && (!agency || !rera)) {
+        showMessage('Brokers must provide their Agency Name and RERA ID.', 'error');
+        return;
+      }
+
       // Disable button
       submitBtn.disabled = true;
       submitText.style.display = 'none';
@@ -264,6 +299,10 @@
         formData.append('phone', phone);
         formData.append('city', city);
         formData.append('role', role.value);
+        if (role.value === 'Broker') {
+          formData.append('agency', document.getElementById('regAgency').value.trim());
+          formData.append('rera_id', document.getElementById('regRera').value.trim());
+        }
 
         await fetch(GOOGLE_SCRIPT_URL, {
           method: 'POST',

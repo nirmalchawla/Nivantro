@@ -577,7 +577,7 @@
 
   <!-- Footer -->
   <footer class="lp-footer">
-    <img src="logo.png" alt="Nivantro Logo" style="height:120px; width:auto; object-fit:contain; background:#ffffff; padding:1rem 2rem; border-radius:12px; margin-bottom:1.5rem; box-shadow:0 6px 12px rgba(0,0,0,0.1);">
+    <img src="logo.png" alt="Nivantro Logo" style="height:80px; width:auto; object-fit:contain; filter:brightness(0) invert(1); opacity:0.85; margin-bottom:1.5rem;">
     <p>&copy; 2025 Nivantro India. All rights reserved.</p>
   </footer>
 
@@ -711,7 +711,8 @@
       var required = ['propName', 'propType', 'propBHK', 'propAddress', 'propCity'];
       for (var i = 0; i < required.length; i++) {
         var el = document.getElementById(required[i]);
-        if (!el.value.trim()) {
+        var val = (el.tagName === 'SELECT') ? el.options[el.selectedIndex] && el.options[el.selectedIndex].value : el.value.trim();
+        if (!val || val === '') {
           showMsg(formMsg, 'Please fill in all required fields.', 'error');
           el.focus();
           return;

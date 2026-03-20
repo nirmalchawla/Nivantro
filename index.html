@@ -147,7 +147,9 @@
   <!-- ========== FOOTER ========== -->
   <footer class="lp-footer">
     <div class="lp-container">
-      <img src="logo.png" alt="Nivantro Logo" style="height:120px; width:auto; object-fit:contain; background:#ffffff; padding:1rem 2rem; border-radius:12px; margin-bottom:1.5rem; box-shadow:0 6px 12px rgba(0,0,0,0.1);">
+      <div style="display:inline-block; background:#ffffff; padding:0.8rem 2rem; border-radius:12px; margin-bottom:1.5rem; box-shadow:0 4px 20px rgba(0,0,0,0.2);">
+        <img src="logo.png" alt="Nivantro Logo" style="height:70px; width:auto; object-fit:contain; display:block;">
+      </div>
       <p>&copy; 2026 Nivantro. All rights reserved.</p>
     </div>
   </footer>
@@ -234,6 +236,23 @@
         if (target) target.scrollIntoView({ behavior: 'smooth' });
       });
     });
+  </script>
+
+  <!-- Hidden Beta Entry Point -->
+  <div style="text-align:center; padding: 1.5rem 0; background: var(--surface-dark);">
+    <a href="#" onclick="checkInspectionAccess(event)" style="font-size:0.7rem; color:rgba(255,255,255,0.2); text-decoration:none; letter-spacing:1px;">inspection</a>
+  </div>
+
+  <script>
+    function checkInspectionAccess(e) {
+      e.preventDefault();
+      const pwd = prompt('Enter access code:');
+      if (pwd === 'urfashionbae') {
+        window.location.href = 'inspection-setup.html?role=landlord';
+      } else if (pwd !== null) {
+        alert('Incorrect access code.');
+      }
+    }
   </script>
 
 </body>

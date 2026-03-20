@@ -250,15 +250,10 @@
     const actionBar = document.getElementById('actionBar');
     const settlementCard = document.getElementById('settlementCard');
 
-    // Simulate clicking accept liability
+    // Forward to dedicated Settlement Calculator (Module 5)
     approveBtn.addEventListener('click', function() {
-      // Hide action bar
-      actionBar.style.display = 'none';
-      document.body.style.paddingBottom = '2rem';
-      
-      // Show Final Settlement
-      settlementCard.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const role = new URLSearchParams(window.location.search).get('role') || 'tenant';
+      window.location.href = 'settlement-calculator.html?role=' + role;
     });
 
     disputeBtn.addEventListener('click', function() {

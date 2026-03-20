@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settlement Calculator | Nivantro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background-color: var(--surface-alt); padding-bottom: 6rem; }
+    .settlement-header {
+      background: var(--primary-dark); color: #fff; padding: 3rem 1.5rem 2rem; border-radius: 0 0 24px 24px;
+      margin-bottom: 2rem; position: relative; text-align: center;
+    }
+    .settlement-title { font-family: var(--font-display); font-size: 2rem; margin-bottom: 0.5rem; }
+    .settlement-meta { color: rgba(255,255,255,0.7); font-size: 0.95rem; }
+    .container { max-width: 800px; margin: 0 auto; padding: 0 1.5rem; }
+    .math-card { background: var(--surface); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
+    .math-row { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+    .math-row:last-child { border-bottom: none; }
+    .math-label { font-size: 1.1rem; font-weight: 500; color: var(--text-muted); }
+    .math-value { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; }
+    .math-total { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
+    .math-total-value { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--success); }
+
+    /* Breakdown Table */
+    .breakdown-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .breakdown-table th { text-align: left; padding: 0.8rem; background: var(--surface-alt); font-size: 0.85rem; color: var(--text-muted); font-weight: 600; border-bottom: 2px solid var(--border); }
+    .breakdown-table td { padding: 0.8rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; vertical-align: top; }
+    .item-name { font-weight: 600; display: block; margin-bottom: 0.2rem; }
+    .item-cat { font-size: 0.75rem; color: var(--text-muted); background: rgba(29,53,87,0.05); padding: 0.2rem 0.6rem; border-radius: 4px; display: inline-block; }
+    .calc-pill { background: rgba(231,76,60,0.1); color: var(--danger); padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 600; font-family: monospace; }
+    .dep-pill { background: rgba(39,174,96,0.1); color: var(--success); padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 600; font-family: monospace; }
+
+    /* Dispute Button */
+    .btn-dispute { background: transparent; border: 1px solid var(--danger); color: var(--danger); font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.7rem; border-radius: 6px; cursor: pointer; white-space: nowrap; transition: all 0.15s; margin-top: 0.4rem; }
+    .btn-dispute:hover { background: rgba(231,76,60,0.08); }
+    .btn-dispute.resolved { border-color: var(--success); color: var(--success); pointer-events: none; }
+
+    /* Dispute Drawer */
+    .dispute-drawer { display: none; background: rgba(231,76,60,0.03); border-left: 3px solid var(--danger); padding: 0.8rem; margin-top: 0.5rem; border-radius: 0 8px 8px 0; }
+    .dispute-drawer.open { display: block; }
+    .dispute-drawer select, .dispute-drawer textarea { width: 100%; font-size: 0.85rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 6px; margin-top: 0.4rem; background: var(--surface); font-family: inherit; box-sizing: border-box; }
+    .dispute-drawer textarea { min-height: 56px; resize: vertical; }
+    .btn-submit-dispute { background: var(--danger); color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.82rem; font-weight: 600; cursor: pointer; margin-top: 0.6rem; }
+
+    /* Disputed Row */
+    tr.disputed td { opacity: 0.4; }
+    .disputed-badge { background: rgba(231,76,60,0.1); color: var(--danger); border: 1px dashed var(--danger); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+
+    /* Rent Ledger */
+    .ledger-strip { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 0.5rem; margin-top: 1rem; }
+    .ledger-month { flex-shrink: 0; border: 1px solid var(--border); border-radius: 8px; padding: 0.7rem 1rem; text-align: center; min-width: 90px; }
+    .month-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+    .month-amt { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin: 0.2rem 0; }
+    .month-status { font-size: 0.7rem; font-weight: 700; }
+    .paid { color: var(--success); }
+    .late { color: var(--warning); }
+
+    /* Action Bar */
+    .action-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); padding: 1rem 1.5rem; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); display: flex; gap: 1rem; z-index: 50; justify-content: center; }
+    .btn-action { padding: 1rem 3rem; border-radius: 8px; font-weight: 700; background: var(--primary); color: #fff; border: none; font-size: 1.1rem; cursor: pointer; max-width: 400px; width: 100%; }
+    .btn-action:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Role logic */
+    .role-tenant, .role-landlord { display: none; }
+    body[data-role="tenant"] .role-tenant { display: block; }
+    body[data-role="landlord"] .role-landlord { display: block; }
+  </style>
+</head>
+<body data-role="landlord" id="bodyRole">
+
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="inspection-compare.html" id="backBtn" class="nav-back">← Back to Move-Out Report</a>
+      <img src="logo.png" alt="Nivantro Logo" style="height:60px; width:auto; object-fit:contain; mix-blend-mode:multiply; margin-left:10px;">
+    </div>
+  </nav>
+
+  <header class="settlement-header">
+    <div class="container">
+      <div style="display:inline-block; background:rgba(255,255,255,0.2); color:#fff; padding:0.3rem 0.8rem; border-radius:50px; font-size:0.75rem; font-weight:700; margin-bottom:1rem; letter-spacing:1px;">MODULE 5 / 5</div>
+      <h1 class="settlement-title">Final Settlement Ledger</h1>
+      <p class="settlement-meta">Prestige Shantiniketan, Apt 402 &bull; Tenancy Duration: 2 Years</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Summary Numbers -->
+    <div class="math-card" style="background: var(--primary); color: #fff; border:none;">
+      <div class="math-row" style="border-bottom-color: rgba(255,255,255,0.1);">
+        <span class="math-label" style="color: rgba(255,255,255,0.8);">Initial Security Deposit</span>
+        <span class="math-value">&#8377;1,50,000</span>
+      </div>
+      <div class="math-row" style="border-bottom-color: rgba(255,255,255,0.1);">
+        <span class="math-label" style="color: rgba(255,255,255,0.8);">Total Chargeable Damage</span>
+        <span class="math-value" style="color: #ffbeb8;" id="totalDamage">&#8722; &#8377;10,200</span>
+      </div>
+      <div class="math-row" style="border-bottom: none; padding-bottom: 0; align-items: flex-end;">
+        <span class="math-total" style="color: #fff;">Net Deposit Refund</span>
+        <span class="math-total-value" id="netRefund">&#8377;1,39,800</span>
+      </div>
+    </div>
+
+    <!-- Chargeable Breakdown with Per-Item Dispute -->
+    <div class="math-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; flex-wrap:wrap; gap:0.5rem;">
+        <h3 style="font-family: var(--font-display); font-size: 1.2rem; margin: 0;">Chargeable Damage Breakdown</h3>
+        <span id="disputeCount" style="font-size:0.8rem; color: var(--danger); font-weight:600;"></span>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.2rem;">
+        Deductions are scientifically adjusted for depreciation. If you disagree with any item, click <strong>Dispute</strong> to flag it for Nivantro arbitration &mdash; it will be excluded from the final total while under review.
+      </p>
+
+      <div style="overflow-x:auto;">
+        <table class="breakdown-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Market Cost</th>
+              <th>Depreciation</th>
+              <th style="text-align:right;">Final Deduction</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr id="row-0" data-amount="4800">
+              <td>
+                <span class="item-name">Master Bedroom Wall</span>
+                <span class="item-cat">Paintwork (20%/yr)</span><br>
+                <button class="btn-dispute" onclick="toggleDispute(0)">&#9873; Dispute This Item</button>
+                <div class="dispute-drawer" id="drawer-0">
+                  <strong style="font-size:0.85rem; color:var(--danger);">Reason for Dispute</strong>
+                  <select>
+                    <option>Damage was pre-existing (in Move-In baseline)</option>
+                    <option>Repair cost estimate is inflated</option>
+                    <option>Damage is normal wear and tear</option>
+                    <option>Other</option>
+                  </select>
+                  <textarea placeholder="Add supporting notes (optional)..."></textarea>
+                  <button class="btn-submit-dispute" onclick="confirmDispute(0)">Submit for Arbitration</button>
+                </div>
+              </td>
+              <td>&#8377;8,000</td>
+              <td><span class="dep-pill">&#8722; 40% (&#8377;3,200)</span></td>
+              <td style="text-align:right;" id="amt-0"><span class="calc-pill">&#8377;4,800</span></td>
+            </tr>
+
+            <tr id="row-1" data-amount="3500">
+              <td>
+                <span class="item-name">Sofa Fabric Tear</span>
+                <span class="item-cat">Furniture (15%/yr)</span><br>
+                <button class="btn-dispute" onclick="toggleDispute(1)">&#9873; Dispute This Item</button>
+                <div class="dispute-drawer" id="drawer-1">
+                  <strong style="font-size:0.85rem; color:var(--danger);">Reason for Dispute</strong>
+                  <select>
+                    <option>Damage was pre-existing (in Move-In baseline)</option>
+                    <option>Repair cost estimate is inflated</option>
+                    <option>Damage is normal wear and tear</option>
+                    <option>Other</option>
+                  </select>
+                  <textarea placeholder="Add supporting notes (optional)..."></textarea>
+                  <button class="btn-submit-dispute" onclick="confirmDispute(1)">Submit for Arbitration</button>
+                </div>
+              </td>
+              <td>&#8377;5,000</td>
+              <td><span class="dep-pill">&#8722; 30% (&#8377;1,500)</span></td>
+              <td style="text-align:right;" id="amt-1"><span class="calc-pill">&#8377;3,500</span></td>
+            </tr>
+
+            <tr id="row-2" data-amount="1900">
+              <td>
+                <span class="item-name">Kitchen Geyser Dial</span>
+                <span class="item-cat">Appliance (10%/yr)</span><br>
+                <button class="btn-dispute" onclick="toggleDispute(2)">&#9873; Dispute This Item</button>
+                <div class="dispute-drawer" id="drawer-2">
+                  <strong style="font-size:0.85rem; color:var(--danger);">Reason for Dispute</strong>
+                  <select>
+                    <option>Damage was pre-existing (in Move-In baseline)</option>
+                    <option>Repair cost estimate is inflated</option>
+                    <option>Damage is normal wear and tear</option>
+                    <option>Other</option>
+                  </select>
+                  <textarea placeholder="Add supporting notes (optional)..."></textarea>
+                  <button class="btn-submit-dispute" onclick="confirmDispute(2)">Submit for Arbitration</button>
+                </div>
+              </td>
+              <td>&#8377;2,375</td>
+              <td><span class="dep-pill">&#8722; 20% (&#8377;475)</span></td>
+              <td style="text-align:right;" id="amt-2"><span class="calc-pill">&#8377;1,900</span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Rent Ledger Summary -->
+    <div class="math-card">
+      <h3 style="font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 0.3rem;">Rent Payment History</h3>
+      <p style="font-size:0.85rem; color: var(--text-muted); margin-bottom:0;">Last 6 months tracked by Nivantro.</p>
+      <div class="ledger-strip">
+        <div class="ledger-month"><div class="month-label">Oct</div><div class="month-amt">&#8377;30k</div><div class="month-status paid">&#10003; Paid</div></div>
+        <div class="ledger-month"><div class="month-label">Sep</div><div class="month-amt">&#8377;30k</div><div class="month-status paid">&#10003; Paid</div></div>
+        <div class="ledger-month"><div class="month-label">Aug</div><div class="month-amt">&#8377;30k</div><div class="month-status paid">&#10003; Paid</div></div>
+        <div class="ledger-month"><div class="month-label">Jul</div><div class="month-amt">&#8377;30k</div><div class="month-status late">&#9888; Late +2d</div></div>
+        <div class="ledger-month"><div class="month-label">Jun</div><div class="month-amt">&#8377;30k</div><div class="month-status paid">&#10003; Paid</div></div>
+        <div class="ledger-month"><div class="month-label">May</div><div class="month-amt">&#8377;30k</div><div class="month-status paid">&#10003; Paid</div></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Action Bar -->
+  <div class="action-bar">
+    <button class="btn-action role-landlord" id="actionBtn" onclick="completeDeal()">Approve &amp; Release &#8377;1,39,800</button>
+    <button class="btn-action role-tenant" onclick="completeDeal()">I Accept Final Settlement</button>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const role = params.get('role') || 'landlord';
+    document.getElementById('bodyRole').setAttribute('data-role', role);
+    document.getElementById('backBtn').href = 'inspection-compare.html?role=' + role;
+
+    const DEPOSIT = 150000;
+    const amounts = [4800, 3500, 1900];
+    const disputed = [false, false, false];
+
+    function formatINR(n) {
+      return '\u20B9' + n.toLocaleString('en-IN');
+    }
+
+    function recalculate() {
+      let totalDamage = 0;
+      disputed.forEach(function(d, i) { if (!d) totalDamage += amounts[i]; });
+      const refund = DEPOSIT - totalDamage;
+      document.getElementById('totalDamage').textContent = '\u2212 ' + formatINR(totalDamage);
+      document.getElementById('netRefund').textContent = formatINR(refund);
+      var actionBtn = document.getElementById('actionBtn');
+      if (actionBtn) actionBtn.textContent = 'Approve & Release ' + formatINR(refund);
+      var count = disputed.filter(Boolean).length;
+      document.getElementById('disputeCount').textContent = count > 0 ? count + ' item(s) under arbitration' : '';
+    }
+
+    function toggleDispute(idx) {
+      document.getElementById('drawer-' + idx).classList.toggle('open');
+    }
+
+    function confirmDispute(idx) {
+      disputed[idx] = true;
+      document.getElementById('row-' + idx).classList.add('disputed');
+      document.getElementById('amt-' + idx).innerHTML = '<span class="disputed-badge">Under Review</span>';
+      var btn = document.getElementById('row-' + idx).querySelector('.btn-dispute');
+      btn.textContent = '\u2713 Disputed';
+      btn.classList.add('resolved');
+      document.getElementById('drawer-' + idx).classList.remove('open');
+      recalculate();
+    }
+
+    function completeDeal() {
+      var count = disputed.filter(Boolean).length;
+      var btn = role === 'landlord' ? document.getElementById('actionBtn') : document.querySelector('.btn-action.role-tenant');
+      btn.textContent = 'Authenticating OTP...';
+      btn.disabled = true;
+      setTimeout(function() {
+        if (count > 0) {
+          alert(count + ' item(s) sent to Nivantro arbitration. Remaining refund released.');
+        } else {
+          alert('Signature Hashed. Full settlement approved and archived!');
+        }
+        window.location.href = role + '-dashboard.html';
+      }, 1500);
+    }
+  </script>
+</body>
+</html>

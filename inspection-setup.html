@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pre-requisite Setup | Nivantro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background-color: var(--surface-alt); padding-bottom: 4rem; }
+    
+    .setup-header {
+      background: var(--surface-dark); color: #fff; padding: 3rem 1.5rem 2rem; border-radius: 0 0 24px 24px;
+      margin-bottom: 2rem; position: relative;
+    }
+    .setup-title { font-family: var(--font-display); font-size: 2rem; margin-bottom: 0.5rem; }
+    .setup-meta { color: rgba(255,255,255,0.7); font-size: 0.95rem; }
+    
+    .container { max-width: 800px; margin: 0 auto; padding: 0 1.5rem; }
+    
+    /* Gate Checklist */
+    .gate-card {
+      background: var(--surface); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    }
+    .gate-card h3 { font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    
+    .checklist-item {
+      display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border);
+    }
+    .checklist-item:last-child { border-bottom: none; }
+    
+    .check-icon {
+      width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: bold; flex-shrink: 0; margin-top: 0.2rem;
+    }
+    .status-done .check-icon { background: var(--success); color: #fff; }
+    .status-done .check-icon::after { content: '✓'; }
+    .status-pending .check-icon { background: rgba(243,156,18,0.2); color: var(--warning); border: 2px solid var(--warning); }
+    .status-pending .check-icon::after { content: '!'; }
+    
+    .item-content { flex: 1; }
+    .item-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.2rem; }
+    .item-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+    
+    .item-action { margin-top: 0.5rem; }
+    .btn-resolve { background: var(--primary); color: #fff; border: none; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+
+    /* Room Configurator */
+    .room-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .room-toggle {
+      border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; cursor: pointer; transition: all 0.2s;
+    }
+    .room-toggle.active { background: rgba(29,53,87,0.05); border-color: var(--primary); }
+    .room-toggle input[type="number"] { width: 40px; text-align: center; padding: 0.2rem; margin-top: 0.5rem; display: none; border: 1px solid var(--border); border-radius: 4px; }
+    .room-toggle.active input[type="number"] { display: inline-block; }
+
+    /* Floating Bar */
+    .lock-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); padding: 1rem 1.5rem;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; z-index: 50;
+    }
+    .lock-status { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--danger); font-size: 0.9rem; }
+    .lock-status.ready { color: var(--success); }
+    
+    .btn-launch { padding: 1rem 2rem; border-radius: 8px; font-weight: 700; background: var(--primary); color: #fff; border: none; font-size: 1.1rem; opacity: 0.5; pointer-events: none; }
+    .btn-launch.active { opacity: 1; pointer-events: auto; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="landlord-dashboard.html" class="nav-back">← Back to Dashboard</a>
+      <img src="logo.png" alt="Nivantro Logo" style="height:60px; width:auto; object-fit:contain; mix-blend-mode:multiply; margin-left:10px;">
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="setup-header">
+    <div class="container">
+      <div style="display:inline-block; background:rgba(255,255,255,0.2); color:#fff; padding:0.3rem 0.8rem; border-radius:50px; font-size:0.75rem; font-weight:700; margin-bottom:1rem; letter-spacing:1px;">MODULE 1 / 5</div>
+      <h1 class="setup-title">Inspection Pre-requisites</h1>
+      <p class="setup-meta">Prestige Shantiniketan, Apt 402 • All 8 legal gates must be resolved before the Move-In Camera unlocks.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Gate 1: Profile Linking -->
+    <div class="gate-card">
+      <h3>1. Identity & Tethering</h3>
+      
+      <div class="checklist-item status-done">
+        <div class="check-icon"></div>
+        <div class="item-content">
+          <div class="item-title">Landlord Profile Active</div>
+          <div class="item-desc">Your profile is KYC-verified.</div>
+        </div>
+      </div>
+      
+      <div class="checklist-item status-done">
+        <div class="check-icon"></div>
+        <div class="item-content">
+          <div class="item-title">Tenant Linked & Authenticated</div>
+          <div class="item-desc">Tenant (Priya) has accepted the property invite and verified her phone number.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Gate 2: Legal Foundations -->
+    <div class="gate-card">
+      <h3>2. Legal Foundations</h3>
+      
+      <div class="checklist-item status-done">
+        <div class="check-icon"></div>
+        <div class="item-content">
+          <div class="item-title">Move-In Date Confirmed</div>
+          <div class="item-desc">Tenancy begins: 15 Oct, 2025.</div>
+        </div>
+      </div>
+      
+      <div class="checklist-item status-pending" id="item-agreement">
+        <div class="check-icon"></div>
+        <div class="item-content">
+          <div class="item-title">Rental Agreement Uploaded</div>
+          <div class="item-desc">Required to enforce the depreciation schedule and SLA terms.</div>
+          <div class="item-action">
+            <button class="btn-resolve" onclick="resolveAgreement()">Upload PDF Agreement</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Gate 3: Inspection Constraints -->
+    <div class="gate-card">
+      <h3>3. Video Inspection Parameters</h3>
+      
+      <div class="checklist-item status-done">
+        <div class="check-icon"></div>
+        <div class="item-content">
+          <div class="item-title">Inspector Role Assigned</div>
+          <div class="item-desc">Broker Proxy (Ramesh) assigned. Identity will be logged in SHA-256 hash.</div>
+        </div>
+      </div>
+      
+      <div class="checklist-item status-pending" id="item-rooms">
+        <div class="check-icon"></div>
+        <div class="item-content" style="width: 100%;">
+          <div class="item-title">Room Sequence Setup</div>
+          <div class="item-desc">Select the parameters below. This generates the exact recording sequence the inspector must follow today, and locks it for the Move-Out comparison later.</div>
+          
+          <div class="room-grid">
+            <div class="room-toggle active" id="btn-bed" onclick="this.classList.toggle('active')">
+              🛏️ Bedrooms<br>
+              <input type="number" value="2" min="1" max="10" onclick="event.stopPropagation()">
+            </div>
+            <div class="room-toggle active" id="btn-bath" onclick="this.classList.toggle('active')">
+              🚿 Bathrooms<br>
+              <input type="number" value="2" min="1" max="10" onclick="event.stopPropagation()">
+            </div>
+            <div class="room-toggle active" id="btn-kit" onclick="this.classList.toggle('active')">
+              🍳 Kitchen
+            </div>
+            <div class="room-toggle" id="btn-balc" onclick="this.classList.toggle('active')">
+              🌅 Balconies<br>
+              <input type="number" value="1" min="1" max="5" onclick="event.stopPropagation()">
+            </div>
+            <div class="room-toggle" id="btn-serv" onclick="this.classList.toggle('active')">
+              🧹 Servant Qtr
+            </div>
+          </div>
+          
+          <div class="item-action" style="margin-top:1rem;">
+            <button class="btn-resolve" onclick="lockSequence()">Lock Sequence</button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Lock Bar -->
+  <div class="lock-bar">
+    <div class="lock-status" id="lockStatus">
+      <span>🔒 2 out of 8 Gates Incomplete</span>
+    </div>
+    <button class="btn-launch" id="btnLaunch" onclick="window.location.href='inspection-camera.html'">Start Video Inspection</button>
+  </div>
+
+  <script>
+    let agreementResolved = false;
+    let roomsLocked = false;
+
+    function resolveAgreement() {
+      // Simulate file upload delay
+      const btn = document.querySelector('#item-agreement .btn-resolve');
+      btn.textContent = 'Uploading...';
+      
+      setTimeout(() => {
+        const item = document.getElementById('item-agreement');
+        item.className = 'checklist-item status-done';
+        item.querySelector('.item-title').textContent = 'Rental Agreement Uploaded';
+        item.querySelector('.item-desc').textContent = 'Signed 11-month agreement attached & hashed.';
+        item.querySelector('.item-action').remove();
+        
+        agreementResolved = true;
+        checkUnlocks();
+      }, 1000);
+    }
+
+    function lockSequence() {
+      const btn = document.querySelector('#item-rooms .btn-resolve');
+      btn.textContent = 'Locking...';
+      
+      setTimeout(() => {
+        const item = document.getElementById('item-rooms');
+        item.className = 'checklist-item status-done';
+        
+        // Count rooms selected
+        let seq = [];
+        if(document.getElementById('btn-bed').classList.contains('active')) seq.push('2 Bedrooms');
+        if(document.getElementById('btn-bath').classList.contains('active')) seq.push('2 Bathrooms');
+        if(document.getElementById('btn-kit').classList.contains('active')) seq.push('Kitchen');
+        
+        item.querySelector('.item-desc').innerHTML = `<strong>Locked Sequence:</strong> Living Room, ${seq.join(', ')}. <br><span style="color:var(--danger); font-size:0.75rem;">Sequence modification disabled until Deal Archive.</span>`;
+        item.querySelector('.room-grid').style.opacity = '0.5';
+        item.querySelector('.room-grid').style.pointerEvents = 'none';
+        item.querySelector('.item-action').remove();
+        
+        roomsLocked = true;
+        checkUnlocks();
+      }, 500);
+    }
+
+    function checkUnlocks() {
+      if(agreementResolved && roomsLocked) {
+        document.getElementById('lockStatus').className = 'lock-status ready';
+        document.getElementById('lockStatus').innerHTML = '✅ All 8 Gates Complete';
+        document.getElementById('btnLaunch').className = 'btn-launch active';
+      } else {
+        const rem = 2 - (agreementResolved?1:0) - (roomsLocked?1:0);
+        document.getElementById('lockStatus').innerHTML = `🔒 ${rem} Gates Incomplete`;
+      }
+    }
+  </script>
+</body>
+</html>
